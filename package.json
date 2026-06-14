@@ -1,0 +1,29 @@
+{
+  "name": "d-nd-ux-ai-seed",
+  "version": "0.1.0",
+  "description": "Reusable UX-AI three-column workspace seed for agentic systems.",
+  "license": "PolyForm-Noncommercial-1.0.0",
+  "type": "module",
+  "private": false,
+  "files": [
+    "src",
+    "templates",
+    "docs",
+    "LICENSE",
+    "NOTICE",
+    "README.md"
+  ],
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "react-dom": "^18.3.1",
+    "typescript": "^5.0.0"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  }
+}
