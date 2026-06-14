@@ -23,8 +23,14 @@ It is not a landing-page kit.
 | `src/ui/SplitPanel.tsx` | Two-panel resizable split primitive. |
 | `src/LiveBadge.tsx` | Polling read-only signal for live public data. |
 | `src/Tooltip.tsx` | Semantic tooltip wrapper for function/mechanism/expectation explanations. |
+| `src/ResponseOutlineRail.tsx` | Chat/report response outline for long answers and internal app conversations. |
+| `src/ArticleDiagramRail.tsx` | Reusable vertical/horizontal process diagram for articles and long responses. |
+| `src/TaxonomyMap.tsx` | Simple taxonomy inspector and data contract for concept systems. |
 | `templates/Shell3ColWorkspaceSeed.tsx` | Copyable starter workspace. |
 | `docs/SHELL3COL_WORKSPACE_SEED.md` | Operating guide and UX-AI rules. |
+| `docs/RESPONSE_OUTLINE_SEED.md` | Guide for response menus in chats, reports and long answers. |
+| `docs/ARTICLE_DIAGRAM_SEED.md` | Guide for reusable article/process diagrams. |
+| `docs/TAXONOMY_SYSTEM_SEED.md` | Taxonomy contract and usage rules for UX-AI systems. |
 | `docs/PATTERN_CANDIDATES.md` | Extraction map for future UX-AI seeds. |
 
 ## Install / Copy
@@ -34,10 +40,12 @@ This is a seed, not a packaged design system yet.
 Recommended use:
 
 1. Copy `src/Shell3Col.tsx` and `src/ui/HoverPopover.tsx` into your React app.
-2. Copy `templates/Shell3ColWorkspaceSeed.tsx`.
-3. Replace the three panel bodies with your domain content.
-4. Give each surface its own `leftStorage` and `rightStorage` keys.
-5. Preserve the `data-thia-*` awareness attributes when building agentic UI.
+2. Copy any secondary primitives you need: `ResponseOutlineRail`,
+   `ArticleDiagramRail`, `TaxonomyMap`, `Tooltip`, `LiveBadge`.
+3. Copy `templates/Shell3ColWorkspaceSeed.tsx`.
+4. Replace the three panel bodies with your domain content.
+5. Give each surface its own `leftStorage` and `rightStorage` keys.
+6. Preserve the `data-thia-*` awareness attributes when building agentic UI.
 
 ## Minimal Usage
 
@@ -74,6 +82,17 @@ narrative page if the user only needs to read forward.
 
 Do not turn every page into a dashboard. Use this pattern only when the user
 needs working memory, selection and consequences at the same time.
+
+## Secondary Seeds
+
+Use `ResponseOutlineRail` when content is long enough that the user needs a
+map of the answer or conversation.
+
+Use `ArticleDiagramRail` when the page must show a process, passage or
+reasoning chain rather than a static illustration.
+
+Use `TaxonomyMap` when a project needs a visible concept contract without
+building a full graph engine.
 
 ## License
 

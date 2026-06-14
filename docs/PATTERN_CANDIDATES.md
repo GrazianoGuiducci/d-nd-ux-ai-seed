@@ -14,6 +14,9 @@ behavior, then rebuild the domain content outside the primitive.
 | Hover tooltip / popover | `HoverPopover`, `Tooltip` | Shared portal behavior, smart placement, hover intent. |
 | 2-panel split | `SplitPanel` | Generic resize/persistence/mobile stack. |
 | Live read-only signal | `LiveBadge` | Simple polling, fallback, no side effect. |
+| Response outline rail | `ResponseOutlineRail` | Generic orientation for long answers, chats, reports and app pages. |
+| Article diagram rail | `ArticleDiagramRail` | Extracted process-diagram behavior without D-ND article content. |
+| Taxonomy inspector | `TaxonomyMap` + guide | Stable data contract for concepts, candidates and relations. |
 
 ## Next Extraction Candidates
 
@@ -40,6 +43,7 @@ behavior, then rebuild the domain content outside the primitive.
 5. `CopyToAiBridge`
 6. `ContributionIntake`
 7. `SectionPath`
+8. `ConceptSheet`
 
 ## Extraction Rule
 
@@ -112,6 +116,37 @@ data-thia-action
 These are not visible copy. They are orientation for assistants, automations and
 future UX-AI agents.
 
+### ResponseOutlineRail
+
+Required:
+
+- generated from section/turn metadata when possible;
+- hidden for short answers;
+- active item follows scroll or selected response block;
+- labels stay short and never duplicate full answer text;
+- mobile fallback is drawer, sticky strip or inline block;
+- kinds mark function: section, turn, claim, warning, action, result.
+
+### ArticleDiagramRail
+
+Required:
+
+- shows process, relation or tension, never decoration;
+- max 7 visible nodes before grouping;
+- usable horizontally in articles and vertically beside long responses;
+- text remains readable without hover;
+- deeper explanation belongs in tooltip/popover or body copy.
+
+### TaxonomyMap
+
+Required:
+
+- stable node id;
+- explicit status for candidate/alias/ambiguous/scaffold/rejected;
+- no automatic candidate promotion;
+- relation labels are data, not hardcoded copy;
+- usable as context for AI without claiming authority.
+
 ## Do Not Promote Yet
 
 | Component | Reason |
@@ -120,4 +155,3 @@ future UX-AI agents.
 | Full `LabGraph.tsx` | Domain data, graph physics and UI are still one large surface. |
 | Full `BiconoLab.tsx` | Good floating-window mechanics, but mixed with bicone domain rendering. |
 | Full `SitemanStudio.tsx` | Valuable action grammar, but too operational and authenticated. |
-
