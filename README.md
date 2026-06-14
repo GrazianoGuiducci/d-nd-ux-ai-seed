@@ -21,8 +21,11 @@ It is not a landing-page kit.
 | `src/Shell3Col.tsx` | Three-column workspace shell with resize, collapse, persistent widths and mobile drawers. |
 | `src/ui/HoverPopover.tsx` | Shared tooltip primitive with portal rendering and smart placement. |
 | `src/ui/SplitPanel.tsx` | Two-panel resizable split primitive. |
+| `src/LiveBadge.tsx` | Polling read-only signal for live public data. |
+| `src/Tooltip.tsx` | Semantic tooltip wrapper for function/mechanism/expectation explanations. |
 | `templates/Shell3ColWorkspaceSeed.tsx` | Copyable starter workspace. |
 | `docs/SHELL3COL_WORKSPACE_SEED.md` | Operating guide and UX-AI rules. |
+| `docs/PATTERN_CANDIDATES.md` | Extraction map for future UX-AI seeds. |
 
 ## Install / Copy
 
@@ -85,4 +88,3 @@ without written permission from the copyright holder.
 Commercial licensing can be requested from the repository owner.
 
 See `LICENSE` and `NOTICE`.
-
