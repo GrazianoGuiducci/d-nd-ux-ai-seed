@@ -21,6 +21,11 @@ Use it when at least one condition is true:
 - mobile users must jump between sections without scrolling blindly.
 
 Do not show it for short answers. A rail with two items is visual noise.
+Do not place the rail in a normal three-column workspace header or canvas just
+because the workspace has selectable items. In that context it becomes a
+competing navigation system. The rail belongs to the length of the generated
+content: article passages, long reports, chat turns, question/answer anchors
+and focal points created by diagrams.
 
 ## Component Contract
 
@@ -43,7 +48,7 @@ const outline = [
 
 Modes:
 
-- `rail`: compact vertical indicator, best at the side of a reading surface;
+- `rail`: compact vertical indicator, best at the side of a long reading surface;
 - `panel`: readable menu, best inside a sidebar;
 - `inline`: embedded block, best inside a response or mobile drawer.
 

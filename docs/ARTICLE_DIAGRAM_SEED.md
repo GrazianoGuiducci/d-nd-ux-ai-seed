@@ -81,6 +81,9 @@ This is different from `ResponseOutlineRail`:
 - diagram = structure of the reasoning or process.
 
 They can coexist, but they should not duplicate each other.
+When a diagram generates focal points in an article, the outline/point rail can
+snap to those article anchors. Do not reuse that point rail as generic workspace
+navigation.
 
 ## Boundaries
 

@@ -1,7 +1,7 @@
 # Shell3Col Workspace Seed
 
 Status: reusable UX-AI workspace seed.
-Primary component: `components/Shell3Col.tsx`.
+Primary component: `src/Shell3Col.tsx`.
 
 ## Purpose
 
@@ -37,6 +37,22 @@ The left and right panels are not decoration. They are working memory.
 - Sidebars can be resized and the width persists in `localStorage`.
 - Mobile degrades to main surface + left/right drawers.
 - Drawers are opened by peek buttons on the viewport edges.
+- Inner `SplitPanel` sections should collapse either panel into a book gutter
+  when available width drops below the configured threshold.
+- Inner book gutters reopen by click. The adjacent split resizer remains
+  available as the drag handle, matching the outer sidebar pattern: book for
+  click, slim handle for drag.
+- Closed outer sidebars expose a full-height gutter: any click along that
+  vertical rail reopens the sidebar.
+- On mobile, inner left/right split panels should become top/bottom panels with
+  a horizontal resize bar. Use drawer mode only when the secondary pane is
+  truly modal.
+- On mobile, keep scroll behavior but hide visual scrollbars unless the host
+  surface specifically needs desktop-style scroll affordance.
+- Do not place a response/article point rail in the workspace header. Use it
+  only inside long articles, generated reports, diagrams or chat surfaces.
+- Keep the main header compact. The active work surface should receive the
+  vertical space.
 
 ## Sizing Defaults
 
@@ -166,10 +182,14 @@ For any action inside the workspace:
 - Prefer one high-probability action over many low-probability actions.
 
 This inherits `docs/AZIONI_FACILI_UX_AI_KERNEL.md`.
+For public/external adoption, use the same principle even when that internal
+kernel is not present: name the action, declare the side effect, and stop at a
+human review boundary before mutation or publish.
 
 ## Anti-Patterns
 
 - A top explanatory band that consumes the main field.
+- A vertical point rail used as generic workspace navigation.
 - A side panel that cannot scroll independently.
 - A badge or long identifier that creates horizontal mobile overflow.
 - A local tooltip implementation.

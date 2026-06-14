@@ -1,0 +1,4 @@
+interface:
+  display_name: "D-ND UX-AI Seed"
+  short_description: "Reusable D-ND UX patterns and templates"
+  default_prompt: "Use $d-nd-ux-ai-seed to select a reusable workspace pattern or template for this domain."

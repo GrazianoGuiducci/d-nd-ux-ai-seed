@@ -33,6 +33,11 @@ behavior, then rebuild the domain content outside the primitive.
 | Knowledge graph inspector | `KnowledgeGraph`, `LabGraph` | Selectable graph -> side detail -> mobile drawer on selection. | High: graph data and renderer are domain-heavy. |
 | Glossary / concept sheet | `GlossaryLayer` | Inline concept bridge; desktop tooltip, mobile bottom sheet. | Medium-high: current glossary is domain-specific. |
 | Awareness markers | `data-thia-*` across Lab/Chat/Forms | Machine-readable UI orientation for agents. | Low: codify schema first. |
+| Navigation surface model | Public pages, app tabs, workspace route groups | Route intent, adjacent surfaces, selected item and next safe action. | Medium: copy and routing must stay separate. |
+| Public domain template pack | Lab D-ND / start / Seed public pages | New domain pages assembled from tested sections, diagrams, menus and intake blocks. | Medium: content slots and route model must be separated. |
+| Site map mega-panel | d-nd.com map navigation | Wide orientation panel for complex public ecosystems. | Medium: must not obscure current task or mobile reading. |
+| Side action rail | Lab feedback/support rails | Persistent feedback/support/contact entry point. | Low: keep labels short and avoid content overlap. |
+| Assistant surface pack | THIA / DOMUS chat | Floating assistant, intake split, contextual starters and page awareness. | High: state, API and copy are coupled. |
 
 ## Priority Order
 
@@ -44,6 +49,10 @@ behavior, then rebuild the domain content outside the primitive.
 6. `ContributionIntake`
 7. `SectionPath`
 8. `ConceptSheet`
+9. `NavigationSurfaceModel`
+10. `PublicDomainTemplatePack`
+11. `SiteMapMegaPanel`
+12. `SideActionRail`
 
 ## Extraction Rule
 

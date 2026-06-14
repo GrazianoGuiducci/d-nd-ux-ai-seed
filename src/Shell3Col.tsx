@@ -81,6 +81,7 @@ const GUTTER_W = 44;
 const RESIZER_W = 16;
 const DRAG_REOPEN_THRESHOLD = 60;
 const AUTO_CLOSE_UNDER = 180;
+const KEYBOARD_RESIZE_STEP = 24;
 
 function isSidebarContent(x: ReactNode | SidebarContent): x is SidebarContent {
   return !!x && typeof x === 'object' && !React.isValidElement(x) && 'body' in (x as any);
@@ -198,6 +199,32 @@ const SHELL_CSS = `
   border: 0; width: 100%;
   font: inherit; color: inherit;
   transition: background 220ms cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+.s3c-gutter-anchor {
+  display: none !important;
+  min-height: 0;
+  align-self: stretch;
+  width: 100%;
+}
+.s3c-gutter-anchor > .s3c-sb-gutter {
+  height: 100%;
+}
+.s3c-shell[data-left-state="closed"] .s3c-side-left,
+.s3c-shell[data-right-state="closed"] .s3c-side-right {
+  position: relative;
+}
+.s3c-shell[data-left-state="closed"] .s3c-side-left .s3c-gutter-anchor,
+.s3c-shell[data-right-state="closed"] .s3c-side-right .s3c-gutter-anchor {
+  display: flex !important;
+  flex: 1 1 auto;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.s3c-shell[data-left-state="closed"] .s3c-side-left .s3c-gutter-anchor > .s3c-sb-gutter,
+.s3c-shell[data-right-state="closed"] .s3c-side-right .s3c-gutter-anchor > .s3c-sb-gutter {
+  min-height: 100%;
 }
 .s3c-shell[data-left-state="closed"] .s3c-side-left .s3c-sb-gutter,
 .s3c-shell[data-right-state="closed"] .s3c-side-right .s3c-sb-gutter { display: flex; }
@@ -335,20 +362,31 @@ const SHELL_CSS = `
 .s3c-tip-portal .tp-funnel a { color: var(--c-primary-text, rgb(103 232 249)); text-decoration: none; }
 .s3c-tip-portal .tp-funnel a:hover { color: rgb(var(--text-primary, 241 245 249)); }
 
-@media (max-width: 639px) {
+@media (max-width: 900px) {
   /* Su mobile il grid degrada a flex column: main occupa tutto, sidebar
      escono dal flusso e tornano come drawer overlay quando aperte. */
   .s3c-body { grid-template-columns: 1fr; display: flex; flex-direction: column; }
   .s3c-body > .s3c-resizer { display: none; }
-  .s3c-body > .s3c-main { flex: 1; min-height: 0; }
+  .s3c-body > .s3c-main {
+    position: relative;
+    z-index: 1;
+    flex: 1 1 auto;
+    width: 100%;
+    min-height: 0;
+    background: transparent;
+  }
 
   /* Sidebar in modalita drawer — fixed overlay laterale.
      Pattern dal design-playground (app-shell ctx-sidebar-mobile). */
   .s3c-body > .s3c-side {
     position: fixed;
-    top: 0; bottom: 0;
+    top: 0;
+    bottom: 0;
+    height: 100dvh;
+    max-height: 100dvh;
     width: min(320px, 85vw);
     z-index: 90;
+    background: rgb(var(--elev-01, 16 16 22));
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
     transition: transform 360ms cubic-bezier(0.4, 0, 0.2, 1);
     border-radius: 0;
@@ -356,20 +394,44 @@ const SHELL_CSS = `
   .s3c-body > .s3c-side-left {
     left: 0;
     transform: translateX(-100%);
+    visibility: hidden;
+    pointer-events: none;
     border-right: 1px solid rgb(var(--border-02, 255 255 255 / 0.12));
   }
   .s3c-body > .s3c-side-right {
     right: 0;
     transform: translateX(100%);
+    visibility: hidden;
+    pointer-events: none;
     border-left: 1px solid rgb(var(--border-02, 255 255 255 / 0.12));
   }
-  .s3c-shell[data-mobile-drawer="left"] .s3c-body > .s3c-side-left { transform: translateX(0); }
-  .s3c-shell[data-mobile-drawer="right"] .s3c-body > .s3c-side-right { transform: translateX(0); }
+  .s3c-shell[data-mobile-drawer="left"] .s3c-body > .s3c-side-left {
+    transform: translateX(0);
+    visibility: visible;
+    pointer-events: auto;
+  }
+  .s3c-shell[data-mobile-drawer="right"] .s3c-body > .s3c-side-right {
+    transform: translateX(0);
+    visibility: visible;
+    pointer-events: auto;
+  }
 
   /* Dentro il drawer: body sempre visibile, gutter/collapse nascosti */
   .s3c-shell .s3c-body > .s3c-side .s3c-sb-body { display: block !important; }
   .s3c-shell .s3c-body > .s3c-side .s3c-sb-gutter { display: none !important; }
   .s3c-shell .s3c-body > .s3c-side .s3c-sb-header { display: flex !important; }
+  .s3c-shell .s3c-body > .s3c-side .s3c-sb-body {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .s3c-shell .s3c-body > .s3c-side .s3c-sb-body::-webkit-scrollbar {
+    display: none;
+  }
+  .s3c-shell .s3c-body > .s3c-side .s3c-gutter-anchor {
+    position: static !important;
+    display: none !important;
+    height: auto !important;
+  }
 
   /* Backdrop cliccabile per chiudere */
   .s3c-mobile-backdrop {
@@ -433,10 +495,10 @@ const SHELL_CSS = `
   }
 }
 
-/* Peek button visibili solo su mobile (display: none by default) */
+/* Peek button visibili solo su mobile/narrow browser (display: none by default) */
 .s3c-peek { display: none; }
 .s3c-mobile-close { display: none; }
-@media (max-width: 639px) {
+@media (max-width: 900px) {
   .s3c-peek { display: flex; }
   /* Swap collapse-btn (chiude il drawer desktop) con mobile-close (× drawer) */
   .s3c-shell .s3c-body > .s3c-side .s3c-collapse-btn { display: none !important; }
@@ -483,34 +545,42 @@ const Shell3Col: React.FC<Shell3ColProps> = ({
   const [leftManualW, setLeftManualW] = useState<number>(() => readWidth(leftStorage, leftOpenWidth));
   const [rightManualW, setRightManualW] = useState<number>(() => readWidth(rightStorage, rightOpenWidth));
   const [dragging, setDragging] = useState<null | 'left' | 'right'>(null);
+  const mobileOverflowRef = useRef<string | null>(null);
 
-  // Mobile drawer state — quale drawer è aperto come overlay (solo < 640px).
+  // Mobile drawer state — quale drawer è aperto come overlay (solo narrow/mobile).
   // null = nessuno (main libero con 2 peek edge button visibili).
   const [mobileDrawer, setMobileDrawer] = useState<null | 'left' | 'right'>(null);
 
   // ESC chiude il drawer; lock body scroll quando aperto
   useEffect(() => {
     if (!mobileDrawer) {
-      document.body.style.overflow = '';
+      if (mobileOverflowRef.current !== null) {
+        document.body.style.overflow = mobileOverflowRef.current;
+        mobileOverflowRef.current = null;
+      }
       return;
     }
+    if (mobileOverflowRef.current === null) mobileOverflowRef.current = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setMobileDrawer(null); };
     window.addEventListener('keydown', onKey);
     return () => {
       window.removeEventListener('keydown', onKey);
-      document.body.style.overflow = '';
+      if (mobileOverflowRef.current !== null) {
+        document.body.style.overflow = mobileOverflowRef.current;
+        mobileOverflowRef.current = null;
+      }
     };
   }, [mobileDrawer]);
 
   // Contenuto del main puo richiedere apertura drawer (es. click su nodo):
   // ascolta custom event 'shell3col:open-mobile-drawer' con detail 'left'|'right'.
-  // Apre solo su mobile (< 640px): su desktop le sidebar sono gia visibili.
+  // Apre solo su mobile/narrow: su desktop le sidebar sono gia visibili.
   useEffect(() => {
     const onOpen = (e: Event) => {
       const side = (e as CustomEvent<'left' | 'right'>).detail;
       if (side !== 'left' && side !== 'right') return;
-      if (window.matchMedia('(max-width: 639px)').matches) {
+      if (window.matchMedia('(max-width: 900px)').matches) {
         setMobileDrawer(side);
       }
     };
@@ -521,10 +591,10 @@ const Shell3Col: React.FC<Shell3ColProps> = ({
   // Tooltip state — dismantled: gestito ora da HoverPopover sul gutter (vedi render).
 
   // Persist
-  useEffect(() => { try { window.localStorage.setItem(`${leftStorage}_state`, leftState); } catch { /* */ } }, [leftState, leftStorage]);
-  useEffect(() => { try { window.localStorage.setItem(`${rightStorage}_state`, rightState); } catch { /* */ } }, [rightState, rightStorage]);
-  useEffect(() => { try { window.localStorage.setItem(`${leftStorage}_w`, String(leftManualW)); } catch { /* */ } }, [leftManualW, leftStorage]);
-  useEffect(() => { try { window.localStorage.setItem(`${rightStorage}_w`, String(rightManualW)); } catch { /* */ } }, [rightManualW, rightStorage]);
+  useEffect(() => { if (leftStorage) try { window.localStorage.setItem(`${leftStorage}_state`, leftState); } catch { /* */ } }, [leftState, leftStorage]);
+  useEffect(() => { if (rightStorage) try { window.localStorage.setItem(`${rightStorage}_state`, rightState); } catch { /* */ } }, [rightState, rightStorage]);
+  useEffect(() => { if (leftStorage) try { window.localStorage.setItem(`${leftStorage}_w`, String(leftManualW)); } catch { /* */ } }, [leftManualW, leftStorage]);
+  useEffect(() => { if (rightStorage) try { window.localStorage.setItem(`${rightStorage}_w`, String(rightManualW)); } catch { /* */ } }, [rightManualW, rightStorage]);
 
   // Drag resize — in closed: drag toward center past threshold riapre (to open).
   // In open: sotto AUTO_CLOSE_UNDER snap a closed.
@@ -586,6 +656,47 @@ const Shell3Col: React.FC<Shell3ColProps> = ({
     };
   }, [dragging, minOpenWidth, maxOpenWidth]);
 
+  const onResizerKeyDown = useCallback((side: 'left' | 'right') => (e: React.KeyboardEvent) => {
+    const isLeft = side === 'left';
+    const state = isLeft ? leftState : rightState;
+    const setState = isLeft ? setLeftState : setRightState;
+    const setWidth = isLeft ? setLeftManualW : setRightManualW;
+    const currentWidth = isLeft ? leftManualW : rightManualW;
+
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      setState(state === 'open' ? 'closed' : 'open');
+      return;
+    }
+
+    if (e.key === 'Home') {
+      e.preventDefault();
+      setState('closed');
+      return;
+    }
+
+    if (e.key === 'End') {
+      e.preventDefault();
+      setState('open');
+      setWidth(maxOpenWidth);
+      return;
+    }
+
+    const direction =
+      e.key === 'ArrowRight'
+        ? 1
+        : e.key === 'ArrowLeft'
+        ? -1
+        : 0;
+
+    if (!direction) return;
+    e.preventDefault();
+    const signedDelta = side === 'left' ? direction : -direction;
+    const nextWidth = Math.max(minOpenWidth, Math.min(maxOpenWidth, currentWidth + signedDelta * KEYBOARD_RESIZE_STEP));
+    setState('open');
+    setWidth(nextWidth);
+  }, [leftManualW, leftState, maxOpenWidth, minOpenWidth, rightManualW, rightState]);
+
   // Normalize content
   const leftContent: SidebarContent = isSidebarContent(left) ? left : { body: left };
   const rightContent: SidebarContent = isSidebarContent(right) ? right : { body: right };
@@ -638,7 +749,7 @@ const Shell3Col: React.FC<Shell3ColProps> = ({
           <HoverPopover
             enabled={leftState === 'closed' && !!leftContent.closedTooltip}
             placement="right"
-            anchorClassName=""
+            anchorClassName="s3c-gutter-anchor"
             content={leftContent.closedTooltip ? renderClosedTooltipContent(leftContent.closedTooltip) : null}
           >
             <button
@@ -659,8 +770,12 @@ const Shell3Col: React.FC<Shell3ColProps> = ({
           role="separator"
           aria-orientation="vertical"
           aria-label={`Resize ${leftTitle}`}
+          aria-valuemin={minOpenWidth}
+          aria-valuemax={maxOpenWidth}
+          aria-valuenow={leftState === 'open' ? leftManualW : GUTTER_W}
           tabIndex={0}
           onPointerDown={onResizerPointerDown('left')}
+          onKeyDown={onResizerKeyDown('left')}
         >
           <span className="s3c-rz-line" />
           <span className="s3c-rz-grip" />
@@ -675,8 +790,12 @@ const Shell3Col: React.FC<Shell3ColProps> = ({
           role="separator"
           aria-orientation="vertical"
           aria-label={`Resize ${rightTitle}`}
+          aria-valuemin={minOpenWidth}
+          aria-valuemax={maxOpenWidth}
+          aria-valuenow={rightState === 'open' ? rightManualW : GUTTER_W}
           tabIndex={0}
           onPointerDown={onResizerPointerDown('right')}
+          onKeyDown={onResizerKeyDown('right')}
         >
           <span className="s3c-rz-line" />
           <span className="s3c-rz-grip" />
@@ -703,7 +822,7 @@ const Shell3Col: React.FC<Shell3ColProps> = ({
           <HoverPopover
             enabled={rightState === 'closed' && !!rightContent.closedTooltip}
             placement="left"
-            anchorClassName=""
+            anchorClassName="s3c-gutter-anchor"
             content={rightContent.closedTooltip ? renderClosedTooltipContent(rightContent.closedTooltip) : null}
           >
             <button

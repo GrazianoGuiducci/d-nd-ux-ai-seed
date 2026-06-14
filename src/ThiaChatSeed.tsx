@@ -1,0 +1,739 @@
+import React, { FormEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+
+export type ThiaChatRole = 'assistant' | 'user' | 'operator';
+
+export type ThiaChatMessage = {
+  role: ThiaChatRole;
+  text: string;
+  transientFocus?: boolean;
+  quickPrompts?: string[];
+};
+
+export type ThiaChatFocus = {
+  surface?: string;
+  tab?: string;
+  focus?: string;
+  item?: string;
+  relation?: string;
+  count?: string;
+  boundary?: string;
+};
+
+export type ThiaChatAskDetail = Partial<ThiaChatFocus> & {
+  prompt?: string;
+  source?: string;
+  autoSend?: boolean;
+};
+
+export interface ThiaChatSeedProps {
+  title?: string;
+  subtitle?: string;
+  surfaceTitle?: string;
+  surfaceId?: string;
+  focus?: ThiaChatFocus;
+  starterPrompts?: string[];
+  initialMessages?: ThiaChatMessage[];
+  storageKey?: string;
+  openByDefault?: boolean;
+  className?: string;
+  onSend?: (prompt: string, focus: ThiaChatFocus) => Promise<string> | string;
+}
+
+type Frame = {
+  size: { width: number; height: number };
+  position: { x: number; y: number };
+};
+
+type DragState = {
+  kind: 'move' | 'resize';
+  startX: number;
+  startY: number;
+  offsetX: number;
+  offsetY: number;
+  startSize: Frame['size'];
+  didShrink: boolean;
+};
+
+const CHAT_READABLE_DRAG_WIDTH = 720;
+const CHAT_SHRINK_DRAG_DELTA = 90;
+const CHAT_GEOMETRY_TRANSITION = 'opacity 410ms ease, transform 1210ms cubic-bezier(.2,.78,.18,1), left 1210ms cubic-bezier(.2,.78,.18,1), top 1210ms cubic-bezier(.2,.78,.18,1), width 1210ms cubic-bezier(.2,.78,.18,1), height 1210ms cubic-bezier(.2,.78,.18,1)';
+
+let thiaChatCssInjected = false;
+const THIA_CHAT_CSS = `
+.dnd-thia {
+  position: fixed;
+  z-index: 120;
+  color: rgb(var(--text-01, 244 247 251));
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+.dnd-thia-bubble-wrap {
+  right: 1rem;
+  bottom: 2.2rem;
+  display: grid;
+  gap: 0.45rem;
+  justify-items: end;
+}
+.dnd-thia-greeting {
+  max-width: 19rem;
+  border: 1px solid rgb(57 255 20 / 0.75);
+  border-radius: 8px;
+  background: rgb(var(--elev-01, 15 18 25) / 0.94);
+  color: rgb(var(--text-01, 244 247 251));
+  padding: 0.68rem 0.78rem;
+  font-size: 0.78rem;
+  line-height: 1.36;
+  box-shadow: 0 0 24px rgb(57 255 20 / 0.18);
+}
+.dnd-thia-avatar {
+  width: 3.05rem;
+  height: 3.05rem;
+  border: 2px solid rgb(57 255 20);
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 50% 35%, rgb(57 255 20 / 0.8), transparent 28%),
+    radial-gradient(circle at 42% 46%, rgb(103 232 249 / 0.7), transparent 12%),
+    radial-gradient(circle at 60% 48%, rgb(167 139 250 / 0.55), transparent 13%),
+    rgb(4 18 10);
+  box-shadow: 0 0 18px rgb(57 255 20 / 0.7), inset 0 0 18px rgb(0 0 0 / 0.55);
+  cursor: pointer;
+}
+.dnd-thia-window {
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  overflow: hidden;
+  border: 1px solid rgb(var(--border-02, 255 255 255 / 0.16));
+  border-radius: 12px;
+  background: rgb(var(--elev-01, 15 18 25) / 0.98);
+  box-shadow: 0 30px 90px rgb(0 0 0 / 0.58), 0 0 38px rgb(57 255 20 / 0.12);
+  transition: ${CHAT_GEOMETRY_TRANSITION};
+}
+.dnd-thia-window[data-expanded="true"] {
+  border-color: rgb(57 255 20 / 0.5);
+}
+.dnd-thia-head {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 0.75rem;
+  align-items: center;
+  min-height: 3.15rem;
+  padding: 0.7rem 0.78rem;
+  border-bottom: 1px solid rgb(var(--border-01, 255 255 255 / 0.09));
+  cursor: move;
+  user-select: none;
+  touch-action: none;
+}
+.dnd-thia-mark {
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid rgb(57 255 20 / 0.74);
+  border-radius: 999px;
+  background: radial-gradient(circle, rgb(57 255 20 / 0.7), transparent 62%);
+  box-shadow: 0 0 18px rgb(57 255 20 / 0.28);
+}
+.dnd-thia-title,
+.dnd-thia-subtitle {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.dnd-thia-title {
+  font-weight: 800;
+  line-height: 1.1;
+}
+.dnd-thia-subtitle {
+  margin-top: 0.15rem;
+  color: rgb(var(--text-muted, 147 158 176));
+  font-size: 0.75rem;
+}
+.dnd-thia-actions {
+  display: flex;
+  gap: 0.3rem;
+}
+.dnd-thia-icon {
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid rgb(var(--border-02, 255 255 255 / 0.16));
+  border-radius: 4px;
+  background: transparent;
+  color: rgb(var(--text-02, 205 213 225));
+  cursor: pointer;
+}
+.dnd-thia-icon:hover,
+.dnd-thia-icon:focus-visible {
+  outline: none;
+  border-color: rgb(57 255 20 / 0.65);
+  color: rgb(57 255 20);
+}
+.dnd-thia-context {
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.62rem 0.78rem;
+  border-bottom: 1px solid rgb(var(--border-01, 255 255 255 / 0.09));
+  background: rgb(var(--elev-00, 7 9 13) / 0.42);
+}
+.dnd-thia-context p {
+  margin: 0;
+  color: rgb(var(--text-02, 205 213 225));
+  font-size: 0.8rem;
+  line-height: 1.35;
+}
+.dnd-thia-context-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+.dnd-thia-chip {
+  border: 1px solid rgb(var(--border-01, 255 255 255 / 0.09));
+  border-radius: 4px;
+  background: rgb(var(--elev-02, 23 28 38) / 0.62);
+  color: rgb(var(--text-muted, 147 158 176));
+  padding: 0.22rem 0.42rem;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.62rem;
+}
+.dnd-thia-messages {
+  min-height: 0;
+  overflow: auto;
+  padding: 0.82rem;
+  scrollbar-width: none;
+}
+.dnd-thia-messages::-webkit-scrollbar {
+  display: none;
+}
+.dnd-thia-message {
+  display: flex;
+  margin-bottom: 0.75rem;
+}
+.dnd-thia-message[data-role="user"] {
+  justify-content: flex-end;
+}
+.dnd-thia-message-body {
+  max-width: 88%;
+  border: 1px solid rgb(var(--border-01, 255 255 255 / 0.09));
+  border-radius: 8px;
+  background: rgb(var(--elev-02, 23 28 38) / 0.72);
+  padding: 0.62rem 0.75rem;
+  color: rgb(var(--text-02, 205 213 225));
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+.dnd-thia-message[data-role="user"] .dnd-thia-message-body {
+  border-color: rgb(34 211 238 / 0.32);
+  background: rgb(8 145 178 / 0.17);
+  color: rgb(var(--text-01, 244 247 251));
+}
+.dnd-thia-quick {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.55rem;
+}
+.dnd-thia-quick button {
+  border: 1px solid rgb(167 139 250 / 0.32);
+  border-radius: 999px;
+  background: rgb(167 139 250 / 0.12);
+  color: rgb(221 214 254);
+  padding: 0.32rem 0.48rem;
+  cursor: pointer;
+  font-size: 0.74rem;
+}
+.dnd-thia-composer {
+  border-top: 1px solid rgb(var(--border-01, 255 255 255 / 0.09));
+  padding: 0.72rem;
+}
+.dnd-thia-input-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 2.45rem;
+  border: 1px solid rgb(var(--border-02, 255 255 255 / 0.16));
+  border-radius: 8px;
+  background: rgb(var(--elev-00, 7 9 13) / 0.62);
+}
+.dnd-thia-input-row:focus-within {
+  border-color: rgb(57 255 20 / 0.55);
+  box-shadow: 0 0 0 2px rgb(57 255 20 / 0.12);
+}
+.dnd-thia-input-row textarea {
+  min-width: 0;
+  min-height: 2.5rem;
+  max-height: 7rem;
+  resize: none;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: rgb(var(--text-01, 244 247 251));
+  padding: 0.68rem;
+}
+.dnd-thia-send {
+  border: 0;
+  border-left: 1px solid rgb(var(--border-01, 255 255 255 / 0.09));
+  background: transparent;
+  color: rgb(57 255 20);
+  cursor: pointer;
+  font-size: 1rem;
+}
+.dnd-thia-resize {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 1.35rem;
+  height: 1.35rem;
+  border: 0;
+  background:
+    linear-gradient(135deg, transparent 48%, rgb(57 255 20 / 0.72) 50%, transparent 53%),
+    linear-gradient(135deg, transparent 60%, rgb(57 255 20 / 0.45) 62%, transparent 65%);
+  cursor: nwse-resize;
+}
+@media (max-width: 720px) {
+  .dnd-thia-bubble-wrap {
+    right: 0.65rem;
+    bottom: 2.1rem;
+  }
+  .dnd-thia-window {
+    left: 0 !important;
+    top: 0 !important;
+    right: auto;
+    bottom: auto;
+    width: 100vw !important;
+    height: 100dvh !important;
+    border: 0;
+    border-radius: 0;
+    transition: opacity 280ms ease, transform 420ms cubic-bezier(.2,.78,.18,1);
+  }
+  .dnd-thia-head {
+    cursor: default;
+  }
+  .dnd-thia-resize {
+    display: none;
+  }
+  .dnd-thia-messages {
+    scrollbar-width: none;
+  }
+  .dnd-thia-messages::-webkit-scrollbar {
+    display: none;
+  }
+}
+`;
+
+function injectThiaChatCss() {
+  if (thiaChatCssInjected || typeof document === 'undefined') return;
+  if (document.getElementById('dnd-thia-chat-seed-css')) {
+    thiaChatCssInjected = true;
+    return;
+  }
+  const style = document.createElement('style');
+  style.id = 'dnd-thia-chat-seed-css';
+  style.textContent = THIA_CHAT_CSS;
+  document.head.appendChild(style);
+  thiaChatCssInjected = true;
+}
+
+function clampFrameSize(value: Frame['size']): Frame['size'] {
+  if (typeof window === 'undefined') return value;
+  const maxWidth = Math.max(320, window.innerWidth * 0.95);
+  const maxHeight = Math.max(360, window.innerHeight * 0.95);
+  return {
+    width: Math.min(maxWidth, Math.max(360, value.width)),
+    height: Math.min(maxHeight, Math.max(360, value.height)),
+  };
+}
+
+function clampFramePosition(value: Frame['position'], size: Frame['size']): Frame['position'] {
+  if (typeof window === 'undefined') return value;
+  const margin = 8;
+  return {
+    x: Math.max(margin, Math.min(Math.max(margin, window.innerWidth - size.width - margin), value.x)),
+    y: Math.max(margin, Math.min(Math.max(margin, window.innerHeight - size.height - margin), value.y)),
+  };
+}
+
+function defaultFrame(): Frame {
+  if (typeof window === 'undefined') {
+    return { size: { width: 420, height: 540 }, position: { x: 24, y: 80 } };
+  }
+  const width = Math.min(460, Math.max(380, window.innerWidth * 0.28));
+  const height = Math.min(620, Math.max(480, window.innerHeight * 0.58));
+  const size = clampFrameSize({ width, height });
+  return {
+    size,
+    position: clampFramePosition({
+      x: Math.round(window.innerWidth - size.width - 28),
+      y: Math.round(window.innerHeight - size.height - 84),
+    }, size),
+  };
+}
+
+function expandedFrame(pointer?: { x: number; y: number }): Frame {
+  if (typeof window === 'undefined') return defaultFrame();
+  const width = Math.min(980, Math.max(CHAT_READABLE_DRAG_WIDTH, window.innerWidth * 0.54));
+  const height = Math.min(720, Math.max(560, window.innerHeight * 0.68));
+  const size = clampFrameSize({ width, height });
+  const x = pointer ? pointer.x - size.width * 0.55 : (window.innerWidth - size.width) / 2;
+  const y = pointer ? pointer.y - 56 : (window.innerHeight - size.height) / 2;
+  return {
+    size,
+    position: clampFramePosition({ x: Math.round(x), y: Math.round(y) }, size),
+  };
+}
+
+function readStoredFrame(storageKey: string): Frame {
+  if (typeof window === 'undefined') return defaultFrame();
+  try {
+    const raw = window.localStorage.getItem(`${storageKey}:frame`);
+    if (!raw) return defaultFrame();
+    const parsed = JSON.parse(raw) as Frame;
+    const size = clampFrameSize(parsed.size);
+    return { size, position: clampFramePosition(parsed.position, size) };
+  } catch {
+    return defaultFrame();
+  }
+}
+
+function readDomFocus(): ThiaChatFocus {
+  if (typeof document === 'undefined') return {};
+  const el = document.querySelector<HTMLElement>('[data-thia-active="true"]');
+  if (!el) return {};
+  return {
+    surface: el.dataset.thiaMarker,
+    tab: el.dataset.thiaTab,
+    focus: el.dataset.thiaFocus,
+    item: el.dataset.thiaItem,
+    relation: el.dataset.thiaRelation,
+    count: el.dataset.thiaCount,
+    boundary: el.dataset.thiaBoundary,
+  };
+}
+
+function compactFocus(focus: ThiaChatFocus): string {
+  const bits = [
+    focus.surface && `surface: ${focus.surface}`,
+    focus.tab && `tab: ${focus.tab}`,
+    focus.focus && `focus: ${focus.focus}`,
+    focus.relation && `relation: ${focus.relation}`,
+  ].filter(Boolean);
+  return bits.join(' / ');
+}
+
+export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
+  title = 'THIA',
+  subtitle = 'Design assistant',
+  surfaceTitle,
+  surfaceId,
+  focus,
+  starterPrompts = ['What is open now?', 'Which surface is in focus?', 'What should be preserved for porting?'],
+  initialMessages,
+  storageKey = 'dnd-thia-chat-seed',
+  openByDefault = false,
+  className,
+  onSend,
+}) => {
+  useEffect(() => { injectThiaChatCss(); }, []);
+
+  const [isMobile, setIsMobile] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(max-width: 720px)').matches,
+  );
+  const [open, setOpen] = useState(() => {
+    if (typeof window === 'undefined') return openByDefault;
+    return window.sessionStorage.getItem(`${storageKey}:open`) === '1' || openByDefault;
+  });
+  const [expanded, setExpanded] = useState(false);
+  const [frame, setFrame] = useState<Frame>(() => readStoredFrame(storageKey));
+  const [messages, setMessages] = useState<ThiaChatMessage[]>(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const raw = window.sessionStorage.getItem(`${storageKey}:messages`);
+        if (raw) return JSON.parse(raw) as ThiaChatMessage[];
+      } catch { /* noop */ }
+    }
+    return initialMessages || [{
+      role: 'assistant',
+      text: 'I can orient on the open surface, visible panels and focused design element.',
+      quickPrompts: starterPrompts,
+    }];
+  });
+  const [input, setInput] = useState('');
+  const dragRef = useRef<DragState | null>(null);
+  const frameRef = useRef(frame);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const activeFocus = useMemo<ThiaChatFocus>(() => {
+    const domFocus = readDomFocus();
+    return {
+      ...domFocus,
+      ...focus,
+      surface: focus?.surface || surfaceId || domFocus.surface,
+      focus: focus?.focus || surfaceTitle || domFocus.focus,
+    };
+  }, [focus, surfaceId, surfaceTitle]);
+
+  useEffect(() => {
+    frameRef.current = frame;
+  }, [frame]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const media = window.matchMedia('(max-width: 720px)');
+    const update = () => setIsMobile(media.matches);
+    update();
+    media.addEventListener?.('change', update);
+    return () => media.removeEventListener?.('change', update);
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    window.sessionStorage.setItem(`${storageKey}:open`, open ? '1' : '0');
+  }, [open, storageKey]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    window.sessionStorage.setItem(`${storageKey}:messages`, JSON.stringify(messages.slice(-18)));
+    messagesEndRef.current?.scrollIntoView({ block: 'end' });
+  }, [messages, storageKey]);
+
+  const saveFrame = useCallback((next: Frame) => {
+    if (typeof window === 'undefined') return;
+    window.localStorage.setItem(`${storageKey}:frame`, JSON.stringify(next));
+  }, [storageKey]);
+
+  const applyFrame = useCallback((next: Frame, persist = false) => {
+    const size = clampFrameSize(next.size);
+    const nextFrame = { size, position: clampFramePosition(next.position, size) };
+    frameRef.current = nextFrame;
+    setFrame(nextFrame);
+    if (persist) saveFrame(nextFrame);
+  }, [saveFrame]);
+
+  const sendPrompt = useCallback(async (prompt: string) => {
+    const clean = prompt.trim();
+    if (!clean) return;
+    setInput('');
+    setOpen(true);
+    setMessages(prev => [...prev, { role: 'user', text: clean }]);
+    const currentFocus = { ...readDomFocus(), ...activeFocus };
+    const fallback = `Current focus: ${compactFocus(currentFocus) || 'no active surface marker found'}. Preserve visible state, storage keys, panel boundaries and responsive behavior before porting.`;
+    try {
+      const response = onSend ? await onSend(clean, currentFocus) : fallback;
+      setMessages(prev => [...prev, { role: 'assistant', text: response }]);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Assistant handoff failed.';
+      setMessages(prev => [...prev, { role: 'assistant', text: message }]);
+    }
+  }, [activeFocus, onSend]);
+
+  useEffect(() => {
+    const handler = (event: Event) => {
+      const detail = ((event as CustomEvent<ThiaChatAskDetail>).detail || {}) as ThiaChatAskDetail;
+      const nextFocus = { ...activeFocus, ...detail };
+      setMessages(prev => [...prev, {
+        role: 'assistant',
+        text: `Focus received from ${detail.source || 'surface'}: ${compactFocus(nextFocus) || 'visible UI'}.`,
+        transientFocus: true,
+        quickPrompts: starterPrompts,
+      }]);
+      setOpen(true);
+      if (!isMobile) {
+        const next = expandedFrame();
+        setExpanded(true);
+        applyFrame(next, true);
+      }
+      if (detail.autoSend && detail.prompt) {
+        window.setTimeout(() => void sendPrompt(detail.prompt || ''), 120);
+      }
+    };
+    window.addEventListener('dnd:thia:ask', handler);
+    return () => window.removeEventListener('dnd:thia:ask', handler);
+  }, [activeFocus, applyFrame, isMobile, sendPrompt, starterPrompts]);
+
+  const onHeaderPointerDown = useCallback((event: React.PointerEvent) => {
+    if (isMobile || event.button !== 0) return;
+    event.preventDefault();
+    const current = frameRef.current;
+    let startFrame = current;
+    if (!expanded && current.size.width < CHAT_READABLE_DRAG_WIDTH) {
+      startFrame = expandedFrame({ x: event.clientX, y: event.clientY });
+      setExpanded(true);
+      applyFrame(startFrame, false);
+    }
+    dragRef.current = {
+      kind: 'move',
+      startX: event.clientX,
+      startY: event.clientY,
+      offsetX: event.clientX - startFrame.position.x,
+      offsetY: event.clientY - startFrame.position.y,
+      startSize: startFrame.size,
+      didShrink: false,
+    };
+    (event.currentTarget as HTMLElement).setPointerCapture?.(event.pointerId);
+  }, [applyFrame, expanded, isMobile]);
+
+  const onResizePointerDown = useCallback((event: React.PointerEvent) => {
+    if (isMobile || event.button !== 0) return;
+    event.preventDefault();
+    event.stopPropagation();
+    dragRef.current = {
+      kind: 'resize',
+      startX: event.clientX,
+      startY: event.clientY,
+      offsetX: 0,
+      offsetY: 0,
+      startSize: frameRef.current.size,
+      didShrink: false,
+    };
+    (event.currentTarget as HTMLElement).setPointerCapture?.(event.pointerId);
+  }, [isMobile]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const onPointerMove = (event: PointerEvent) => {
+      const drag = dragRef.current;
+      if (!drag) return;
+      if (drag.kind === 'resize') {
+        const current = frameRef.current;
+        applyFrame({
+          size: {
+            width: event.clientX - current.position.x,
+            height: event.clientY - current.position.y,
+          },
+          position: current.position,
+        });
+        return;
+      }
+
+      const canShrink = !drag.didShrink
+        && (drag.startSize.width >= 820 || drag.startSize.height >= 680)
+        && event.clientY - drag.startY > CHAT_SHRINK_DRAG_DELTA;
+      if (canShrink) {
+        const small = defaultFrame();
+        drag.didShrink = true;
+        setExpanded(false);
+        applyFrame(small);
+        drag.offsetX = event.clientX - small.position.x;
+        drag.offsetY = event.clientY - small.position.y;
+        return;
+      }
+
+      const current = frameRef.current;
+      applyFrame({
+        size: current.size,
+        position: {
+          x: event.clientX - drag.offsetX,
+          y: event.clientY - drag.offsetY,
+        },
+      });
+    };
+    const onPointerUp = () => {
+      if (dragRef.current) saveFrame(frameRef.current);
+      dragRef.current = null;
+    };
+    window.addEventListener('pointermove', onPointerMove);
+    window.addEventListener('pointerup', onPointerUp);
+    window.addEventListener('pointercancel', onPointerUp);
+    return () => {
+      window.removeEventListener('pointermove', onPointerMove);
+      window.removeEventListener('pointerup', onPointerUp);
+      window.removeEventListener('pointercancel', onPointerUp);
+    };
+  }, [applyFrame, saveFrame]);
+
+  const toggleExpanded = useCallback(() => {
+    const next = expanded ? defaultFrame() : expandedFrame();
+    setExpanded(!expanded);
+    applyFrame(next, true);
+  }, [applyFrame, expanded]);
+
+  const onSubmit = (event: FormEvent) => {
+    event.preventDefault();
+    void sendPrompt(input);
+  };
+
+  if (!open) {
+    return (
+      <div className={`dnd-thia dnd-thia-bubble-wrap${className ? ` ${className}` : ''}`}>
+        <div className="dnd-thia-greeting">I can orient you on what is open here.</div>
+        <button type="button" className="dnd-thia-avatar" aria-label={`Open ${title}`} onClick={() => setOpen(true)} />
+      </div>
+    );
+  }
+
+  return (
+    <section
+      className={`dnd-thia dnd-thia-window${className ? ` ${className}` : ''}`}
+      data-expanded={expanded ? 'true' : 'false'}
+      style={isMobile ? undefined : {
+        left: frame.position.x,
+        top: frame.position.y,
+        width: frame.size.width,
+        height: frame.size.height,
+      }}
+      aria-label={`${title} chat seed`}
+    >
+      <header className="dnd-thia-head" onPointerDown={onHeaderPointerDown}>
+        <span className="dnd-thia-mark" aria-hidden="true" />
+        <span>
+          <span className="dnd-thia-title">{title}</span>
+          <span className="dnd-thia-subtitle">{subtitle}</span>
+        </span>
+        <span className="dnd-thia-actions">
+          <button type="button" className="dnd-thia-icon" onClick={toggleExpanded} aria-label={expanded ? 'Shrink chat' : 'Expand chat'}>
+            {expanded ? '-' : '[]'}
+          </button>
+          <button type="button" className="dnd-thia-icon" onClick={() => setOpen(false)} aria-label="Close chat">
+            x
+          </button>
+        </span>
+      </header>
+
+      <div className="dnd-thia-context">
+        <p>{activeFocus.focus || surfaceTitle || 'No focused surface selected yet.'}</p>
+        <div className="dnd-thia-context-chips" aria-label="Current awareness">
+          {Object.entries(activeFocus).filter(([, value]) => value).map(([key, value]) => (
+            <span key={key} className="dnd-thia-chip">{key}: {value}</span>
+          ))}
+        </div>
+      </div>
+
+      <div className="dnd-thia-messages">
+        {messages.map((message, index) => (
+          <div key={`${message.role}-${index}`} className="dnd-thia-message" data-role={message.role}>
+            <div className="dnd-thia-message-body">
+              {message.text}
+              {message.quickPrompts && message.quickPrompts.length > 0 && (
+                <div className="dnd-thia-quick">
+                  {message.quickPrompts.map(prompt => (
+                    <button key={prompt} type="button" onClick={() => void sendPrompt(prompt)}>
+                      {prompt}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        ))}
+        <div ref={messagesEndRef} />
+      </div>
+
+      <form className="dnd-thia-composer" onSubmit={onSubmit}>
+        <div className="dnd-thia-input-row">
+          <textarea
+            value={input}
+            rows={1}
+            placeholder="Ask about the active surface..."
+            onChange={event => setInput(event.target.value)}
+            onKeyDown={event => {
+              if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                event.currentTarget.form?.requestSubmit();
+              }
+            }}
+          />
+          <button type="submit" className="dnd-thia-send" aria-label="Send message">&gt;</button>
+        </div>
+      </form>
+
+      <button type="button" className="dnd-thia-resize" aria-label="Resize chat" onPointerDown={onResizePointerDown} />
+    </section>
+  );
+};
+
+export default ThiaChatSeed;

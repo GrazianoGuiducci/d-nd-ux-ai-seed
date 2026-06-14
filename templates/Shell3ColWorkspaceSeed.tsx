@@ -1,5 +1,6 @@
 import React from 'react';
 import Shell3Col from '../src/Shell3Col';
+import './Shell3ColWorkspaceSeed.css';
 
 type WorkspaceSeedProps = {
   en?: boolean;
@@ -24,39 +25,39 @@ export default function Shell3ColWorkspaceSeed({ en = false, activeItem }: Works
   };
 
   const leftPanel = (
-    <div className="min-w-0 p-4 text-slate-100">
-      <div className="border-b border-slate-800 pb-4">
-        <div className="mb-2 font-mono text-xs uppercase tracking-wider text-slate-500">
+    <div className="workspace-seed-panel">
+      <div className="workspace-seed-section">
+        <div className="workspace-seed-label">
           {en ? 'context' : 'contesto'}
         </div>
-        <h3 className="text-lg font-light text-slate-50">
+        <h3>
           {en ? 'Current field' : 'Campo corrente'}
         </h3>
-        <p className="mt-1 text-sm leading-relaxed text-slate-400">
+        <p>
           {en
             ? 'What the user must keep in working memory while reading the main field.'
             : 'Cio che l utente deve tenere in memoria operativa mentre legge il campo centrale.'}
         </p>
       </div>
 
-      <div className="mt-4 grid grid-cols-2 gap-2 text-center font-mono text-xs">
-        <div className="border border-slate-800 bg-slate-950/50 px-3 py-2">
-          <div className="text-slate-500">{en ? 'items' : 'oggetti'}</div>
-          <div className="mt-1 text-cyan-300">0</div>
+      <div className="workspace-seed-metrics">
+        <div>
+          <span>{en ? 'items' : 'oggetti'}</span>
+          <strong>0</strong>
         </div>
-        <div className="border border-slate-800 bg-slate-950/50 px-3 py-2">
-          <div className="text-slate-500">{en ? 'mode' : 'modo'}</div>
-          <div className="mt-1 text-emerald-300">read-only</div>
+        <div>
+          <span>{en ? 'mode' : 'modo'}</span>
+          <strong>read-only</strong>
         </div>
       </div>
     </div>
   );
 
   const mainPanel = (
-    <section className="relative flex h-full min-w-0 items-center justify-center overflow-auto bg-slate-950">
-      <div className="w-full max-w-5xl p-6">
-        <div className="flex aspect-[16/9] items-center justify-center border border-slate-800 bg-slate-950/80">
-          <span className="font-mono text-sm uppercase tracking-wider text-cyan-300">
+    <section className="workspace-seed-main">
+      <div className="workspace-seed-canvas-wrap">
+        <div className="workspace-seed-canvas">
+          <span>
             {en ? 'main field' : 'campo centrale'}
           </span>
         </div>
@@ -65,22 +66,22 @@ export default function Shell3ColWorkspaceSeed({ en = false, activeItem }: Works
   );
 
   const rightPanel = (
-    <div className="min-w-0 p-4 text-slate-100">
-      <div className="mb-4">
-        <div className="mb-2 font-mono text-xs uppercase tracking-wider text-slate-500">
+    <div className="workspace-seed-panel">
+      <div className="workspace-seed-section">
+        <div className="workspace-seed-label">
           {en ? 'selected item' : 'oggetto selezionato'}
         </div>
-        <h4 className="text-base font-medium text-slate-50">
+        <h4>
           {activeItem?.title || (en ? 'Nothing selected' : 'Nessuna selezione')}
         </h4>
         {activeItem?.relation && (
-          <div className="mt-2 rounded border border-cyan-500/30 bg-cyan-500/10 px-2 py-1 font-mono text-xs text-cyan-300">
+          <div className="workspace-seed-relation">
             {activeItem.relation}
           </div>
         )}
       </div>
 
-      <div className="border-t border-slate-800 pt-4 text-sm text-slate-400">
+      <div className="workspace-seed-note">
         {en
           ? 'Put consequences, constraints and next likely actions here.'
           : 'Inserire qui conseguenze, vincoli e prossime azioni probabili.'}
@@ -90,7 +91,7 @@ export default function Shell3ColWorkspaceSeed({ en = false, activeItem }: Works
 
   return (
     <div
-      className="h-full overflow-hidden bg-slate-950 text-slate-100"
+      className="workspace-seed-root"
       data-thia-marker="workspace-seed"
       data-thia-active="true"
       data-thia-tab={labels.tab}

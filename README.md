@@ -1,20 +1,15 @@
 # D-ND UX-AI Seed
 
-Reusable interface seeds for agentic workspaces.
+Reusable UX and UI seeds for agentic workspaces, public navigation surfaces,
+labs, dashboards and tools.
 
-This repository contains the current D-ND three-column workspace pattern:
+This repository exists for D-ND internal consistency across projects, and for
+external teams that need a clear model for dense human+AI interfaces. It is not
+a landing-page kit and it is not a finished design system with every component
+prebuilt. It is a seed library: copy, adapt, verify, then promote useful
+patterns back into the shared model.
 
-```text
-left context -> main field -> right detail
-```
-
-It is meant for dashboards, labs, graph workspaces, simulators, agentic control
-surfaces and tools where the user must inspect, compare, select and act without
-losing orientation.
-
-It is not a landing-page kit.
-
-## What Is Included
+## Included
 
 | Path | Purpose |
 | --- | --- |
@@ -26,52 +21,83 @@ It is not a landing-page kit.
 | `src/ResponseOutlineRail.tsx` | Chat/report response outline for long answers and internal app conversations. |
 | `src/ArticleDiagramRail.tsx` | Reusable vertical/horizontal process diagram for articles and long responses. |
 | `src/TaxonomyMap.tsx` | Simple taxonomy inspector and data contract for concept systems. |
+| `src/MegaMenuSeed.tsx` | Megamenu seed for tabs, template families and subdomain navigation. |
+| `src/ThiaChatSeed.tsx` | THIA-style assistant seed with focus awareness, drag, resize and persisted geometry. |
 | `templates/Shell3ColWorkspaceSeed.tsx` | Copyable starter workspace. |
-| `docs/SHELL3COL_WORKSPACE_SEED.md` | Operating guide and UX-AI rules. |
-| `docs/RESPONSE_OUTLINE_SEED.md` | Guide for response menus in chats, reports and long answers. |
-| `docs/ARTICLE_DIAGRAM_SEED.md` | Guide for reusable article/process diagrams. |
-| `docs/TAXONOMY_SYSTEM_SEED.md` | Taxonomy contract and usage rules for UX-AI systems. |
-| `docs/PATTERN_CANDIDATES.md` | Extraction map for future UX-AI seeds. |
+| `demo/` | Vite demo showing the seeds as one working UX surface. |
+| `docs/` | Adoption rules, workspace behavior, response outline, diagrams, taxonomy and pattern candidates. |
+| `skills/d-nd-ux-ai-seed/` | Portable agent skill for selecting and adopting these UX patterns in Codex or compatible systems. |
 
-## Install / Copy
+## Quick Start
 
-This is a seed, not a packaged design system yet.
+```bash
+npm install
+npm run dev
+```
 
-Recommended use:
+Open the local Vite URL and test:
 
-1. Copy `src/Shell3Col.tsx` and `src/ui/HoverPopover.tsx` into your React app.
-2. Copy any secondary primitives you need: `ResponseOutlineRail`,
-   `ArticleDiagramRail`, `TaxonomyMap`, `Tooltip`, `LiveBadge`.
-3. Copy `templates/Shell3ColWorkspaceSeed.tsx`.
-4. Replace the three panel bodies with your domain content.
-5. Give each surface its own `leftStorage` and `rightStorage` keys.
-6. Preserve the `data-thia-*` awareness attributes when building agentic UI.
+- desktop shell resize and collapse;
+- mobile side drawers;
+- split panel resize;
+- taxonomy selection;
+- tooltip behavior;
+- megamenu navigation;
+- THIA chat handoff and resize;
+- local read-only `LiveBadge`.
 
-## Minimal Usage
+Run checks before publishing or copying into another project:
+
+```bash
+npm run typecheck
+npm run build
+npm run pack:dry
+```
+
+## Use As A Package
+
+The package exposes an ESM and UMD library build after `npm run build`:
 
 ```tsx
-import Shell3Col from './Shell3Col';
-
-export function Workspace() {
-  return (
-    <div className="h-full overflow-hidden bg-slate-950 text-slate-100">
-      <Shell3Col
-        flat
-        leftTitle="Field"
-        rightTitle="Detail"
-        leftStorage="my_surface_left"
-        rightStorage="my_surface_right"
-        minHeight="100%"
-        leftOpenWidth={300}
-        rightOpenWidth={340}
-        left={{ body: <div className="p-4">Context</div> }}
-        main={<div className="h-full overflow-auto">Main field</div>}
-        right={{ body: <div className="p-4">Detail</div> }}
-      />
-    </div>
-  );
-}
+import { Shell3Col, ResponseOutlineRail, TaxonomyMap, ThiaChatSeed } from 'd-nd-ux-ai-seed';
 ```
+
+React and React DOM are peer dependencies:
+
+```text
+react >= 18
+react-dom >= 18
+```
+
+The primitives inject their own minimal CSS where needed. The demo and template
+CSS are intentionally plain CSS so consumers are not required to use Tailwind.
+
+## Use As A Copyable Seed
+
+Recommended for product surfaces that need local adaptation:
+
+1. Copy `src/Shell3Col.tsx` and `src/ui/HoverPopover.tsx`.
+2. Copy secondary primitives only when needed: `SplitPanel`,
+   `ResponseOutlineRail`, `ArticleDiagramRail`, `TaxonomyMap`, `Tooltip`,
+   `LiveBadge`.
+3. Copy `templates/Shell3ColWorkspaceSeed.tsx` and
+   `templates/Shell3ColWorkspaceSeed.css`.
+4. Replace the three panel bodies with domain content.
+5. Give each surface unique `leftStorage`, `rightStorage` and split storage
+   keys.
+6. Preserve machine-readable awareness attributes such as `data-thia-*` or map
+   them to your own agent-orientation schema.
+
+## Use As An Agent Skill
+
+For Codex-style systems that support skills, copy `skills/d-nd-ux-ai-seed/`
+into the local skills directory and invoke `$d-nd-ux-ai-seed` when selecting a
+workspace, navigation, taxonomy, inspector or assistant-response pattern.
+
+For systems without native skills, copy the `SKILL.md` body into the project
+agent instructions and keep the repo docs/templates available as local
+references. The important rule is that the agent must select the smallest
+reusable unit before editing: component, template, or documented pattern.
 
 ## Design Rule
 
@@ -80,19 +106,37 @@ workspace if multiple live contexts must stay visible;
 narrative page if the user only needs to read forward.
 ```
 
-Do not turn every page into a dashboard. Use this pattern only when the user
-needs working memory, selection and consequences at the same time.
+Use the three-column shell when context, active field and consequences must
+stay visible at the same time. For public pages, use these seeds to stabilize
+navigation, process diagrams, local inspectors and response maps without
+turning every page into a dashboard.
 
-## Secondary Seeds
+## Internal And External Model
 
-Use `ResponseOutlineRail` when content is long enough that the user needs a
-map of the answer or conversation.
+For D-ND projects, this repo is the shared UX-AI extraction point. Patterns
+created in product work should move here only after they have a reusable
+behavior contract.
 
-Use `ArticleDiagramRail` when the page must show a process, passage or
-reasoning chain rather than a static illustration.
+For external users, the useful contract is:
 
-Use `TaxonomyMap` when a project needs a visible concept contract without
-building a full graph engine.
+- extract behavior, not private content;
+- expose state and boundaries visibly;
+- keep machine-readable orientation attributes stable;
+- document side effects before adding actions;
+- verify desktop and mobile before promoting a pattern.
+
+See `docs/ADOPTION_GUIDE.md`, `docs/INTEGRATION_CHECKLIST.md`,
+`docs/MEGAMENU_SEED.md`, `docs/THIA_CHAT_SEED.md` and
+`docs/PROMOTION_WORKFLOW.md`.
+
+Use `docs/TEMPLATE_SOURCE_INVENTORY.md` to decide which existing D-ND public
+surface or subdomain pattern should be extracted next.
+
+Use `docs/THIA_DESIGN_SEED_LINKING.md` when linking this design seed from a
+THIA seed or assistant runtime. Use `docs/PORTFOLIO_ENTRY.md` for the D-ND
+portfolio/technical portfolio entry.
+
+See `docs/COMPLETION_STATUS.md` for the current ready-baseline checklist.
 
 ## License
 

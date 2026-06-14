@@ -13,6 +13,63 @@ export interface LiveBadgeProps<T = unknown> {
   requestInit?: RequestInit;
 }
 
+let cssInjected = false;
+const LIVE_BADGE_CSS = `
+.lbd {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  gap: 0.375rem;
+}
+.lbd-dot {
+  width: 0.375rem;
+  height: 0.375rem;
+  flex-shrink: 0;
+  border-radius: 999px;
+  background: rgb(100 116 139);
+}
+.lbd-dot-live {
+  background: rgb(103 232 249);
+  box-shadow: 0 0 6px rgba(34, 211, 238, 0.55);
+  animation: lbdPulse 1.8s ease-in-out infinite;
+}
+.lbd-dot-stale {
+  background: rgb(252 211 77);
+  box-shadow: 0 0 6px rgba(251, 191, 36, 0.35);
+}
+.lbd-dot-error {
+  background: rgb(253 164 175);
+  box-shadow: 0 0 6px rgba(251, 113, 133, 0.35);
+}
+.lbd-text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.875rem;
+  line-height: 1.35;
+  color: rgb(var(--text-muted, 170 175 190));
+}
+@media (prefers-reduced-motion: reduce) {
+  .lbd-dot-live { animation: none; }
+}
+@keyframes lbdPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.42; }
+}
+`;
+
+function injectCSS() {
+  if (cssInjected || typeof document === 'undefined') return;
+  if (document.getElementById('live-badge-css')) { cssInjected = true; return; }
+  const style = document.createElement('style');
+  style.id = 'live-badge-css';
+  style.textContent = LIVE_BADGE_CSS;
+  document.head.appendChild(style);
+  cssInjected = true;
+}
+
 /**
  * LiveBadge — small live-data indicator for public read-only endpoints.
  *
@@ -29,6 +86,8 @@ export default function LiveBadge<T = unknown>({
   dotClassName = '',
   requestInit,
 }: LiveBadgeProps<T>) {
+  useEffect(() => { injectCSS(); }, []);
+
   const [data, setData] = useState<T | null>(null);
   const [status, setStatus] = useState<LiveBadgeStatus>('idle');
   const [lastSeen, setLastSeen] = useState<number | null>(null);
@@ -46,7 +105,7 @@ export default function LiveBadge<T = unknown>({
         setLastSeen(Date.now());
         setStatus('live');
       } catch {
-        if (mounted) setStatus(current => (data ? current : 'error'));
+        if (mounted) setStatus('error');
       }
     };
 
@@ -68,17 +127,10 @@ export default function LiveBadge<T = unknown>({
 
   if (!data) return <>{fallback}</>;
 
-  const dotColor =
-    status === 'live'
-      ? 'bg-cyan-300 shadow-[0_0_6px_rgba(34,211,238,0.55)]'
-      : status === 'stale'
-      ? 'bg-amber-300 shadow-[0_0_6px_rgba(251,191,36,0.35)]'
-      : 'bg-slate-500';
-
   return (
-    <span className={`inline-flex min-w-0 items-center gap-1.5 ${className}`}>
-      <span className={`h-1.5 w-1.5 shrink-0 rounded-full ${dotColor} ${status === 'live' ? 'animate-pulse' : ''} ${dotClassName}`} />
-      <span className="min-w-0 font-mono text-sm text-slate-400">
+    <span className={`lbd ${className}`} data-status={status}>
+      <span className={`lbd-dot lbd-dot-${status} ${dotClassName}`} />
+      <span className="lbd-text">
         {render(data, status)}
       </span>
     </span>

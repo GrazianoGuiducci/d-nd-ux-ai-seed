@@ -9,7 +9,9 @@ import React, { useState, useEffect, useRef, useCallback, ReactNode } from 'reac
  *  - Min/max clamp
  *  - Pointer events (mouse + touch unificati)
  *  - Keyboard a11y (frecce su resizer spostano ±5%)
- *  - Responsive: sotto 900px il secondo pannello diventa drawer laterale
+ *  - Book collapse: il secondo pannello collassa in gutter se scende sotto soglia
+ *  - Mobile: lo split orizzontale diventa sopra/sotto con resizer orizzontale;
+ *    drawer opzionale via mobileBehavior
  *
  * Usage:
  *   <SplitPanel
@@ -31,11 +33,24 @@ export interface SplitPanelProps {
   storageKey?: string;   // localStorage key per persistenza
   firstLabel?: string;   // mostrato come eyebrow sopra first
   secondLabel?: string;  // mostrato come eyebrow sopra second
-  /** Sotto 900px il secondo pannello diventa drawer invece di split. Default true. */
+  /** Back-compat alias: se true e mobileBehavior non e definito usa il drawer. */
   stackOnMobile?: boolean;
+  /** Mobile default: resta ridimensionabile, passando da lato/lato a sopra/sotto. */
+  mobileBehavior?: 'resizable' | 'drawer';
+  /** Collassa il primo pannello quando la sua dimensione scende sotto questa soglia. */
+  collapseFirstBelow?: number;
+  /** Collassa il secondo pannello quando la sua dimensione scende sotto questa soglia. */
+  collapseSecondBelow?: number;
+  /** Dimensione gutter del primo pannello chiuso. */
+  collapsedFirstSize?: number;
+  /** Dimensione gutter del secondo pannello chiuso. */
+  collapsedSecondSize?: number;
 }
 
 const RESIZER_PX = 8;
+const DEFAULT_COLLAPSE_SECOND_BELOW = 220;
+const DEFAULT_COLLAPSED_SECOND_SIZE = 44;
+const REOPEN_DELTA = 56;
 
 let cssInjected = false;
 const SPLIT_CSS = `
@@ -55,8 +70,19 @@ const SPLIT_CSS = `
   display: flex;
   flex-direction: column;
 }
+.split-panel-pane.is-collapsed {
+  position: relative;
+  z-index: 3;
+  overflow: hidden;
+  border: 1px solid rgb(var(--border-02, 255 255 255 / 0.16));
+  background: rgb(var(--elev-02, 24 24 32) / 0.42);
+}
 .split-panel-pane-eyebrow {
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
   padding: 0.5rem 0.95rem;
   font-family: 'JetBrains Mono', ui-monospace, monospace;
   font-size: 0.7rem;
@@ -70,6 +96,97 @@ const SPLIT_CSS = `
   flex: 1;
   min-height: 0;
   overflow: auto;
+}
+.split-panel-mobile-close,
+.split-panel-pane-collapse {
+  display: none;
+  width: 1.75rem;
+  height: 1.75rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgb(var(--border-02, 255 255 255 / 0.12));
+  background: transparent;
+  color: rgb(var(--text-muted, 170 175 190));
+  cursor: pointer;
+}
+.split-panel-pane-collapse {
+  display: inline-flex;
+}
+.split-panel-mobile-close:hover,
+.split-panel-mobile-close:focus-visible,
+.split-panel-pane-collapse:hover,
+.split-panel-pane-collapse:focus-visible {
+  border-color: var(--c-primary-border-hover, rgb(34 211 238 / 0.5));
+  color: var(--c-primary-text, rgb(103 232 249));
+  outline: none;
+}
+.split-panel-pane.is-collapsed .split-panel-pane-eyebrow,
+.split-panel-pane.is-collapsed .split-panel-pane-body {
+  display: none;
+}
+.split-panel-book-gutter {
+  display: none;
+  position: relative;
+  z-index: 4;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  min-width: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 0;
+  background: transparent;
+  color: rgb(var(--text-muted, 170 175 190));
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.split-panel-book-gutter.is-first {
+  order: -1;
+}
+.split-panel-pane.is-collapsed .split-panel-book-gutter {
+  display: flex;
+}
+.split-panel-book-gutter:hover,
+.split-panel-book-gutter:focus-visible {
+  color: var(--c-primary-text, rgb(103 232 249));
+  background: var(--c-primary-bg, rgb(6 58 78 / 0.35));
+  outline: none;
+}
+.split-panel[data-orientation="horizontal"] .split-panel-book-gutter {
+  flex-direction: column;
+}
+.split-panel[data-orientation="vertical"] .split-panel-book-gutter {
+  flex-direction: row;
+}
+.split-panel[data-orientation="vertical"] .split-panel-pane.is-collapsed,
+.split-panel[data-orientation="vertical"] .split-panel-book-gutter {
+  width: 100%;
+}
+.split-panel-book-icon {
+  width: 24px;
+  height: 24px;
+  border: 1px solid rgb(var(--border-02, 255 255 255 / 0.12));
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+}
+.split-panel-book-label {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: inherit;
+}
+.split-panel[data-orientation="horizontal"] .split-panel-book-label {
+  writing-mode: vertical-rl;
+  max-height: 11rem;
 }
 .split-panel-resizer {
   flex-shrink: 0;
@@ -91,6 +208,15 @@ const SPLIT_CSS = `
   height: ${RESIZER_PX}px;
   cursor: row-resize;
 }
+.split-panel[data-first-state="closed"] .split-panel-resizer,
+.split-panel[data-second-state="closed"] .split-panel-resizer {
+  background: transparent;
+}
+.split-panel[data-first-state="closed"] .split-panel-resizer .split-panel-resizer-grip,
+.split-panel[data-second-state="closed"] .split-panel-resizer .split-panel-resizer-grip {
+  opacity: 1;
+  background: var(--c-primary-border-hover, rgb(34 211 238 / 0.5));
+}
 .split-panel-resizer-grip {
   position: absolute;
   top: 50%;
@@ -108,26 +234,47 @@ const SPLIT_CSS = `
   height: 2px;
 }
 
-/* Mobile and narrow browser windows: second pane as side drawer, resizer hidden */
+/* Optional legacy mobile drawer. Default mobile behavior remains resizable. */
 @media (max-width: 900px) {
-  .split-panel.stack-mobile {
-    position: relative;
+  .split-panel-pane,
+  .split-panel-pane-body {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
-  .split-panel.stack-mobile .split-panel-resizer {
+  .split-panel-pane::-webkit-scrollbar,
+  .split-panel-pane-body::-webkit-scrollbar {
     display: none;
   }
-  .split-panel.stack-mobile .split-panel-pane {
+  .split-panel.mobile-resizable .split-panel-pane-collapse {
+    display: none;
+  }
+  .split-panel.mobile-resizable[data-orientation="vertical"] .split-panel-resizer-grip {
+    display: none;
+  }
+  .split-panel.mobile-resizable[data-orientation="vertical"] .split-panel-book-icon {
+    display: none;
+  }
+  .split-panel.mobile-resizable[data-orientation="vertical"] .split-panel-book-gutter {
+    min-height: 44px;
+  }
+  .split-panel.mobile-drawer {
+    position: relative;
+  }
+  .split-panel.mobile-drawer .split-panel-resizer {
+    display: none;
+  }
+  .split-panel.mobile-drawer .split-panel-pane {
     flex: none !important;
     min-height: 200px;
   }
-  .split-panel.stack-mobile[data-orientation="horizontal"] {
+  .split-panel.mobile-drawer[data-orientation="horizontal"] {
     display: block;
   }
-  .split-panel.stack-mobile[data-orientation="horizontal"] > .split-panel-pane:first-child {
+  .split-panel.mobile-drawer[data-orientation="horizontal"] > .split-panel-pane:first-child {
     width: 100% !important;
     height: 100%;
   }
-  .split-panel.stack-mobile[data-orientation="horizontal"] > .split-panel-pane:last-of-type {
+  .split-panel.mobile-drawer[data-orientation="horizontal"] > .split-panel-pane:last-of-type {
     position: fixed;
     top: 0;
     right: 0;
@@ -141,7 +288,7 @@ const SPLIT_CSS = `
     transform: translateX(100%);
     transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
   }
-  .split-panel.stack-mobile[data-orientation="horizontal"][data-mobile-second-open="true"] > .split-panel-pane:last-of-type {
+  .split-panel.mobile-drawer[data-orientation="horizontal"][data-mobile-second-open="true"] > .split-panel-pane:last-of-type {
     transform: translateX(0);
   }
   .split-panel-mobile-backdrop {
@@ -153,7 +300,7 @@ const SPLIT_CSS = `
     pointer-events: none;
     transition: opacity 200ms ease;
   }
-  .split-panel.stack-mobile[data-mobile-second-open="true"] .split-panel-mobile-backdrop {
+  .split-panel.mobile-drawer[data-mobile-second-open="true"] .split-panel-mobile-backdrop {
     opacity: 1;
     pointer-events: auto;
   }
@@ -180,17 +327,16 @@ const SPLIT_CSS = `
   .split-panel-mobile-peek:hover {
     background: rgb(var(--elev-03, 34 34 44));
   }
-  .split-panel.stack-mobile[data-mobile-second-open="true"] .split-panel-mobile-peek {
+  .split-panel.mobile-drawer[data-mobile-second-open="true"] .split-panel-mobile-peek {
     opacity: 0;
     pointer-events: none;
   }
-  .split-panel-mobile-close {
+  .split-panel.mobile-drawer .split-panel-mobile-close {
     display: inline-flex !important;
   }
 }
 .split-panel-mobile-backdrop,
-.split-panel-mobile-peek,
-.split-panel-mobile-close {
+.split-panel-mobile-peek {
   display: none;
 }
 `;
@@ -224,14 +370,38 @@ export const SplitPanel: React.FC<SplitPanelProps> = ({
   storageKey,
   firstLabel,
   secondLabel,
-  stackOnMobile = true,
+  stackOnMobile = false,
+  mobileBehavior,
+  collapseFirstBelow = DEFAULT_COLLAPSE_SECOND_BELOW,
+  collapseSecondBelow = DEFAULT_COLLAPSE_SECOND_BELOW,
+  collapsedFirstSize = DEFAULT_COLLAPSED_SECOND_SIZE,
+  collapsedSecondSize = DEFAULT_COLLAPSED_SECOND_SIZE,
 }) => {
   useEffect(() => { injectCSS(); }, []);
 
   const [ratio, setRatio] = useState<number>(() => readRatio(storageKey, defaultRatio));
   const [dragging, setDragging] = useState(false);
   const [mobileSecondOpen, setMobileSecondOpen] = useState(false);
+  const [firstState, setFirstState] = useState<'open' | 'closed'>('open');
+  const [secondState, setSecondState] = useState<'open' | 'closed'>('open');
+  const [isMobileResizable, setIsMobileResizable] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(max-width: 900px)').matches,
+  );
   const containerRef = useRef<HTMLDivElement>(null);
+  const skipAutoCollapseRef = useRef(false);
+  const capturedResizerPointerRef = useRef<{ element: HTMLElement; pointerId: number } | null>(null);
+  const dragStartRef = useRef<{
+    pos: number;
+    firstSize: number;
+    secondSize: number;
+    firstState: 'open' | 'closed';
+    secondState: 'open' | 'closed';
+  } | null>(null);
+  const resolvedMobileBehavior = mobileBehavior || (stackOnMobile ? 'drawer' : 'resizable');
+  const effectiveOrientation =
+    resolvedMobileBehavior === 'resizable' && isMobileResizable && orientation === 'horizontal'
+      ? 'vertical'
+      : orientation;
 
   // Persist
   useEffect(() => {
@@ -239,11 +409,71 @@ export const SplitPanel: React.FC<SplitPanelProps> = ({
     try { window.localStorage.setItem(storageKey, String(ratio)); } catch { /* noop */ }
   }, [ratio, storageKey]);
 
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const media = window.matchMedia('(max-width: 900px)');
+    const update = () => setIsMobileResizable(media.matches);
+    update();
+    media.addEventListener?.('change', update);
+    return () => media.removeEventListener?.('change', update);
+  }, []);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el || typeof window === 'undefined') return;
+
+    const checkSize = () => {
+      if (skipAutoCollapseRef.current) {
+        skipAutoCollapseRef.current = false;
+        return;
+      }
+      const rect = el.getBoundingClientRect();
+      const total = effectiveOrientation === 'horizontal' ? rect.width : rect.height;
+      if (!total) return;
+      const canAutoCollapse = total >= collapseFirstBelow + collapseSecondBelow + RESIZER_PX;
+      if (!canAutoCollapse) return;
+      const firstSize = total * ratio - RESIZER_PX;
+      const secondSize = total * (1 - ratio) - RESIZER_PX;
+      if (firstState === 'open' && firstSize < collapseFirstBelow && secondState === 'open') {
+        setSecondState('open');
+        setFirstState('closed');
+      } else if (secondState === 'open' && secondSize < collapseSecondBelow && firstState === 'open') {
+        setFirstState('open');
+        setSecondState('closed');
+      }
+    };
+
+    checkSize();
+
+    if (typeof ResizeObserver !== 'undefined') {
+      const observer = new ResizeObserver(checkSize);
+      observer.observe(el);
+      return () => observer.disconnect();
+    }
+
+    window.addEventListener('resize', checkSize);
+    return () => window.removeEventListener('resize', checkSize);
+  }, [collapseFirstBelow, collapseSecondBelow, effectiveOrientation, firstState, ratio, secondState]);
+
   const onResizerPointerDown = useCallback((e: React.PointerEvent) => {
     e.preventDefault();
-    (e.target as HTMLElement).setPointerCapture?.(e.pointerId);
+    const target = e.currentTarget as HTMLElement;
+    target.setPointerCapture?.(e.pointerId);
+    capturedResizerPointerRef.current = { element: target, pointerId: e.pointerId };
+    const el = containerRef.current;
+    const rect = el?.getBoundingClientRect();
+    const total = effectiveOrientation === 'horizontal' ? rect?.width : rect?.height;
+    const firstSize = total ? Math.max(collapsedFirstSize, total * ratio - RESIZER_PX) : collapsedFirstSize;
+    const secondSize = total ? Math.max(collapsedSecondSize, total * (1 - ratio) - RESIZER_PX) : collapsedSecondSize;
+    dragStartRef.current = {
+      pos: effectiveOrientation === 'horizontal' ? e.clientX : e.clientY,
+      firstSize: firstState === 'open' ? firstSize : collapsedFirstSize,
+      secondSize: secondState === 'open' ? secondSize : collapsedSecondSize,
+      firstState,
+      secondState,
+    };
     setDragging(true);
-  }, []);
+  }, [collapsedFirstSize, collapsedSecondSize, effectiveOrientation, firstState, ratio, secondState]);
 
   useEffect(() => {
     if (!dragging) return;
@@ -251,21 +481,68 @@ export const SplitPanel: React.FC<SplitPanelProps> = ({
       const el = containerRef.current;
       if (!el) return;
       const rect = el.getBoundingClientRect();
-      let r: number;
-      if (orientation === 'horizontal') {
-        r = (ev.clientX - rect.left) / rect.width;
-      } else {
-        r = (ev.clientY - rect.top) / rect.height;
+      const total = effectiveOrientation === 'horizontal' ? rect.width : rect.height;
+      if (!total) return;
+
+      const pointerPos = effectiveOrientation === 'horizontal' ? ev.clientX : ev.clientY;
+      const start = dragStartRef.current;
+      if (start?.firstState === 'closed') {
+        const deltaToOpen = pointerPos - start.pos;
+        if (deltaToOpen > REOPEN_DELTA) {
+          const openFirst = Math.max(collapseFirstBelow, collapsedFirstSize + deltaToOpen);
+          const nextRatio = Math.max(minRatio, Math.min(maxRatio, (openFirst + RESIZER_PX) / total));
+          setRatio(nextRatio);
+          setFirstState('open');
+          dragStartRef.current = { ...start, pos: pointerPos, firstSize: openFirst, firstState: 'open' };
+        }
+        return;
       }
+
+      if (start?.secondState === 'closed') {
+        const deltaToOpen = start.pos - pointerPos;
+        if (deltaToOpen > REOPEN_DELTA) {
+          const openSecond = Math.max(collapseSecondBelow, collapsedSecondSize + deltaToOpen);
+          const nextRatio = Math.max(minRatio, Math.min(maxRatio, 1 - (openSecond + RESIZER_PX) / total));
+          setRatio(nextRatio);
+          setSecondState('open');
+          dragStartRef.current = { ...start, pos: pointerPos, secondSize: openSecond, secondState: 'open' };
+        }
+        return;
+      }
+
+      const rawRatio = effectiveOrientation === 'horizontal'
+        ? (ev.clientX - rect.left) / rect.width
+        : (ev.clientY - rect.top) / rect.height;
+      let r = rawRatio;
       r = Math.max(minRatio, Math.min(maxRatio, r));
-      setRatio(r);
+      const firstSize = total * r - RESIZER_PX;
+      const secondSize = total * (1 - r) - RESIZER_PX;
+      if (rawRatio <= minRatio || firstSize < collapseFirstBelow) {
+        setSecondState('open');
+        setFirstState('closed');
+      } else if (rawRatio >= maxRatio || secondSize < collapseSecondBelow) {
+        setFirstState('open');
+        setSecondState('closed');
+      } else {
+        setFirstState('open');
+        setSecondState('open');
+        setRatio(r);
+      }
     };
-    const onUp = () => setDragging(false);
+    const onUp = () => {
+      const captured = capturedResizerPointerRef.current;
+      if (captured?.element.hasPointerCapture?.(captured.pointerId)) {
+        captured.element.releasePointerCapture?.(captured.pointerId);
+      }
+      capturedResizerPointerRef.current = null;
+      dragStartRef.current = null;
+      setDragging(false);
+    };
     window.addEventListener('pointermove', onMove);
     window.addEventListener('pointerup', onUp);
     window.addEventListener('pointercancel', onUp);
     const prevCursor = document.body.style.cursor;
-    document.body.style.cursor = orientation === 'horizontal' ? 'col-resize' : 'row-resize';
+    document.body.style.cursor = effectiveOrientation === 'horizontal' ? 'col-resize' : 'row-resize';
     document.body.style.userSelect = 'none';
     return () => {
       window.removeEventListener('pointermove', onMove);
@@ -274,37 +551,136 @@ export const SplitPanel: React.FC<SplitPanelProps> = ({
       document.body.style.cursor = prevCursor;
       document.body.style.userSelect = '';
     };
-  }, [dragging, orientation, minRatio, maxRatio]);
+  }, [dragging, effectiveOrientation, minRatio, maxRatio, collapseFirstBelow, collapseSecondBelow, collapsedFirstSize, collapsedSecondSize]);
 
   const onResizerKeyDown = useCallback((e: React.KeyboardEvent) => {
     const step = 0.05;
-    const dec = orientation === 'horizontal' ? 'ArrowLeft' : 'ArrowUp';
-    const inc = orientation === 'horizontal' ? 'ArrowRight' : 'ArrowDown';
+    const dec = effectiveOrientation === 'horizontal' ? 'ArrowLeft' : 'ArrowUp';
+    const inc = effectiveOrientation === 'horizontal' ? 'ArrowRight' : 'ArrowDown';
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      setSecondState(state => state === 'open' ? 'closed' : 'open');
+      setFirstState('open');
+      return;
+    }
+    if (e.key === 'Home') {
+      e.preventDefault();
+      setSecondState('open');
+      setRatio(minRatio);
+      return;
+    }
+    if (e.key === 'End') {
+      e.preventDefault();
+      setSecondState('closed');
+      return;
+    }
     if (e.key === dec) { e.preventDefault(); setRatio(r => Math.max(minRatio, r - step)); }
     if (e.key === inc) { e.preventDefault(); setRatio(r => Math.min(maxRatio, r + step)); }
-  }, [orientation, minRatio, maxRatio]);
+  }, [effectiveOrientation, minRatio, maxRatio]);
+
+  const collapseFirst = useCallback(() => {
+    setSecondState('open');
+    setFirstState('closed');
+  }, []);
+
+  const collapseSecond = useCallback(() => {
+    setFirstState('open');
+    setSecondState('closed');
+  }, []);
 
   const pct = Math.round(ratio * 10000) / 100;
-  const firstStyle: React.CSSProperties = orientation === 'horizontal'
+  const firstStyle: React.CSSProperties = firstState === 'closed'
+    ? effectiveOrientation === 'horizontal'
+      ? { width: collapsedFirstSize, flex: 'none' }
+      : { height: collapsedFirstSize, flex: 'none' }
+    : secondState === 'closed'
+    ? { flex: '1 1 0' }
+    : effectiveOrientation === 'horizontal'
     ? { width: `${pct}%`, flex: 'none' }
     : { height: `${pct}%`, flex: 'none' };
-  const secondStyle: React.CSSProperties = { flex: '1 1 0' };
+  const secondStyle: React.CSSProperties = secondState === 'closed'
+    ? effectiveOrientation === 'horizontal'
+      ? { width: collapsedSecondSize, flex: 'none' }
+      : { height: collapsedSecondSize, flex: 'none' }
+    : firstState === 'closed'
+    ? { flex: '1 1 0' }
+    : { flex: '1 1 0' };
+
+  const reopenFirst = useCallback(() => {
+    const el = containerRef.current;
+    skipAutoCollapseRef.current = true;
+    if (el) {
+      const rect = el.getBoundingClientRect();
+      const total = effectiveOrientation === 'horizontal' ? rect.width : rect.height;
+      if (total) {
+        const desiredFirst = Math.max(collapseFirstBelow + REOPEN_DELTA, collapsedFirstSize + REOPEN_DELTA);
+        const maxFirst = Math.max(collapsedFirstSize, total - collapseSecondBelow - RESIZER_PX);
+        const targetFirst = Math.min(total * maxRatio - RESIZER_PX, maxFirst, desiredFirst);
+        const nextRatio = Math.max(minRatio, Math.min(maxRatio, (targetFirst + RESIZER_PX) / total));
+        setRatio(nextRatio);
+      }
+    }
+    setFirstState('open');
+    setSecondState('open');
+  }, [collapseFirstBelow, collapsedFirstSize, effectiveOrientation, maxRatio, minRatio]);
+
+  const reopenSecond = useCallback(() => {
+    const el = containerRef.current;
+    skipAutoCollapseRef.current = true;
+    if (el) {
+      const rect = el.getBoundingClientRect();
+      const total = effectiveOrientation === 'horizontal' ? rect.width : rect.height;
+      if (total) {
+        const desiredSecond = Math.max(collapseSecondBelow + REOPEN_DELTA, collapsedSecondSize + REOPEN_DELTA);
+        const maxSecond = Math.max(collapsedSecondSize, total - collapseFirstBelow - RESIZER_PX);
+        const targetSecond = Math.min(total * (1 - minRatio) - RESIZER_PX, maxSecond, desiredSecond);
+        const nextRatio = Math.max(minRatio, Math.min(maxRatio, 1 - (targetSecond + RESIZER_PX) / total));
+        setRatio(nextRatio);
+      }
+    }
+    setFirstState('open');
+    setSecondState('open');
+  }, [collapseSecondBelow, collapsedSecondSize, effectiveOrientation, maxRatio, minRatio]);
 
   return (
     <div
       ref={containerRef}
-      className={`split-panel${stackOnMobile ? ' stack-mobile' : ''}`}
-      data-orientation={orientation}
+      className={`split-panel ${resolvedMobileBehavior === 'drawer' ? 'mobile-drawer' : 'mobile-resizable'}`}
+      data-orientation={effectiveOrientation}
+      data-base-orientation={orientation}
+      data-first-state={firstState}
+      data-second-state={secondState}
       data-mobile-second-open={mobileSecondOpen ? 'true' : undefined}
     >
-      <div className="split-panel-pane" style={firstStyle}>
-        {firstLabel && <div className="split-panel-pane-eyebrow">{firstLabel}</div>}
+      <div className={`split-panel-pane${firstState === 'closed' ? ' is-collapsed' : ''}`} style={firstStyle}>
+        {firstLabel && (
+          <div className="split-panel-pane-eyebrow">
+            <span>{firstLabel}</span>
+            <button
+              type="button"
+              className="split-panel-pane-collapse"
+              onClick={collapseFirst}
+              aria-label={`Collapse ${firstLabel}`}
+            >
+              ‹
+            </button>
+          </div>
+        )}
         <div className="split-panel-pane-body">{first}</div>
+        <button
+          type="button"
+          className="split-panel-book-gutter is-first"
+          onClick={reopenFirst}
+          aria-label={`Open ${firstLabel || 'context'}`}
+        >
+          <span className="split-panel-book-icon" aria-hidden="true">▦</span>
+          <span className="split-panel-book-label">{firstLabel || 'Context'}</span>
+        </button>
       </div>
       <div
         className={`split-panel-resizer${dragging ? ' dragging' : ''}`}
         role="separator"
-        aria-orientation={orientation === 'horizontal' ? 'vertical' : 'horizontal'}
+        aria-orientation={effectiveOrientation === 'horizontal' ? 'vertical' : 'horizontal'}
         aria-valuenow={pct}
         aria-valuemin={minRatio * 100}
         aria-valuemax={maxRatio * 100}
@@ -314,13 +690,21 @@ export const SplitPanel: React.FC<SplitPanelProps> = ({
       >
         <span className="split-panel-resizer-grip" />
       </div>
-      <div className="split-panel-pane" style={secondStyle}>
+      <div className={`split-panel-pane${secondState === 'closed' ? ' is-collapsed' : ''}`} style={secondStyle}>
         {secondLabel && (
-          <div className="split-panel-pane-eyebrow flex items-center justify-between gap-2">
+          <div className="split-panel-pane-eyebrow">
             <span>{secondLabel}</span>
             <button
               type="button"
-              className="split-panel-mobile-close hidden h-7 w-7 items-center justify-center rounded border border-slate-700 text-slate-400 hover:border-cyan-500/50 hover:text-cyan-200"
+              className="split-panel-pane-collapse"
+              onClick={collapseSecond}
+              aria-label={`Collapse ${secondLabel}`}
+            >
+              ›
+            </button>
+            <button
+              type="button"
+              className="split-panel-mobile-close"
               onClick={() => setMobileSecondOpen(false)}
               aria-label={`Close ${secondLabel}`}
             >
@@ -329,20 +713,33 @@ export const SplitPanel: React.FC<SplitPanelProps> = ({
           </div>
         )}
         <div className="split-panel-pane-body">{second}</div>
+        <button
+          type="button"
+          className="split-panel-book-gutter"
+          onClick={reopenSecond}
+          aria-label={`Open ${secondLabel || 'detail'}`}
+        >
+          <span className="split-panel-book-icon" aria-hidden="true">▦</span>
+          <span className="split-panel-book-label">{secondLabel || 'Detail'}</span>
+        </button>
       </div>
-      <button
-        type="button"
-        className="split-panel-mobile-peek"
-        onClick={() => setMobileSecondOpen(true)}
-        aria-label={`Open ${secondLabel || 'detail'}`}
-      >
-        {secondLabel || 'Detail'}
-      </button>
-      <div
-        className="split-panel-mobile-backdrop"
-        onClick={() => setMobileSecondOpen(false)}
-        aria-hidden="true"
-      />
+      {resolvedMobileBehavior === 'drawer' && (
+        <>
+          <button
+            type="button"
+            className="split-panel-mobile-peek"
+            onClick={() => setMobileSecondOpen(true)}
+            aria-label={`Open ${secondLabel || 'detail'}`}
+          >
+            {secondLabel || 'Detail'}
+          </button>
+          <div
+            className="split-panel-mobile-backdrop"
+            onClick={() => setMobileSecondOpen(false)}
+            aria-hidden="true"
+          />
+        </>
+      )}
     </div>
   );
 };
