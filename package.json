@@ -1,11 +1,25 @@
 {
   "name": "d-nd-ux-ai-seed",
   "version": "0.1.0",
-  "description": "Reusable UX-AI three-column workspace seed for agentic systems.",
+  "description": "Reusable UX-AI workspace seeds and portable agentic interface primitives.",
   "license": "PolyForm-Noncommercial-1.0.0",
   "type": "module",
   "private": false,
   "sideEffects": false,
+  "author": "Graziano Guiducci",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GrazianoGuiducci/d-nd-ux-ai-seed.git"
+  },
+  "keywords": [
+    "agentic-ui",
+    "ux-ai",
+    "react",
+    "workspace",
+    "design-system",
+    "ai-agents",
+    "interface-primitives"
+  ],
   "main": "./dist/d-nd-ux-ai-seed.umd.cjs",
   "module": "./dist/d-nd-ux-ai-seed.js",
   "types": "./dist/index.d.ts",
@@ -16,6 +30,7 @@
       "require": "./dist/d-nd-ux-ai-seed.umd.cjs"
     },
     "./styles": "./demo/styles.css",
+    "./registry": "./seed.registry.json",
     "./package.json": "./package.json"
   },
   "files": [
@@ -26,6 +41,7 @@
     "public",
     "docs",
     "skills",
+    "seed.registry.json",
     "LICENSE",
     "NOTICE",
     "README.md"
@@ -56,7 +72,5 @@
   "directories": {
     "doc": "docs"
   },
-  "dependencies": {},
-  "keywords": [],
-  "author": ""
+  "dependencies": {}
 }
