@@ -102,7 +102,7 @@ const THIA_CHAT_CSS = `
   grid-template-rows: auto auto minmax(0, 1fr) auto;
   overflow: hidden;
   border: 1px solid rgb(var(--border-02, 255 255 255 / 0.16));
-  border-radius: 12px;
+  border-radius: 8px;
   background: rgb(var(--elev-01, 15 18 25) / 0.98);
   box-shadow: 0 30px 90px rgb(0 0 0 / 0.58), 0 0 38px rgb(57 255 20 / 0.12);
   transition: ${CHAT_GEOMETRY_TRANSITION};
@@ -152,6 +152,8 @@ const THIA_CHAT_CSS = `
   gap: 0.3rem;
 }
 .dnd-thia-icon {
+  display: inline-grid;
+  place-items: center;
   width: 2rem;
   height: 2rem;
   border: 1px solid rgb(var(--border-02, 255 255 255 / 0.16));
@@ -159,12 +161,27 @@ const THIA_CHAT_CSS = `
   background: transparent;
   color: rgb(var(--text-02, 205 213 225));
   cursor: pointer;
+  line-height: 1;
+  touch-action: manipulation;
 }
 .dnd-thia-icon:hover,
 .dnd-thia-icon:focus-visible {
   outline: none;
   border-color: rgb(57 255 20 / 0.65);
   color: rgb(57 255 20);
+}
+.dnd-thia-icon-glyph {
+  display: block;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 1rem;
+  line-height: 1;
+  pointer-events: none;
+}
+.dnd-thia-icon[data-action="expand"] .dnd-thia-icon-glyph {
+  transform: translateY(-1px);
+}
+.dnd-thia-icon[data-action="close"] .dnd-thia-icon-glyph {
+  font-size: 1.08rem;
 }
 .dnd-thia-context {
   display: grid;
@@ -318,7 +335,9 @@ const THIA_CHAT_CSS = `
 
 function injectThiaChatCss() {
   if (thiaChatCssInjected || typeof document === 'undefined') return;
-  if (document.getElementById('dnd-thia-chat-seed-css')) {
+  const existing = document.getElementById('dnd-thia-chat-seed-css');
+  if (existing) {
+    if (existing.textContent !== THIA_CHAT_CSS) existing.textContent = THIA_CHAT_CSS;
     thiaChatCssInjected = true;
     return;
   }
@@ -674,12 +693,12 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
           <span className="dnd-thia-title">{title}</span>
           <span className="dnd-thia-subtitle">{subtitle}</span>
         </span>
-        <span className="dnd-thia-actions">
-          <button type="button" className="dnd-thia-icon" onClick={toggleExpanded} aria-label={expanded ? 'Shrink chat' : 'Expand chat'}>
-            {expanded ? '-' : '[]'}
+        <span className="dnd-thia-actions" onPointerDown={(event) => event.stopPropagation()}>
+          <button type="button" className="dnd-thia-icon" data-action="expand" onClick={toggleExpanded} aria-label={expanded ? 'Shrink chat' : 'Expand chat'}>
+            <span className="dnd-thia-icon-glyph" aria-hidden="true">{expanded ? '↙' : '↗'}</span>
           </button>
-          <button type="button" className="dnd-thia-icon" onClick={() => setOpen(false)} aria-label="Close chat">
-            x
+          <button type="button" className="dnd-thia-icon" data-action="close" onClick={() => setOpen(false)} aria-label="Close chat">
+            <span className="dnd-thia-icon-glyph" aria-hidden="true">×</span>
           </button>
         </span>
       </header>

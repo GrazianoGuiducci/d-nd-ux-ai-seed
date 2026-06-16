@@ -15,6 +15,7 @@ Use this checklist when a project wants to consume `d-nd-ux-ai-seed`.
 - Import or copy `Shell3Col` for workspace shells.
 - Import or copy `SplitPanel` for inner resizable panels.
 - Import or copy `HoverPopover` instead of creating local tooltip variants.
+- Import or copy `DesignPrimitives` for shared buttons, cards, modals and radius tokens.
 - Import or copy `MegaMenuSeed` for tab, route and template-family navigation.
 - Import or copy `ThiaChatSeed` when the assistant must see the active surface and focused panel.
 - Keep storage keys unique per target app.

@@ -16,10 +16,11 @@ The repo is both a component library and a source cabinet for reusable D-ND UI/U
    - `docs/TEMPLATE_SOURCE_INVENTORY.md` for reusable page/domain sources.
    - `docs/PATTERN_CANDIDATES.md` for candidate pattern maturity.
    - `docs/INTEGRATION_CHECKLIST.md` before copying components.
+   - `docs/DESIGN_PRIMITIVES.md` before creating local buttons, cards, modals or tooltip styles.
    - `docs/THIA_DESIGN_SEED_LINKING.md` when the target is THIA or an assistant runtime.
    - `docs/SHELL3COL_WORKSPACE_SEED.md` for the three-column workspace contract.
 3. Choose the smallest reusable unit:
-   - Component: `src/Shell3Col.tsx`, `src/ui/SplitPanel.tsx`, `src/ui/HoverPopover.tsx`.
+   - Component: `src/Shell3Col.tsx`, `src/ui/SplitPanel.tsx`, `src/ui/HoverPopover.tsx`, `src/DesignPrimitives.tsx`.
    - Template: `templates/Shell3ColWorkspaceSeed.tsx` plus CSS.
    - Pattern documentation: docs-only guidance when code is not mature enough.
 4. Preserve `data-thia-*` and awareness markers when moving UI across domains.
@@ -41,6 +42,10 @@ Use `MegaMenuSeed` for tab families, route groups and subdomain navigation.
 Use `ThiaChatSeed` when an assistant surface must know the active panel, focus
 and `data-thia-*` context before discussing changes.
 
+Use `DesignPrimitives` before creating new local button, card or modal styling.
+Cards and modals stop at 8px radius; controls use 4px unless they are explicit
+pills.
+
 ## Adoption Workflow
 
 1. Clone or vendor the repo.
@@ -48,7 +53,7 @@ and `data-thia-*` context before discussing changes.
 3. Start the demo with `npm run dev` and verify desktop plus mobile/narrow view.
 4. Copy the selected component/template into the target project or import from the package.
 5. Rename storage keys, props, route labels, and awareness attributes for the target domain.
-6. Verify overflow, drawer states, keyboard focus, resize bars, mobile stacking, and closed-book gutters.
+6. Verify overflow, drawer states, keyboard focus, resize bars, mobile stacking, modal close behavior and closed-book gutters.
 7. Document any new reusable pattern in `docs/PATTERN_CANDIDATES.md` before promoting it.
 
 ## Boundaries

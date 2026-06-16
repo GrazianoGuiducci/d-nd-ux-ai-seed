@@ -1,6 +1,9 @@
 import React, { useMemo, useState } from 'react';
 import {
   ArticleDiagramRail,
+  DndButton,
+  DndCard,
+  DndModal,
   LiveBadge,
   MegaMenuSeed,
   Shell3Col,
@@ -155,6 +158,7 @@ function stateLabel(state: DemoSurface['state']) {
 export default function DemoApp() {
   const [selectedId, setSelectedId] = useState(surfaces[0].id);
   const [mode, setMode] = useState<'patterns' | 'taxonomy'>('patterns');
+  const [modalOpen, setModalOpen] = useState(false);
 
   const selected = useMemo(
     () => surfaces.find((surface) => surface.id === selectedId) || surfaces[0],
@@ -399,6 +403,21 @@ export default function DemoApp() {
         </p>
       </div>
 
+      <div className="demo-primitive-stack" aria-label="Design primitives">
+        <DndCard className="demo-primitive-card" tone="active">
+          <span>Radius contract</span>
+          <p>Cards and modals stop at 8px; controls use 4px; pills are explicit.</p>
+        </DndCard>
+        <div className="demo-button-row">
+          <DndButton type="button" variant="primary" size="sm" onClick={() => setModalOpen(true)}>
+            Open modal
+          </DndButton>
+          <DndButton type="button" variant="ghost" size="sm">
+            Ghost
+          </DndButton>
+        </div>
+      </div>
+
       <Tooltip
         content={{
           function: 'This marker shows the machine-readable orientation contract used by D-ND agentic UI.',
@@ -410,6 +429,28 @@ export default function DemoApp() {
           Inspect awareness marker
         </button>
       </Tooltip>
+
+      <DndModal
+        open={modalOpen}
+        title="Modal primitive"
+        subtitle="A focused overlay with explicit close, backdrop close, Escape close and stable radius."
+        onClose={() => setModalOpen(false)}
+        footer={
+          <>
+            <DndButton type="button" variant="ghost" onClick={() => setModalOpen(false)}>
+              Cancel
+            </DndButton>
+            <DndButton type="button" variant="primary" onClick={() => setModalOpen(false)}>
+              Accept
+            </DndButton>
+          </>
+        }
+      >
+        <p className="demo-modal-copy">
+          Use this for bounded decisions, confirmations or focused editing. Do not use it for
+          ordinary side-panel inspection when a drawer or inspector can preserve context.
+        </p>
+      </DndModal>
     </aside>
   );
 

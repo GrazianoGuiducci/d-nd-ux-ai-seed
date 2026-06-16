@@ -10,6 +10,7 @@ export { default as TaxonomyMap } from './TaxonomyMap';
 export { default as MegaMenuSeed } from './MegaMenuSeed';
 export { default as ThiaChatSeed } from './ThiaChatSeed';
 export { default as AgentContextChatSeed } from './ThiaChatSeed';
+export { DND_RADII, DndButton, DndCard, DndModal } from './DesignPrimitives';
 export type { LiveBadgeProps, LiveBadgeStatus } from './LiveBadge';
 export type { TooltipContent, TooltipProps } from './Tooltip';
 export type { ResponseOutlineItem, ResponseOutlineKind, ResponseOutlineRailProps } from './ResponseOutlineRail';
@@ -28,3 +29,4 @@ export type {
   ThiaChatSeedProps,
   ThiaChatSeedProps as AgentContextChatSeedProps,
 } from './ThiaChatSeed';
+export type { DndButtonProps, DndButtonSize, DndButtonVariant, DndCardProps, DndCardTone, DndModalProps } from './DesignPrimitives';

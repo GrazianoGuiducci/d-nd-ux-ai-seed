@@ -12,6 +12,7 @@ behavior, then rebuild the domain content outside the primitive.
 | --- | --- | --- |
 | 3-column workspace | `Shell3Col` | Mature across Graph, Insights and Potential surfaces. |
 | Hover tooltip / popover | `HoverPopover`, `Tooltip` | Shared portal behavior, smart placement, hover intent. |
+| Design primitives | `DesignPrimitives` | Shared radius contract plus button, card and modal baseline. |
 | 2-panel split | `SplitPanel` | Generic resize/persistence/mobile stack. |
 | Live read-only signal | `LiveBadge` | Simple polling, fallback, no side effect. |
 | Response outline rail | `ResponseOutlineRail` | Generic orientation for long answers, chats, reports and app pages. |

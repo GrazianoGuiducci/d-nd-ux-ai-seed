@@ -45,6 +45,22 @@ Keep it as a navigation contract, not only a decorative dropdown.
 On mobile, keep the trigger as a compact hamburger. Do not let a text button
 consume the whole top row.
 
+### Design Primitives
+
+- `DndButton`
+- `DndCard`
+- `DndModal`
+- `DND_RADII`
+- `Tooltip`
+- `HoverPopover`
+
+Use these for shared control, card, modal and tooltip styling before creating
+local variants. Cards and modals should not exceed 8px radius. Controls use
+4px radius unless they are explicit pills.
+
+Use modals only for bounded decisions or focused editing. Use sidebars, drawers
+or split panels for ordinary inspection so context remains visible.
+
 ### Assistant Surface
 
 - `ThiaChatSeed`
@@ -97,6 +113,9 @@ Use it where the user must see uncertainty before a concept becomes canonical.
 - Mobile inner split changes from left/right to top/bottom.
 - Mobile does not need visible scrollbars for dense panel surfaces.
 - Text does not overflow route boxes, cards, buttons or drawers.
+- Cards, modals and controls use the radius contract from
+  `docs/DESIGN_PRIMITIVES.md`.
+- Modals close through Escape, close button and backdrop click.
 - The assistant reads the current focused surface.
 - The powered link and assistant widget do not block primary controls.
 

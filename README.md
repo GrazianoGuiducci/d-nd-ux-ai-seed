@@ -18,6 +18,7 @@ patterns back into the shared model.
 | `src/ui/SplitPanel.tsx` | Two-panel resizable split primitive. |
 | `src/LiveBadge.tsx` | Polling read-only signal for live public data. |
 | `src/Tooltip.tsx` | Semantic tooltip wrapper for function/mechanism/expectation explanations. |
+| `src/DesignPrimitives.tsx` | Shared radius tokens plus button, card and modal primitives. |
 | `src/ResponseOutlineRail.tsx` | Chat/report response outline for long answers and internal app conversations. |
 | `src/ArticleDiagramRail.tsx` | Reusable vertical/horizontal process diagram for articles and long responses. |
 | `src/TaxonomyMap.tsx` | Simple taxonomy inspector and data contract for concept systems. |
@@ -42,6 +43,7 @@ Open the local Vite URL and test:
 - split panel resize;
 - taxonomy selection;
 - tooltip behavior;
+- button, card and modal primitives;
 - megamenu navigation;
 - THIA chat handoff and resize;
 - local read-only `LiveBadge`.
@@ -79,7 +81,7 @@ Recommended for product surfaces that need local adaptation:
 1. Copy `src/Shell3Col.tsx` and `src/ui/HoverPopover.tsx`.
 2. Copy secondary primitives only when needed: `SplitPanel`,
    `ResponseOutlineRail`, `ArticleDiagramRail`, `TaxonomyMap`, `Tooltip`,
-   `LiveBadge`.
+   `DesignPrimitives`, `LiveBadge`.
 3. Copy `templates/Shell3ColWorkspaceSeed.tsx` and
    `templates/Shell3ColWorkspaceSeed.css`.
 4. Replace the three panel bodies with domain content.
@@ -126,7 +128,7 @@ For external users, the useful contract is:
 - verify desktop and mobile before promoting a pattern.
 
 See `docs/ADOPTION_GUIDE.md`, `docs/INTEGRATION_CHECKLIST.md`,
-`docs/MEGAMENU_SEED.md`, `docs/THIA_CHAT_SEED.md` and
+`docs/DESIGN_PRIMITIVES.md`, `docs/MEGAMENU_SEED.md`, `docs/THIA_CHAT_SEED.md` and
 `docs/PROMOTION_WORKFLOW.md`.
 
 Use `docs/TEMPLATE_SOURCE_INVENTORY.md` to decide which existing D-ND public
