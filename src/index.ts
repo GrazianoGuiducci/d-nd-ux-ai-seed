@@ -36,7 +36,6 @@ export type { TaxonomyEdge, TaxonomyMapProps, TaxonomyNode, TaxonomyNodeStatus }
 export type { MegaMenuSeedGroup, MegaMenuSeedItem, MegaMenuSeedProps } from './MegaMenuSeed';
 export type {
   ThiaChatAskDetail,
-  ThiaChatAskDetail as AgentContextAskDetail,
   ThiaChatFocus,
   ThiaChatFocus as AgentContextFocus,
   ThiaChatMessage,
