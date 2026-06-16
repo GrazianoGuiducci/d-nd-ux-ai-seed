@@ -14,6 +14,18 @@ Use:
 - `src/Tooltip.tsx`
 - `src/ui/HoverPopover.tsx`
 
+Public exports:
+
+- `AgentButton`
+- `AgentCard`
+- `AgentModal`
+
+Compatibility exports:
+
+- `DndButton`
+- `DndCard`
+- `DndModal`
+
 `Tooltip` and `HoverPopover` already cover explanatory hover/focus depth. Do not
 create local tooltip CSS when one of those primitives can express the behavior.
 
@@ -33,7 +45,8 @@ status chips, compact tags and segmented option chips, not general containers.
 
 ## Buttons
 
-Use `DndButton` for commands.
+Use `AgentButton` for public/generic code and `DndButton` for internal
+compatibility.
 
 Variants:
 
@@ -47,8 +60,8 @@ buttons need an `aria-label`.
 
 ## Cards
 
-Use `DndCard` for individual repeated items, inspector facts and compact
-status/result blocks.
+Use `AgentCard` / `DndCard` for individual repeated items, inspector facts and
+compact status/result blocks.
 
 Do not wrap an entire page section in a card. Do not put cards inside other
 cards unless the inner item is a real repeated record.
@@ -60,18 +73,25 @@ Tones:
 - `warning`: needs attention but not destructive;
 - `danger`: destructive, failed or blocked state.
 
+Interactive cards are focusable. If they receive a click handler, Enter and Space
+should activate them through the same path. For primary actions, prefer a real
+button or link when the whole card does not need to be clickable.
+
 ## Modals
 
-Use `DndModal` for bounded decisions, confirmations or focused editing.
+Use `AgentModal` / `DndModal` for bounded decisions, confirmations or focused
+editing.
 
 Do not use a modal for ordinary inspection when a sidebar, drawer or split panel
 keeps context visible. A modal should close through:
 
 - explicit close button;
 - Escape;
-- backdrop click.
+- backdrop pointer interaction.
 
-The modal locks body scroll only while open.
+The modal locks body scroll only while open. Focus enters the modal on open, Tab
+and Shift+Tab remain trapped inside it, and focus returns to the previous element
+when the modal closes.
 
 ## Tooltips
 
@@ -97,4 +117,4 @@ When moving these primitives into a target project, copy:
    fallback variables intentionally.
 
 Then verify desktop, tablet and mobile for overflow, focus, backdrop, scroll
-lock and long labels.
+lock, focus restore and long labels.
