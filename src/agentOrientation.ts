@@ -33,10 +33,12 @@ function readDatasetPair(el: HTMLElement, agentKey: string, thiaKey: string): st
   return clean(dataset[agentKey]) || clean(dataset[thiaKey]);
 }
 
-export function findActiveOrientationElement(root: ParentNode = document): HTMLElement | null {
+export function findActiveOrientationElement(root?: ParentNode): HTMLElement | null {
+  if (typeof document === 'undefined' && !root) return null;
+  const targetRoot = root || document;
   return (
-    root.querySelector<HTMLElement>(AGENT_ACTIVE_SELECTOR) ||
-    root.querySelector<HTMLElement>(THIA_ACTIVE_SELECTOR)
+    targetRoot.querySelector<HTMLElement>(AGENT_ACTIVE_SELECTOR) ||
+    targetRoot.querySelector<HTMLElement>(THIA_ACTIVE_SELECTOR)
   );
 }
 
@@ -57,8 +59,7 @@ export function readAgentOrientationFromElement(el: HTMLElement | null | undefin
   };
 }
 
-export function readActiveAgentOrientation(root: ParentNode = document): AgentOrientation {
-  if (typeof document === 'undefined') return {};
+export function readActiveAgentOrientation(root?: ParentNode): AgentOrientation {
   return readAgentOrientationFromElement(findActiveOrientationElement(root));
 }
 
