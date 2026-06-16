@@ -1,0 +1,145 @@
+{
+  "schemaVersion": 1,
+  "name": "Agentic UX Seed Registry",
+  "repository": "GrazianoGuiducci/d-nd-ux-ai-seed",
+  "orientation": {
+    "publicPrefix": "data-agent-*",
+    "compatibilityPrefix": "data-thia-*",
+    "publicEvent": "agent:context:ask",
+    "compatibilityEvent": "dnd:thia:ask"
+  },
+  "seeds": [
+    {
+      "id": "agent-workspace-shell",
+      "status": "promoted",
+      "name": "Agent Workspace Shell",
+      "exports": ["Shell3Col", "AgentWorkspaceShell"],
+      "components": ["src/Shell3Col.tsx", "src/ui/HoverPopover.tsx"],
+      "docs": ["docs/SHELL3COL_WORKSPACE_SEED.md", "docs/ADOPTION_GUIDE.md", "docs/INTEGRATION_CHECKLIST.md"],
+      "useWhen": "The user must keep context, active field and consequences visible together.",
+      "doNotUseWhen": "The page is a simple article, linear landing page or one-context flow.",
+      "requiredAttributes": ["data-agent-marker", "data-agent-active", "data-agent-focus"],
+      "responsiveChecks": ["375px", "768px", "1024px", "1366px", "wide-desktop"]
+    },
+    {
+      "id": "split-panel",
+      "status": "promoted",
+      "name": "Split Panel",
+      "exports": ["SplitPanel"],
+      "components": ["src/ui/SplitPanel.tsx"],
+      "docs": ["docs/INTEGRATION_CHECKLIST.md"],
+      "useWhen": "Two related panes must remain resizable with recovery gutters.",
+      "doNotUseWhen": "The second pane is truly modal or should replace the main task.",
+      "requiredAttributes": [],
+      "responsiveChecks": ["mobile-top-bottom", "keyboard-resize", "closed-book-gutters"]
+    },
+    {
+      "id": "design-primitives",
+      "status": "promoted",
+      "name": "Design Primitives",
+      "exports": ["DND_RADII", "AgentButton", "AgentCard", "AgentModal", "DndButton", "DndCard", "DndModal"],
+      "components": ["src/DesignPrimitives.tsx"],
+      "docs": ["docs/DESIGN_PRIMITIVES.md"],
+      "useWhen": "A target project needs shared buttons, cards, modals and radius tokens.",
+      "doNotUseWhen": "A semantic component already exists for the behavior, such as a panel, drawer or inspector.",
+      "requiredAttributes": [],
+      "responsiveChecks": ["focus-visible", "modal-escape", "modal-backdrop", "long-label-overflow"]
+    },
+    {
+      "id": "hover-popover-tooltip",
+      "status": "promoted",
+      "name": "Hover Popover and Tooltip",
+      "exports": ["HoverPopover", "Tooltip"],
+      "components": ["src/ui/HoverPopover.tsx", "src/Tooltip.tsx"],
+      "docs": ["docs/DESIGN_PRIMITIVES.md", "docs/SHELL3COL_WORKSPACE_SEED.md"],
+      "useWhen": "Local explanation, closed-gutter explanation or compact related-link depth is required.",
+      "doNotUseWhen": "The explanation is long enough to require an inspector, sheet, drawer or body section.",
+      "requiredAttributes": [],
+      "responsiveChecks": ["portal-clipping", "escape-dismiss", "keyboard-focus", "mobile-no-hover-dependency"]
+    },
+    {
+      "id": "response-outline",
+      "status": "promoted",
+      "name": "Response Outline Rail",
+      "exports": ["ResponseOutlineRail"],
+      "components": ["src/ResponseOutlineRail.tsx"],
+      "docs": ["docs/RESPONSE_OUTLINE_SEED.md"],
+      "useWhen": "A long answer, report or assistant thread needs visible navigation across sections, claims, warnings, actions and results.",
+      "doNotUseWhen": "The content has fewer than three meaningful sections.",
+      "requiredAttributes": ["data-agent-marker", "data-agent-count"],
+      "responsiveChecks": ["rail-hidden-for-short-content", "mobile-drawer-or-inline", "active-section-tracking"]
+    },
+    {
+      "id": "article-diagram",
+      "status": "promoted",
+      "name": "Article Diagram Rail",
+      "exports": ["ArticleDiagramRail"],
+      "components": ["src/ArticleDiagramRail.tsx"],
+      "docs": ["docs/ARTICLE_DIAGRAM_SEED.md"],
+      "useWhen": "A process, relation, direction or reasoning chain needs to stay visible near prose.",
+      "doNotUseWhen": "The diagram would be decorative or duplicate the outline rail.",
+      "requiredAttributes": ["data-agent-marker", "data-agent-count"],
+      "responsiveChecks": ["max-seven-visible-nodes", "horizontal-mobile-scroll", "labels-no-overflow"]
+    },
+    {
+      "id": "taxonomy-map",
+      "status": "promoted",
+      "name": "Taxonomy Map",
+      "exports": ["TaxonomyMap"],
+      "components": ["src/TaxonomyMap.tsx"],
+      "docs": ["docs/TAXONOMY_SYSTEM_SEED.md"],
+      "useWhen": "Canonical, candidate, alias, ambiguous, scaffold or rejected concepts must remain visible.",
+      "doNotUseWhen": "The concept set is purely decorative or does not need review states.",
+      "requiredAttributes": ["data-agent-marker", "data-agent-item", "data-agent-relation"],
+      "responsiveChecks": ["long-label-overflow", "candidate-status-visible", "selection-callback"]
+    },
+    {
+      "id": "mega-menu",
+      "status": "promoted",
+      "name": "Mega Menu Seed",
+      "exports": ["MegaMenuSeed"],
+      "components": ["src/MegaMenuSeed.tsx"],
+      "docs": ["docs/MEGAMENU_SEED.md"],
+      "useWhen": "Tabs, route groups, template families or subdomain surfaces need visible navigation context.",
+      "doNotUseWhen": "A simple dropdown or decorative menu is enough.",
+      "requiredAttributes": [],
+      "responsiveChecks": ["mobile-compact-trigger", "active-id-visible", "keyboard-escape"]
+    },
+    {
+      "id": "agent-context-chat",
+      "status": "promoted",
+      "name": "Agent Context Chat Seed",
+      "exports": ["AgentContextChatSeed", "ThiaChatSeed"],
+      "components": ["src/ThiaChatSeed.tsx", "src/agentOrientation.ts"],
+      "docs": ["docs/THIA_CHAT_SEED.md", "docs/EXTERNAL_GENERALIZATION_PLAN.md"],
+      "useWhen": "An assistant surface must read active UI context before discussing changes.",
+      "doNotUseWhen": "The chat cannot receive focus, surface or action-boundary context.",
+      "requiredAttributes": ["data-agent-active", "data-agent-marker", "data-agent-focus"],
+      "responsiveChecks": ["desktop-drag", "desktop-resize", "mobile-fullscreen", "agent-context-event", "compatibility-event"]
+    },
+    {
+      "id": "public-nav-shell",
+      "status": "candidate",
+      "name": "Public Nav Shell",
+      "exports": [],
+      "components": [],
+      "docs": ["docs/TEMPLATE_SOURCE_INVENTORY.md"],
+      "useWhen": "A public domain/subdomain needs consistent navigation with mobile drawer behavior.",
+      "doNotUseWhen": "The target has only one surface and no adjacent routes.",
+      "requiredAttributes": [],
+      "responsiveChecks": ["mobile-drawer", "active-route", "external-links"]
+    },
+    {
+      "id": "copy-to-ai-bridge",
+      "status": "candidate",
+      "name": "Copy To AI Bridge",
+      "exports": [],
+      "components": [],
+      "docs": ["docs/PATTERN_CANDIDATES.md"],
+      "useWhen": "A user needs to move prepared context into another AI tool without losing intent.",
+      "doNotUseWhen": "The copy text contains private data without explicit user control.",
+      "requiredAttributes": ["data-agent-action"],
+      "responsiveChecks": ["copy-feedback", "mobile-copy", "privacy-boundary"]
+    }
+  ]
+}
