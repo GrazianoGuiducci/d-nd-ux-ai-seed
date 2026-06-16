@@ -1,4 +1,4 @@
-import React, { useEffect, useId } from 'react';
+import React, { useEffect, useId, useRef } from 'react';
 
 export const DND_RADII = {
   none: '0',
@@ -13,6 +13,10 @@ export const DND_RADII = {
 export type DndButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger';
 export type DndButtonSize = 'sm' | 'md';
 export type DndCardTone = 'default' | 'active' | 'warning' | 'danger';
+
+export type AgentButtonVariant = DndButtonVariant;
+export type AgentButtonSize = DndButtonSize;
+export type AgentCardTone = DndCardTone;
 
 export interface DndButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: DndButtonVariant;
@@ -34,6 +38,10 @@ export interface DndModalProps {
   onClose: () => void;
   closeLabel?: string;
 }
+
+export type AgentButtonProps = DndButtonProps;
+export type AgentCardProps = DndCardProps;
+export type AgentModalProps = DndModalProps;
 
 const DESIGN_CSS = `
 :root {
@@ -158,6 +166,10 @@ const DESIGN_CSS = `
   background: rgb(var(--elev-01, 15 18 25) / 0.98);
   box-shadow: var(--dnd-shadow-panel);
 }
+.dnd-ui-modal:focus-visible {
+  outline: none;
+  box-shadow: var(--dnd-shadow-panel), var(--dnd-focus-ring);
+}
 .dnd-ui-modal-head {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
@@ -209,6 +221,25 @@ function injectDesignCSS() {
   designCssInjected = true;
 }
 
+const FOCUSABLE_SELECTOR = [
+  'a[href]',
+  'button:not([disabled])',
+  'textarea:not([disabled])',
+  'input:not([disabled])',
+  'select:not([disabled])',
+  '[tabindex]:not([tabindex="-1"])',
+].join(',');
+
+function getFocusable(container: HTMLElement | null): HTMLElement[] {
+  if (!container) return [];
+  return Array.from(container.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)).filter((node) => {
+    if (node.hasAttribute('disabled')) return false;
+    if (node.getAttribute('aria-hidden') === 'true') return false;
+    const style = window.getComputedStyle(node);
+    return style.display !== 'none' && style.visibility !== 'hidden';
+  });
+}
+
 export function DndButton({
   variant = 'secondary',
   size = 'md',
@@ -233,6 +264,7 @@ export function DndCard({
   interactive = false,
   className = '',
   tabIndex,
+  onKeyDown,
   ...props
 }: DndCardProps) {
   useEffect(() => { injectDesignCSS(); }, []);
@@ -243,6 +275,14 @@ export function DndCard({
       data-tone={tone}
       data-interactive={interactive ? 'true' : undefined}
       tabIndex={interactive && tabIndex === undefined ? 0 : tabIndex}
+      onKeyDown={(event) => {
+        onKeyDown?.(event);
+        if (!interactive || event.defaultPrevented) return;
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          event.currentTarget.click();
+        }
+      }}
     />
   );
 }
@@ -257,33 +297,70 @@ export function DndModal({
   closeLabel = 'Close',
 }: DndModalProps) {
   const titleId = useId();
+  const modalRef = useRef<HTMLElement>(null);
+  const restoreFocusRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => { injectDesignCSS(); }, []);
 
   useEffect(() => {
     if (!open || typeof document === 'undefined') return;
+    restoreFocusRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
+
+    const focusTimer = window.setTimeout(() => {
+      const focusable = getFocusable(modalRef.current);
+      (focusable[0] || modalRef.current)?.focus();
+    }, 0);
+
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') onClose();
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        onClose();
+        return;
+      }
+
+      if (event.key !== 'Tab') return;
+      const focusable = getFocusable(modalRef.current);
+      if (focusable.length === 0) {
+        event.preventDefault();
+        modalRef.current?.focus();
+        return;
+      }
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      const active = document.activeElement;
+      if (event.shiftKey && active === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && active === last) {
+        event.preventDefault();
+        first.focus();
+      }
     };
+
     window.addEventListener('keydown', onKey);
     return () => {
+      window.clearTimeout(focusTimer);
       window.removeEventListener('keydown', onKey);
       document.body.style.overflow = previousOverflow;
+      restoreFocusRef.current?.focus();
+      restoreFocusRef.current = null;
     };
   }, [onClose, open]);
 
   if (!open) return null;
 
   return (
-    <div className="dnd-ui-modal-backdrop" onMouseDown={onClose}>
+    <div className="dnd-ui-modal-backdrop" onPointerDown={onClose}>
       <section
+        ref={modalRef}
         className="dnd-ui-modal"
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
-        onMouseDown={(event) => event.stopPropagation()}
+        tabIndex={-1}
+        onPointerDown={(event) => event.stopPropagation()}
       >
         <header className="dnd-ui-modal-head">
           <div>
@@ -291,7 +368,7 @@ export function DndModal({
             {subtitle && <p className="dnd-ui-modal-subtitle">{subtitle}</p>}
           </div>
           <DndButton type="button" variant="ghost" size="sm" onClick={onClose} aria-label={closeLabel}>
-            x
+            ×
           </DndButton>
         </header>
         <div className="dnd-ui-modal-body">{children}</div>
@@ -301,9 +378,16 @@ export function DndModal({
   );
 }
 
+export const AgentButton = DndButton;
+export const AgentCard = DndCard;
+export const AgentModal = DndModal;
+
 export default {
   DND_RADII,
   DndButton,
   DndCard,
   DndModal,
+  AgentButton,
+  AgentCard,
+  AgentModal,
 };
