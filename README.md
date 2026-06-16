@@ -1,5 +1,7 @@
 # D-ND UX-AI Seed
 
+Public name: **Agentic UX Seed**.
+
 Reusable UX and UI seeds for agentic workspaces, public navigation surfaces,
 labs, dashboards and tools.
 
@@ -19,15 +21,17 @@ patterns back into the shared model.
 | `src/LiveBadge.tsx` | Polling read-only signal for live public data. |
 | `src/Tooltip.tsx` | Semantic tooltip wrapper for function/mechanism/expectation explanations. |
 | `src/DesignPrimitives.tsx` | Shared radius tokens plus button, card and modal primitives. |
+| `src/agentOrientation.ts` | Public `data-agent-*` orientation helpers with `data-thia-*` compatibility. |
 | `src/ResponseOutlineRail.tsx` | Chat/report response outline for long answers and internal app conversations. |
 | `src/ArticleDiagramRail.tsx` | Reusable vertical/horizontal process diagram for articles and long responses. |
 | `src/TaxonomyMap.tsx` | Simple taxonomy inspector and data contract for concept systems. |
 | `src/MegaMenuSeed.tsx` | Megamenu seed for tabs, template families and subdomain navigation. |
-| `src/ThiaChatSeed.tsx` | THIA-style assistant seed with focus awareness, drag, resize and persisted geometry. |
+| `src/ThiaChatSeed.tsx` | Context-aware assistant seed. Public alias: `AgentContextChatSeed`. Internal THIA mode: `brand="thia"`. |
 | `templates/Shell3ColWorkspaceSeed.tsx` | Copyable starter workspace. |
 | `demo/` | Vite demo showing the seeds as one working UX surface. |
 | `docs/` | Adoption rules, workspace behavior, response outline, diagrams, taxonomy and pattern candidates. |
-| `skills/d-nd-ux-ai-seed/` | Portable agent skill for selecting and adopting these UX patterns in Codex or compatible systems. |
+| `skills/agentic-ux-seed/` | Portable agent skill for selecting and adopting these UX patterns in Codex, Claude Code or compatible systems. |
+| `seed.registry.json` | Machine-readable seed registry with promoted/candidate status and adoption checks. |
 
 ## Quick Start
 
@@ -45,7 +49,7 @@ Open the local Vite URL and test:
 - tooltip behavior;
 - button, card and modal primitives;
 - megamenu navigation;
-- THIA chat handoff and resize;
+- agent chat handoff and resize;
 - local read-only `LiveBadge`.
 
 Run checks before publishing or copying into another project:
@@ -61,7 +65,21 @@ npm run pack:dry
 The package exposes an ESM and UMD library build after `npm run build`:
 
 ```tsx
-import { Shell3Col, ResponseOutlineRail, TaxonomyMap, ThiaChatSeed } from 'd-nd-ux-ai-seed';
+import {
+  AgentWorkspaceShell,
+  AgentButton,
+  AgentCard,
+  AgentModal,
+  AgentContextChatSeed,
+  ResponseOutlineRail,
+  TaxonomyMap,
+} from 'd-nd-ux-ai-seed';
+```
+
+Internal compatibility exports remain available:
+
+```tsx
+import { Shell3Col, DndButton, DndCard, DndModal, ThiaChatSeed } from 'd-nd-ux-ai-seed';
 ```
 
 React and React DOM are peer dependencies:
@@ -82,19 +100,21 @@ Recommended for product surfaces that need local adaptation:
 2. Copy secondary primitives only when needed: `SplitPanel`,
    `ResponseOutlineRail`, `ArticleDiagramRail`, `TaxonomyMap`, `Tooltip`,
    `DesignPrimitives`, `LiveBadge`.
-3. Copy `templates/Shell3ColWorkspaceSeed.tsx` and
+3. Copy `src/agentOrientation.ts` when an assistant, browser test or coding
+   agent needs stable surface context.
+4. Copy `templates/Shell3ColWorkspaceSeed.tsx` and
    `templates/Shell3ColWorkspaceSeed.css`.
-4. Replace the three panel bodies with domain content.
-5. Give each surface unique `leftStorage`, `rightStorage` and split storage
+5. Replace the three panel bodies with domain content.
+6. Give each surface unique `leftStorage`, `rightStorage` and split storage
    keys.
-6. Preserve machine-readable awareness attributes such as `data-thia-*` or map
-   them to your own agent-orientation schema.
+7. Prefer `data-agent-*` for public orientation. Keep `data-thia-*` only for
+   internal compatibility.
 
 ## Use As An Agent Skill
 
-For Codex-style systems that support skills, copy `skills/d-nd-ux-ai-seed/`
-into the local skills directory and invoke `$d-nd-ux-ai-seed` when selecting a
-workspace, navigation, taxonomy, inspector or assistant-response pattern.
+For Codex-style systems that support skills, copy `skills/agentic-ux-seed/`
+into the local skills directory and invoke the skill when selecting a workspace,
+navigation, taxonomy, inspector or assistant-response pattern.
 
 For systems without native skills, copy the `SKILL.md` body into the project
 agent instructions and keep the repo docs/templates available as local
@@ -113,6 +133,46 @@ stay visible at the same time. For public pages, use these seeds to stabilize
 navigation, process diagrams, local inspectors and response maps without
 turning every page into a dashboard.
 
+## Orientation Model
+
+Public schema:
+
+```tsx
+data-agent-marker="..."
+data-agent-active="true"
+data-agent-tab="..."
+data-agent-focus="..."
+data-agent-item="..."
+data-agent-relation="..."
+data-agent-count="..."
+data-agent-boundary="..."
+```
+
+Compatibility schema:
+
+```tsx
+data-thia-marker="..."
+data-thia-active="true"
+data-thia-tab="..."
+data-thia-focus="..."
+data-thia-item="..."
+data-thia-relation="..."
+data-thia-count="..."
+data-thia-boundary="..."
+```
+
+Public event:
+
+```text
+agent:context:ask
+```
+
+Compatibility event:
+
+```text
+dnd:thia:ask
+```
+
 ## Internal And External Model
 
 For D-ND projects, this repo is the shared UX-AI extraction point. Patterns
@@ -121,15 +181,20 @@ behavior contract.
 
 For external users, the useful contract is:
 
-- extract behavior, not private content;
+- extract behavior, not project-specific content;
 - expose state and boundaries visibly;
 - keep machine-readable orientation attributes stable;
 - document side effects before adding actions;
 - verify desktop and mobile before promoting a pattern.
 
 See `docs/ADOPTION_GUIDE.md`, `docs/INTEGRATION_CHECKLIST.md`,
-`docs/DESIGN_PRIMITIVES.md`, `docs/MEGAMENU_SEED.md`, `docs/THIA_CHAT_SEED.md` and
-`docs/PROMOTION_WORKFLOW.md`.
+`docs/DESIGN_PRIMITIVES.md`, `docs/AGENTIC_UX_SYSTEM_SPEC.md`,
+`docs/EXTERNAL_GENERALIZATION_PLAN.md`, `docs/CODEX_REFINEMENT_TASKS.md`,
+`docs/QA_MANUAL_CHECKLIST.md`, `docs/MEGAMENU_SEED.md`,
+`docs/THIA_CHAT_SEED.md` and `docs/PROMOTION_WORKFLOW.md`.
+
+Use `seed.registry.json` when a coding agent needs a machine-readable list of
+promoted and candidate seeds.
 
 Use `docs/TEMPLATE_SOURCE_INVENTORY.md` to decide which existing D-ND public
 surface or subdomain pattern should be extracted next.
