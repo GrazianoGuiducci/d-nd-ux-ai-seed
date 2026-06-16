@@ -1,6 +1,13 @@
 import React, { FormEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  AGENT_CONTEXT_ASK_EVENT,
+  THIA_CONTEXT_ASK_EVENT,
+  readActiveAgentOrientation,
+  type AgentContextAskDetail,
+} from './agentOrientation';
 
 export type ThiaChatRole = 'assistant' | 'user' | 'operator';
+export type ThiaChatBrand = 'agent' | 'thia';
 
 export type ThiaChatMessage = {
   role: ThiaChatRole;
@@ -19,11 +26,7 @@ export type ThiaChatFocus = {
   boundary?: string;
 };
 
-export type ThiaChatAskDetail = Partial<ThiaChatFocus> & {
-  prompt?: string;
-  source?: string;
-  autoSend?: boolean;
-};
+export type ThiaChatAskDetail = AgentContextAskDetail;
 
 export interface ThiaChatSeedProps {
   title?: string;
@@ -36,6 +39,7 @@ export interface ThiaChatSeedProps {
   storageKey?: string;
   openByDefault?: boolean;
   className?: string;
+  brand?: ThiaChatBrand;
   onSend?: (prompt: string, focus: ThiaChatFocus) => Promise<string> | string;
 }
 
@@ -58,13 +62,23 @@ const CHAT_READABLE_DRAG_WIDTH = 720;
 const CHAT_SHRINK_DRAG_DELTA = 90;
 const CHAT_GEOMETRY_TRANSITION = 'opacity 410ms ease, transform 1210ms cubic-bezier(.2,.78,.18,1), left 1210ms cubic-bezier(.2,.78,.18,1), top 1210ms cubic-bezier(.2,.78,.18,1), width 1210ms cubic-bezier(.2,.78,.18,1), height 1210ms cubic-bezier(.2,.78,.18,1)';
 
-let thiaChatCssInjected = false;
-const THIA_CHAT_CSS = `
+let chatCssInjected = false;
+const CHAT_CSS = `
 .dnd-thia {
+  --agent-chat-accent: rgb(34 211 238);
+  --agent-chat-accent-soft: rgb(34 211 238 / 0.16);
+  --agent-chat-accent-border: rgb(34 211 238 / 0.48);
+  --agent-chat-accent-glow: rgb(34 211 238 / 0.22);
   position: fixed;
   z-index: 120;
   color: rgb(var(--text-01, 244 247 251));
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+.dnd-thia[data-brand="thia"] {
+  --agent-chat-accent: rgb(57 255 20);
+  --agent-chat-accent-soft: rgb(57 255 20 / 0.13);
+  --agent-chat-accent-border: rgb(57 255 20 / 0.62);
+  --agent-chat-accent-glow: rgb(57 255 20 / 0.22);
 }
 .dnd-thia-bubble-wrap {
   right: 1rem;
@@ -75,26 +89,26 @@ const THIA_CHAT_CSS = `
 }
 .dnd-thia-greeting {
   max-width: 19rem;
-  border: 1px solid rgb(57 255 20 / 0.75);
+  border: 1px solid var(--agent-chat-accent-border);
   border-radius: 8px;
   background: rgb(var(--elev-01, 15 18 25) / 0.94);
   color: rgb(var(--text-01, 244 247 251));
   padding: 0.68rem 0.78rem;
   font-size: 0.78rem;
   line-height: 1.36;
-  box-shadow: 0 0 24px rgb(57 255 20 / 0.18);
+  box-shadow: 0 0 24px var(--agent-chat-accent-glow);
 }
 .dnd-thia-avatar {
   width: 3.05rem;
   height: 3.05rem;
-  border: 2px solid rgb(57 255 20);
+  border: 2px solid var(--agent-chat-accent);
   border-radius: 999px;
   background:
-    radial-gradient(circle at 50% 35%, rgb(57 255 20 / 0.8), transparent 28%),
-    radial-gradient(circle at 42% 46%, rgb(103 232 249 / 0.7), transparent 12%),
-    radial-gradient(circle at 60% 48%, rgb(167 139 250 / 0.55), transparent 13%),
-    rgb(4 18 10);
-  box-shadow: 0 0 18px rgb(57 255 20 / 0.7), inset 0 0 18px rgb(0 0 0 / 0.55);
+    radial-gradient(circle at 50% 35%, var(--agent-chat-accent), transparent 28%),
+    radial-gradient(circle at 42% 46%, rgb(103 232 249 / 0.65), transparent 12%),
+    radial-gradient(circle at 60% 48%, rgb(167 139 250 / 0.52), transparent 13%),
+    rgb(4 18 20);
+  box-shadow: 0 0 18px var(--agent-chat-accent-border), inset 0 0 18px rgb(0 0 0 / 0.55);
   cursor: pointer;
 }
 .dnd-thia-window {
@@ -104,11 +118,11 @@ const THIA_CHAT_CSS = `
   border: 1px solid rgb(var(--border-02, 255 255 255 / 0.16));
   border-radius: 8px;
   background: rgb(var(--elev-01, 15 18 25) / 0.98);
-  box-shadow: 0 30px 90px rgb(0 0 0 / 0.58), 0 0 38px rgb(57 255 20 / 0.12);
+  box-shadow: 0 30px 90px rgb(0 0 0 / 0.58), 0 0 38px var(--agent-chat-accent-soft);
   transition: ${CHAT_GEOMETRY_TRANSITION};
 }
 .dnd-thia-window[data-expanded="true"] {
-  border-color: rgb(57 255 20 / 0.5);
+  border-color: var(--agent-chat-accent-border);
 }
 .dnd-thia-head {
   display: grid;
@@ -125,10 +139,10 @@ const THIA_CHAT_CSS = `
 .dnd-thia-mark {
   width: 2rem;
   height: 2rem;
-  border: 1px solid rgb(57 255 20 / 0.74);
+  border: 1px solid var(--agent-chat-accent-border);
   border-radius: 999px;
-  background: radial-gradient(circle, rgb(57 255 20 / 0.7), transparent 62%);
-  box-shadow: 0 0 18px rgb(57 255 20 / 0.28);
+  background: radial-gradient(circle, var(--agent-chat-accent), transparent 62%);
+  box-shadow: 0 0 18px var(--agent-chat-accent-glow);
 }
 .dnd-thia-title,
 .dnd-thia-subtitle {
@@ -167,8 +181,8 @@ const THIA_CHAT_CSS = `
 .dnd-thia-icon:hover,
 .dnd-thia-icon:focus-visible {
   outline: none;
-  border-color: rgb(57 255 20 / 0.65);
-  color: rgb(57 255 20);
+  border-color: var(--agent-chat-accent-border);
+  color: var(--agent-chat-accent);
 }
 .dnd-thia-icon-glyph {
   display: block;
@@ -268,8 +282,8 @@ const THIA_CHAT_CSS = `
   background: rgb(var(--elev-00, 7 9 13) / 0.62);
 }
 .dnd-thia-input-row:focus-within {
-  border-color: rgb(57 255 20 / 0.55);
-  box-shadow: 0 0 0 2px rgb(57 255 20 / 0.12);
+  border-color: var(--agent-chat-accent-border);
+  box-shadow: 0 0 0 2px var(--agent-chat-accent-soft);
 }
 .dnd-thia-input-row textarea {
   min-width: 0;
@@ -286,7 +300,7 @@ const THIA_CHAT_CSS = `
   border: 0;
   border-left: 1px solid rgb(var(--border-01, 255 255 255 / 0.09));
   background: transparent;
-  color: rgb(57 255 20);
+  color: var(--agent-chat-accent);
   cursor: pointer;
   font-size: 1rem;
 }
@@ -298,8 +312,8 @@ const THIA_CHAT_CSS = `
   height: 1.35rem;
   border: 0;
   background:
-    linear-gradient(135deg, transparent 48%, rgb(57 255 20 / 0.72) 50%, transparent 53%),
-    linear-gradient(135deg, transparent 60%, rgb(57 255 20 / 0.45) 62%, transparent 65%);
+    linear-gradient(135deg, transparent 48%, var(--agent-chat-accent-border) 50%, transparent 53%),
+    linear-gradient(135deg, transparent 60%, var(--agent-chat-accent-soft) 62%, transparent 65%);
   cursor: nwse-resize;
 }
 @media (max-width: 720px) {
@@ -333,19 +347,20 @@ const THIA_CHAT_CSS = `
 }
 `;
 
-function injectThiaChatCss() {
-  if (thiaChatCssInjected || typeof document === 'undefined') return;
-  const existing = document.getElementById('dnd-thia-chat-seed-css');
+function injectChatCss() {
+  if (chatCssInjected || typeof document === 'undefined') return;
+  const id = 'dnd-thia-chat-seed-css';
+  const existing = document.getElementById(id);
   if (existing) {
-    if (existing.textContent !== THIA_CHAT_CSS) existing.textContent = THIA_CHAT_CSS;
-    thiaChatCssInjected = true;
+    if (existing.textContent !== CHAT_CSS) existing.textContent = CHAT_CSS;
+    chatCssInjected = true;
     return;
   }
   const style = document.createElement('style');
-  style.id = 'dnd-thia-chat-seed-css';
-  style.textContent = THIA_CHAT_CSS;
+  style.id = id;
+  style.textContent = CHAT_CSS;
   document.head.appendChild(style);
-  thiaChatCssInjected = true;
+  chatCssInjected = true;
 }
 
 function clampFrameSize(value: Frame['size']): Frame['size'] {
@@ -390,10 +405,7 @@ function expandedFrame(pointer?: { x: number; y: number }): Frame {
   const size = clampFrameSize({ width, height });
   const x = pointer ? pointer.x - size.width * 0.55 : (window.innerWidth - size.width) / 2;
   const y = pointer ? pointer.y - 56 : (window.innerHeight - size.height) / 2;
-  return {
-    size,
-    position: clampFramePosition({ x: Math.round(x), y: Math.round(y) }, size),
-  };
+  return { size, position: clampFramePosition({ x: Math.round(x), y: Math.round(y) }, size) };
 }
 
 function readStoredFrame(storageKey: string): Frame {
@@ -411,16 +423,15 @@ function readStoredFrame(storageKey: string): Frame {
 
 function readDomFocus(): ThiaChatFocus {
   if (typeof document === 'undefined') return {};
-  const el = document.querySelector<HTMLElement>('[data-thia-active="true"]');
-  if (!el) return {};
+  const orientation = readActiveAgentOrientation();
   return {
-    surface: el.dataset.thiaMarker,
-    tab: el.dataset.thiaTab,
-    focus: el.dataset.thiaFocus,
-    item: el.dataset.thiaItem,
-    relation: el.dataset.thiaRelation,
-    count: el.dataset.thiaCount,
-    boundary: el.dataset.thiaBoundary,
+    surface: orientation.surface,
+    tab: orientation.tab,
+    focus: orientation.focus,
+    item: orientation.item,
+    relation: orientation.relation,
+    count: orientation.count,
+    boundary: orientation.boundary,
   };
 }
 
@@ -435,33 +446,38 @@ function compactFocus(focus: ThiaChatFocus): string {
 }
 
 export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
-  title = 'THIA',
-  subtitle = 'Design assistant',
+  title,
+  subtitle,
   surfaceTitle,
   surfaceId,
   focus,
   starterPrompts = ['What is open now?', 'Which surface is in focus?', 'What should be preserved for porting?'],
   initialMessages,
-  storageKey = 'dnd-thia-chat-seed',
+  storageKey,
   openByDefault = false,
   className,
+  brand = 'agent',
   onSend,
 }) => {
-  useEffect(() => { injectThiaChatCss(); }, []);
+  const resolvedTitle = title || (brand === 'thia' ? 'THIA' : 'Assistant');
+  const resolvedSubtitle = subtitle || (brand === 'thia' ? 'Design assistant' : 'Context assistant');
+  const resolvedStorageKey = storageKey || (brand === 'thia' ? 'dnd-thia-chat-seed' : 'agent-context-chat-seed');
+
+  useEffect(() => { injectChatCss(); }, []);
 
   const [isMobile, setIsMobile] = useState(
     () => typeof window !== 'undefined' && window.matchMedia('(max-width: 720px)').matches,
   );
   const [open, setOpen] = useState(() => {
     if (typeof window === 'undefined') return openByDefault;
-    return window.sessionStorage.getItem(`${storageKey}:open`) === '1' || openByDefault;
+    return window.sessionStorage.getItem(`${resolvedStorageKey}:open`) === '1' || openByDefault;
   });
   const [expanded, setExpanded] = useState(false);
-  const [frame, setFrame] = useState<Frame>(() => readStoredFrame(storageKey));
+  const [frame, setFrame] = useState<Frame>(() => readStoredFrame(resolvedStorageKey));
   const [messages, setMessages] = useState<ThiaChatMessage[]>(() => {
     if (typeof window !== 'undefined') {
       try {
-        const raw = window.sessionStorage.getItem(`${storageKey}:messages`);
+        const raw = window.sessionStorage.getItem(`${resolvedStorageKey}:messages`);
         if (raw) return JSON.parse(raw) as ThiaChatMessage[];
       } catch { /* noop */ }
     }
@@ -501,19 +517,19 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    window.sessionStorage.setItem(`${storageKey}:open`, open ? '1' : '0');
-  }, [open, storageKey]);
+    window.sessionStorage.setItem(`${resolvedStorageKey}:open`, open ? '1' : '0');
+  }, [open, resolvedStorageKey]);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    window.sessionStorage.setItem(`${storageKey}:messages`, JSON.stringify(messages.slice(-18)));
+    window.sessionStorage.setItem(`${resolvedStorageKey}:messages`, JSON.stringify(messages.slice(-18)));
     messagesEndRef.current?.scrollIntoView({ block: 'end' });
-  }, [messages, storageKey]);
+  }, [messages, resolvedStorageKey]);
 
   const saveFrame = useCallback((next: Frame) => {
     if (typeof window === 'undefined') return;
-    window.localStorage.setItem(`${storageKey}:frame`, JSON.stringify(next));
-  }, [storageKey]);
+    window.localStorage.setItem(`${resolvedStorageKey}:frame`, JSON.stringify(next));
+  }, [resolvedStorageKey]);
 
   const applyFrame = useCallback((next: Frame, persist = false) => {
     const size = clampFrameSize(next.size);
@@ -560,8 +576,12 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
         window.setTimeout(() => void sendPrompt(detail.prompt || ''), 120);
       }
     };
-    window.addEventListener('dnd:thia:ask', handler);
-    return () => window.removeEventListener('dnd:thia:ask', handler);
+    window.addEventListener(AGENT_CONTEXT_ASK_EVENT, handler);
+    window.addEventListener(THIA_CONTEXT_ASK_EVENT, handler);
+    return () => {
+      window.removeEventListener(AGENT_CONTEXT_ASK_EVENT, handler);
+      window.removeEventListener(THIA_CONTEXT_ASK_EVENT, handler);
+    };
   }, [activeFocus, applyFrame, isMobile, sendPrompt, starterPrompts]);
 
   const onHeaderPointerDown = useCallback((event: React.PointerEvent) => {
@@ -668,9 +688,9 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
 
   if (!open) {
     return (
-      <div className={`dnd-thia dnd-thia-bubble-wrap${className ? ` ${className}` : ''}`}>
+      <div className={`dnd-thia dnd-thia-bubble-wrap${className ? ` ${className}` : ''}`} data-brand={brand}>
         <div className="dnd-thia-greeting">I can orient you on what is open here.</div>
-        <button type="button" className="dnd-thia-avatar" aria-label={`Open ${title}`} onClick={() => setOpen(true)} />
+        <button type="button" className="dnd-thia-avatar" aria-label={`Open ${resolvedTitle}`} onClick={() => setOpen(true)} />
       </div>
     );
   }
@@ -678,6 +698,7 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
   return (
     <section
       className={`dnd-thia dnd-thia-window${className ? ` ${className}` : ''}`}
+      data-brand={brand}
       data-expanded={expanded ? 'true' : 'false'}
       style={isMobile ? undefined : {
         left: frame.position.x,
@@ -685,13 +706,13 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
         width: frame.size.width,
         height: frame.size.height,
       }}
-      aria-label={`${title} chat seed`}
+      aria-label={`${resolvedTitle} chat seed`}
     >
       <header className="dnd-thia-head" onPointerDown={onHeaderPointerDown}>
         <span className="dnd-thia-mark" aria-hidden="true" />
         <span>
-          <span className="dnd-thia-title">{title}</span>
-          <span className="dnd-thia-subtitle">{subtitle}</span>
+          <span className="dnd-thia-title">{resolvedTitle}</span>
+          <span className="dnd-thia-subtitle">{resolvedSubtitle}</span>
         </span>
         <span className="dnd-thia-actions" onPointerDown={(event) => event.stopPropagation()}>
           <button type="button" className="dnd-thia-icon" data-action="expand" onClick={toggleExpanded} aria-label={expanded ? 'Shrink chat' : 'Expand chat'}>
