@@ -10,7 +10,24 @@ export { default as TaxonomyMap } from './TaxonomyMap';
 export { default as MegaMenuSeed } from './MegaMenuSeed';
 export { default as ThiaChatSeed } from './ThiaChatSeed';
 export { default as AgentContextChatSeed } from './ThiaChatSeed';
-export { DND_RADII, DndButton, DndCard, DndModal } from './DesignPrimitives';
+export {
+  DND_RADII,
+  DndButton,
+  DndCard,
+  DndModal,
+  AgentButton,
+  AgentCard,
+  AgentModal,
+} from './DesignPrimitives';
+export {
+  AGENT_CONTEXT_ASK_EVENT,
+  THIA_CONTEXT_ASK_EVENT,
+  agentOrientationAttributes,
+  dispatchAgentContextAsk,
+  findActiveOrientationElement,
+  readActiveAgentOrientation,
+  readAgentOrientationFromElement,
+} from './agentOrientation';
 export type { LiveBadgeProps, LiveBadgeStatus } from './LiveBadge';
 export type { TooltipContent, TooltipProps } from './Tooltip';
 export type { ResponseOutlineItem, ResponseOutlineKind, ResponseOutlineRailProps } from './ResponseOutlineRail';
@@ -29,4 +46,18 @@ export type {
   ThiaChatSeedProps,
   ThiaChatSeedProps as AgentContextChatSeedProps,
 } from './ThiaChatSeed';
-export type { DndButtonProps, DndButtonSize, DndButtonVariant, DndCardProps, DndCardTone, DndModalProps } from './DesignPrimitives';
+export type {
+  AgentButtonProps,
+  AgentButtonSize,
+  AgentButtonVariant,
+  AgentCardProps,
+  AgentCardTone,
+  AgentModalProps,
+  DndButtonProps,
+  DndButtonSize,
+  DndButtonVariant,
+  DndCardProps,
+  DndCardTone,
+  DndModalProps,
+} from './DesignPrimitives';
+export type { AgentContextAskDetail, AgentOrientation } from './agentOrientation';
