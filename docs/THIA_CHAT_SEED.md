@@ -1,22 +1,45 @@
-# THIA Chat Seed
+# Agent Context Chat Seed
 
 Status: reusable assistant surface.
 
-`ThiaChatSeed` extracts the portable UI behavior from the D-ND public THIA
-chat without coupling this repo to the live backend.
+Public export: `AgentContextChatSeed`.
+
+Compatibility export: `ThiaChatSeed`.
+
+The seed extracts portable assistant UI behavior from the D-ND public THIA chat
+without coupling this repo to a live backend.
 
 The goal is not to ship a fake assistant. The goal is to preserve the behavior
-contract that makes THIA useful across domains: it can see the active surface,
-the focused item and the open UI context before discussing changes with the
-user.
+contract that makes an assistant useful across domains: it can see the active
+surface, the focused item and the open UI context before discussing changes with
+the user.
+
+## Public / Internal Branding
+
+Use the generic public mode by default:
+
+```tsx
+<AgentContextChatSeed />
+```
+
+Use internal THIA styling explicitly:
+
+```tsx
+<ThiaChatSeed brand="thia" title="THIA" subtitle="Design assistant" />
+```
+
+The behavior should remain the same. Branding should not carry the whole agentic
+orientation contract.
 
 ## Behavior Contract
 
-- Reads `data-thia-*` attributes from the active surface.
+- Reads `data-agent-*` attributes from the active surface first.
+- Falls back to `data-thia-*` attributes for internal compatibility.
 - Accepts explicit `focus` props from the host app.
 - Stores open/messages in session storage.
 - Stores drag/resize geometry in local storage.
-- Supports `dnd:thia:ask` handoff events.
+- Supports public `agent:context:ask` handoff events.
+- Supports compatibility `dnd:thia:ask` handoff events.
 - Expands slowly when dragged from the compact home position.
 - Shrinks back when dragged downward from a readable large frame.
 - Resizes from the lower-right corner on desktop.
@@ -25,10 +48,10 @@ user.
 
 ## Handoff Event
 
-Any surface can ask THIA to open with context:
+Any surface can ask the assistant to open with context:
 
 ```ts
-window.dispatchEvent(new CustomEvent('dnd:thia:ask', {
+window.dispatchEvent(new CustomEvent('agent:context:ask', {
   detail: {
     source: 'seed-menu',
     focus: 'Adoption guide',
@@ -38,9 +61,27 @@ window.dispatchEvent(new CustomEvent('dnd:thia:ask', {
 }));
 ```
 
+Compatibility:
+
+```ts
+window.dispatchEvent(new CustomEvent('dnd:thia:ask', { detail }));
+```
+
 ## Awareness Attributes
 
-Recommended host attributes:
+Recommended public host attributes:
+
+```tsx
+data-agent-marker="ux-ai-seed-demo"
+data-agent-active="true"
+data-agent-tab="patterns"
+data-agent-focus="Three-column workspace"
+data-agent-item="workspace"
+data-agent-relation="layout"
+data-agent-boundary="layout and orientation only"
+```
+
+Compatibility host attributes:
 
 ```tsx
 data-thia-marker="ux-ai-seed-demo"
@@ -52,12 +93,12 @@ data-thia-relation="layout"
 data-thia-boundary="layout and orientation only"
 ```
 
-External projects can rename the schema, but they should not remove the
-concept. Assistant surfaces need stable orientation data.
+External projects can rename the schema, but they should not remove the concept.
+Assistant surfaces need stable orientation data.
 
 ## Mobile
 
-On mobile THIA uses the full viewport:
+On mobile the assistant uses the full viewport:
 
 ```text
 left: 0
@@ -68,4 +109,3 @@ height: 100dvh
 
 This avoids half-panels, covered bodies and nested scroll traps. The message
 area remains scrollable when needed, but the scrollbar is hidden.
-
