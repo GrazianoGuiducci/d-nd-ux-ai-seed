@@ -41,10 +41,11 @@ orientation contract.
 - Supports public `agent:context:ask` handoff events.
 - Supports compatibility `dnd:thia:ask` handoff events.
 - Header drag repositions the current frame only.
-- Expands to a large field through the header button.
+- Expands to a full-page working frame through the header button, then restores
+  the previous frame.
 - Resizes from the lower-right corner on desktop.
-- Includes an optional side tab that opens the in-chat feedback form for
-  "help us improve" flows.
+- Includes an optional side tab that opens a Lab-style Submit Module inside the
+  chat: chat on the left, contribution/question form on the right.
 - Uses a true full-screen mobile panel.
 - Keeps internal scrollbars visually hidden.
 
@@ -52,8 +53,8 @@ orientation contract.
 
 The feedback form is rendered inside the chat, so a host app can expose a
 "Help us improve" or "Aiutaci a migliorare" action without rebuilding the
-assistant surface. The fixed side tab opens the chat and shows the form
-directly.
+assistant surface. The fixed side tab opens a large intake frame and shows the
+Submit Module directly inside THIA.
 
 ```tsx
 <AgentContextChatSeed
@@ -61,8 +62,9 @@ directly.
     label: 'Aiutaci a migliorare',
     tabLabel: 'Aiutaci a migliorare',
     tabPosition: 'left',
-    title: 'Aiutaci a migliorare',
-    categories: ['Design', 'Contenuto', 'Comportamento', 'Contributo'],
+    moduleTitle: 'Submit Module',
+    moduleSubtitle: 'THIA collects the question and prepares a clear trace to send.',
+    categories: ['Contribution', 'Question'],
   }}
   onFeedbackSubmit={async (payload) => {
     await saveFeedback(payload);
@@ -85,8 +87,21 @@ Desktop behavior should stay limited to these transitions:
 - compact bubble opens the chat;
 - clicking the header alone does not resize the chat;
 - dragging the header only repositions the current frame;
-- the expand button opens a large field;
+- the expand button opens a full-page frame and restores the previous frame on
+  the next click;
 - the lower-right grip is the only direct manual resize control.
+
+## Submit Module Contract
+
+The Lab-derived module preserves these controls:
+
+- side tab opens the module directly;
+- `Contribution` / `Question` mode buttons;
+- large trace textarea with markdown preview/edit toggle;
+- attach-file affordance retained locally for host handoff;
+- clear, preview, download and submit actions;
+- optional name, email and newsletter checkbox;
+- split chat/form layout with a draggable divider on desktop.
 
 Avoid adding additional auto-dock or auto-resize behavior. More implicit motion
 makes the assistant harder to trust in dense workspaces.

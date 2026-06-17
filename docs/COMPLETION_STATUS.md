@@ -20,13 +20,15 @@ Last verification: `npm run typecheck`, `npm run build`, `npm run pack:dry`,
 - `ThiaChatSeed` / `AgentContextChatSeed` with awareness, drag, resize, explicit
   expansion, public + compatibility handoff events and full-screen mobile
   behavior.
-- `AgentContextChatSeed` in-chat feedback form for "help us improve" flows,
-  with fixed side tab, local fallback confirmation and optional host submit
-  handler.
+- `AgentContextChatSeed` Lab-style Submit Module for "help us improve" flows,
+  with fixed side tab, split chat/form layout, local fallback confirmation and
+  optional host submit handler.
 - Chat radius aligned to the design primitive contract: 8px surfaces and 4px
   compact controls.
 - Chat drag contract aligned to the Lab surface: header drag only repositions;
   the expand button and lower-right grip are the only dimension controls.
+- Chat expand control now opens a full-page working frame and restores the
+  previous frame on the next click.
 - Public `data-agent-*` orientation emitted by workspace demo, template,
   response outline, article diagram and taxonomy map, with `data-thia-*`
   compatibility preserved.

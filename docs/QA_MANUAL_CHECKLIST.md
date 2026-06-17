@@ -120,12 +120,15 @@ Record any breakpoint where behavior changes.
 - Header drag only repositions the assistant; vertical movement does not expand
   or shrink it.
 - Expand and close buttons do not start accidental drag.
-- Expand button opens a large field.
+- Expand button opens a full-page frame and next click restores the prior frame.
 - Resize handle works on desktop.
 - Mobile opens as full-screen panel.
 - Messages scroll without visible nested scrollbar traps.
-- Feedback button opens the in-chat feedback form.
-- Fixed "Help us improve" side tab opens the chat with the feedback form visible.
+- Feedback button opens the split chat / Submit Module frame.
+- Fixed "Help us improve" side tab opens the chat with the Submit Module visible.
+- Submit Module shows Contribution/Question tabs, attach file, clear form,
+  preview/edit, download, name/email, newsletter and submit controls.
+- Submit Module divider resizes chat/form columns on desktop.
 - Feedback submit uses the host handler when provided and otherwise shows a
   local review-ready confirmation.
 - `agent:context:ask` opens assistant with context.

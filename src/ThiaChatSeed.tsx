@@ -31,6 +31,10 @@ export type ThiaChatAskDetail = AgentContextAskDetail;
 export type ThiaChatFeedbackPayload = {
   category: string;
   message: string;
+  name?: string;
+  email?: string;
+  newsletter?: boolean;
+  attachments?: { name: string; size: number; type: string }[];
   contact?: string;
   focus: ThiaChatFocus;
   surfaceId?: string;
@@ -43,9 +47,20 @@ export type ThiaChatFeedbackConfig = {
   tabPosition?: 'left' | 'right';
   title?: string;
   description?: string;
+  moduleTitle?: string;
+  moduleSubtitle?: string;
   categories?: string[];
   messagePlaceholder?: string;
+  namePlaceholder?: string;
+  emailPlaceholder?: string;
   contactPlaceholder?: string;
+  newsletterLabel?: string;
+  clearLabel?: string;
+  previewLabel?: string;
+  editLabel?: string;
+  downloadLabel?: string;
+  attachLabel?: string;
+  closeLabel?: string;
   submitLabel?: string;
 };
 
@@ -72,14 +87,15 @@ type Frame = {
 };
 
 type DragState = {
-  kind: 'move' | 'resize';
+  kind: 'move' | 'resize' | 'split';
   offsetX: number;
   offsetY: number;
 };
 
 const CHAT_READABLE_WIDTH = 720;
+const DEFAULT_INTAKE_SPLIT_PCT = 45;
 const CHAT_GEOMETRY_TRANSITION = 'opacity 410ms ease, transform 1210ms cubic-bezier(.2,.78,.18,1), left 1210ms cubic-bezier(.2,.78,.18,1), top 1210ms cubic-bezier(.2,.78,.18,1), width 1210ms cubic-bezier(.2,.78,.18,1), height 1210ms cubic-bezier(.2,.78,.18,1)';
-const DEFAULT_FEEDBACK_CATEGORIES = ['Design issue', 'Missing context', 'Broken behavior', 'Contribution'];
+const DEFAULT_FEEDBACK_CATEGORIES = ['Contribution', 'Question'];
 
 let chatCssInjected = false;
 const CHAT_CSS = `
@@ -183,6 +199,9 @@ const CHAT_CSS = `
 }
 .dnd-thia-window[data-expanded="true"] {
   border-color: var(--agent-chat-accent-border);
+}
+.dnd-thia-window[data-intake="true"] {
+  grid-template-rows: auto minmax(0, 1fr);
 }
 .dnd-thia-head {
   display: grid;
@@ -424,6 +443,191 @@ const CHAT_CSS = `
   font-size: 0.74rem;
   line-height: 1.35;
 }
+.dnd-thia-intake {
+  display: grid;
+  grid-template-columns: minmax(220px, var(--dnd-thia-intake-split, 45%)) 4px minmax(260px, 1fr);
+  min-height: 0;
+  overflow: hidden;
+}
+.dnd-thia-intake-chat,
+.dnd-thia-intake-form-wrap {
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.dnd-thia-intake-chat {
+  border-right: 1px solid rgb(var(--border-01, 255 255 255 / 0.09));
+}
+.dnd-thia-intake-splitter {
+  display: grid;
+  place-items: center;
+  width: 4px;
+  border: 0;
+  background: rgb(var(--elev-00, 7 9 13) / 0.78);
+  cursor: col-resize;
+}
+.dnd-thia-intake-splitter span {
+  width: 2px;
+  height: 2.2rem;
+  border-radius: 999px;
+  background: rgb(var(--text-muted, 147 158 176));
+}
+.dnd-thia-intake-splitter:hover span,
+.dnd-thia-intake-splitter:focus-visible span {
+  background: var(--agent-chat-accent);
+}
+.dnd-thia-intake-starters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.42rem;
+  border-top: 1px solid rgb(var(--border-01, 255 255 255 / 0.09));
+  padding: 0.68rem 0.72rem;
+}
+.dnd-thia-intake-starters button {
+  border: 1px solid rgb(167 139 250 / 0.34);
+  border-radius: 999px;
+  background: rgb(167 139 250 / 0.12);
+  color: rgb(221 214 254);
+  padding: 0.36rem 0.58rem;
+  cursor: pointer;
+  font-size: 0.74rem;
+}
+.dnd-thia-module-form {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto auto auto auto auto;
+  gap: 0.72rem;
+  min-height: 0;
+  height: 100%;
+  overflow: auto;
+  padding: 1rem;
+  background: rgb(var(--elev-00, 7 9 13) / 0.34);
+}
+.dnd-thia-module-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.8rem;
+  align-items: flex-start;
+}
+.dnd-thia-module-title {
+  color: var(--agent-chat-accent);
+  font-size: 0.95rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+.dnd-thia-module-subtitle {
+  margin-top: 0.52rem;
+  color: rgb(var(--text-02, 205 213 225));
+  font-size: 0.82rem;
+  line-height: 1.42;
+}
+.dnd-thia-kind-row,
+.dnd-thia-module-tools,
+.dnd-thia-module-foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+.dnd-thia-kind-row {
+  justify-content: flex-end;
+}
+.dnd-thia-kind-row button,
+.dnd-thia-module-mini,
+.dnd-thia-file-button {
+  min-height: 2rem;
+  border: 1px solid rgb(var(--border-02, 255 255 255 / 0.16));
+  border-radius: var(--agent-chat-radius-control);
+  background: transparent;
+  color: rgb(var(--text-02, 205 213 225));
+  cursor: pointer;
+  font-size: 0.74rem;
+  line-height: 1;
+  padding: 0 0.62rem;
+}
+.dnd-thia-kind-row button.is-active,
+.dnd-thia-file-button,
+.dnd-thia-module-submit {
+  border-color: var(--agent-chat-accent-border);
+  background: var(--agent-chat-accent-soft);
+  color: var(--agent-chat-accent);
+}
+.dnd-thia-module-close {
+  display: inline-grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border: 0;
+  border-radius: var(--agent-chat-radius-control);
+  background: transparent;
+  color: rgb(var(--text-muted, 147 158 176));
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+.dnd-thia-module-form textarea,
+.dnd-thia-module-form input {
+  min-width: 0;
+  width: 100%;
+  border: 1px solid rgb(167 139 250 / 0.42);
+  border-radius: var(--agent-chat-radius-card);
+  background: rgb(var(--elev-01, 15 18 25) / 0.72);
+  color: rgb(var(--text-01, 244 247 251));
+  padding: 0.7rem 0.78rem;
+  font: inherit;
+  font-size: 0.82rem;
+}
+.dnd-thia-module-form textarea {
+  min-height: 18rem;
+  resize: vertical;
+}
+.dnd-thia-md-preview {
+  min-height: 18rem;
+  overflow: auto;
+  border: 1px solid rgb(167 139 250 / 0.42);
+  border-radius: var(--agent-chat-radius-card);
+  background: rgb(var(--elev-01, 15 18 25) / 0.72);
+  color: rgb(var(--text-02, 205 213 225));
+  padding: 0.78rem;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+.dnd-thia-file-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.52rem;
+  align-items: center;
+}
+.dnd-thia-file-list {
+  color: rgb(var(--text-muted, 147 158 176));
+  font-size: 0.74rem;
+}
+.dnd-thia-module-tools {
+  justify-content: flex-end;
+}
+.dnd-thia-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.58rem;
+}
+.dnd-thia-check {
+  display: flex;
+  gap: 0.45rem;
+  align-items: center;
+  color: rgb(var(--text-02, 205 213 225));
+  font-size: 0.78rem;
+}
+.dnd-thia-module-foot {
+  justify-content: space-between;
+}
+.dnd-thia-module-submit {
+  min-height: 2.35rem;
+  border-radius: var(--agent-chat-radius-control);
+  cursor: pointer;
+  font-weight: 800;
+  padding: 0 0.8rem;
+}
 .dnd-thia-input-row {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 2.45rem;
@@ -493,6 +697,32 @@ const CHAT_CSS = `
   }
   .dnd-thia-resize {
     display: none;
+  }
+  .dnd-thia-intake {
+    display: flex;
+    flex-direction: column;
+  }
+  .dnd-thia-intake-chat {
+    min-height: 42%;
+    border-right: 0;
+    border-bottom: 1px solid rgb(var(--border-01, 255 255 255 / 0.09));
+  }
+  .dnd-thia-intake-splitter {
+    display: none;
+  }
+  .dnd-thia-module-form {
+    min-height: 58%;
+    padding: 0.85rem;
+  }
+  .dnd-thia-module-head,
+  .dnd-thia-form-grid {
+    grid-template-columns: 1fr;
+  }
+  .dnd-thia-module-head {
+    display: grid;
+  }
+  .dnd-thia-kind-row {
+    justify-content: flex-start;
   }
   .dnd-thia-messages {
     scrollbar-width: none;
@@ -564,6 +794,34 @@ function expandedFrame(pointer?: { x: number; y: number }): Frame {
   return { size, position: clampFramePosition({ x: Math.round(x), y: Math.round(y) }, size) };
 }
 
+function intakeFrame(): Frame {
+  if (typeof window === 'undefined') {
+    return { size: { width: 960, height: 640 }, position: { x: 24, y: 24 } };
+  }
+  const width = Math.min(1200, Math.max(960, window.innerWidth * 0.68));
+  const height = Math.min(760, Math.max(640, window.innerHeight * 0.78));
+  const size = clampFrameSize({ width, height });
+  return {
+    size,
+    position: clampFramePosition({
+      x: Math.round((window.innerWidth - size.width) / 2),
+      y: Math.round((window.innerHeight - size.height) / 2),
+    }, size),
+  };
+}
+
+function fullPageFrame(): Frame {
+  if (typeof window === 'undefined') return defaultFrame();
+  const margin = 8;
+  return {
+    size: {
+      width: Math.max(320, window.innerWidth - margin * 2),
+      height: Math.max(360, window.innerHeight - margin * 2),
+    },
+    position: { x: margin, y: margin },
+  };
+}
+
 function readStoredFrame(storageKey: string): Frame {
   if (typeof window === 'undefined') return defaultFrame();
   try {
@@ -601,18 +859,33 @@ function compactFocus(focus: ThiaChatFocus): string {
   return bits.join(' / ');
 }
 
+function plainMarkdownPreview(value: string): string {
+  return value.trim() || 'Write the trace, doubt, correction, source, or useful detail.';
+}
+
 function resolveFeedbackConfig(feedback: ThiaChatSeedProps['feedback']): Required<ThiaChatFeedbackConfig> {
   const base = {
     enabled: true,
     label: 'Help us improve',
     tabLabel: 'Help us improve',
     tabPosition: 'left' as const,
-    title: 'Help us improve',
-    description: 'Send a focused note about this surface. The host app decides where it is stored.',
+    title: 'Submit Module',
+    description: 'THIA keeps Lab context and classifies what is useful.',
+    moduleTitle: 'Submit Module',
+    moduleSubtitle: 'THIA collects the question and prepares a clear trace to send.',
     categories: DEFAULT_FEEDBACK_CATEGORIES,
-    messagePlaceholder: 'What should be improved, corrected or preserved?',
-    contactPlaceholder: 'Optional contact or reference',
-    submitLabel: 'Send feedback',
+    messagePlaceholder: 'Write the trace, doubt, correction, source, or useful detail.',
+    namePlaceholder: 'Name, optional',
+    emailPlaceholder: 'Email, optional',
+    contactPlaceholder: 'Email, optional',
+    newsletterLabel: 'Keep me updated by email',
+    clearLabel: 'Clear form',
+    previewLabel: 'Preview .md',
+    editLabel: 'Edit .md',
+    downloadLabel: 'Download',
+    attachLabel: 'Attach file',
+    closeLabel: 'Close',
+    submitLabel: 'Submit module',
   };
   if (feedback === false) return { ...base, enabled: false };
   if (feedback === true || feedback === undefined) return base;
@@ -668,10 +941,18 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
   const [feedbackOpen, setFeedbackOpen] = useState(false);
   const [feedbackCategory, setFeedbackCategory] = useState(() => feedbackConfig.categories[0] || 'Feedback');
   const [feedbackMessage, setFeedbackMessage] = useState('');
+  const [feedbackName, setFeedbackName] = useState('');
   const [feedbackContact, setFeedbackContact] = useState('');
+  const [feedbackNewsletter, setFeedbackNewsletter] = useState(false);
+  const [feedbackPreview, setFeedbackPreview] = useState(false);
+  const [feedbackAttachments, setFeedbackAttachments] = useState<{ name: string; size: number; type: string }[]>([]);
   const [feedbackStatus, setFeedbackStatus] = useState('');
+  const [intakeSplitPct, setIntakeSplitPct] = useState(DEFAULT_INTAKE_SPLIT_PCT);
   const dragRef = useRef<DragState | null>(null);
   const frameRef = useRef(frame);
+  const restoreFrameRef = useRef<Frame | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const windowRef = useRef<HTMLElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const activeFocus = useMemo<ThiaChatFocus>(() => {
@@ -754,6 +1035,10 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
     const payload: ThiaChatFeedbackPayload = {
       category: feedbackCategory,
       message: clean,
+      name: feedbackName.trim() || undefined,
+      email: feedbackContact.trim() || undefined,
+      newsletter: feedbackNewsletter,
+      attachments: feedbackAttachments.length ? feedbackAttachments : undefined,
       contact: feedbackContact.trim() || undefined,
       focus: { ...readDomFocus(), ...activeFocus },
       surfaceId,
@@ -767,14 +1052,17 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
         transientFocus: true,
       }]);
       setFeedbackMessage('');
+      setFeedbackName('');
       setFeedbackContact('');
-      setFeedbackStatus('Feedback captured.');
-      setFeedbackOpen(false);
+      setFeedbackNewsletter(false);
+      setFeedbackAttachments([]);
+      setFeedbackPreview(false);
+      setFeedbackStatus(response ? 'Module submitted.' : 'Module submitted. The trace was recorded for review.');
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Feedback submit failed.';
       setFeedbackStatus(message);
     }
-  }, [activeFocus, feedbackCategory, feedbackContact, feedbackMessage, onFeedbackSubmit, surfaceId]);
+  }, [activeFocus, feedbackAttachments, feedbackCategory, feedbackContact, feedbackMessage, feedbackName, feedbackNewsletter, onFeedbackSubmit, surfaceId]);
 
   useEffect(() => {
     const handler = (event: Event) => {
@@ -789,7 +1077,8 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
       setOpen(true);
       if (!isMobile) {
         const next = expandedFrame();
-        setExpanded(true);
+        setExpanded(false);
+        restoreFrameRef.current = null;
         applyFrame(next, true);
       }
       if (detail.autoSend && detail.prompt) {
@@ -833,6 +1122,13 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
     const onPointerMove = (event: PointerEvent) => {
       const drag = dragRef.current;
       if (!drag) return;
+      if (drag.kind === 'split') {
+        const rect = windowRef.current?.getBoundingClientRect();
+        if (!rect) return;
+        const pct = ((event.clientX - rect.left) / rect.width) * 100;
+        setIntakeSplitPct(Math.min(54, Math.max(28, pct)));
+        return;
+      }
       if (drag.kind === 'resize') {
         const current = frameRef.current;
         applyFrame({
@@ -869,10 +1165,18 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
   }, [applyFrame, saveFrame]);
 
   const toggleExpanded = useCallback(() => {
-    const next = expanded ? defaultFrame() : expandedFrame();
-    setExpanded(!expanded);
-    applyFrame(next, true);
-  }, [applyFrame, expanded]);
+    if (isMobile) return;
+    if (expanded) {
+      const restore = restoreFrameRef.current || (feedbackOpen ? intakeFrame() : defaultFrame());
+      restoreFrameRef.current = null;
+      setExpanded(false);
+      applyFrame(restore, true);
+      return;
+    }
+    restoreFrameRef.current = frameRef.current;
+    setExpanded(true);
+    applyFrame(fullPageFrame(), true);
+  }, [applyFrame, expanded, feedbackOpen, isMobile]);
 
   const onSubmit = (event: FormEvent) => {
     event.preventDefault();
@@ -882,8 +1186,52 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
   const openFeedbackPanel = useCallback(() => {
     setOpen(true);
     setFeedbackOpen(true);
+    setIntakeSplitPct(DEFAULT_INTAKE_SPLIT_PCT);
+    setExpanded(false);
+    restoreFrameRef.current = null;
+    if (!isMobile) applyFrame(intakeFrame(), true);
+    setFeedbackStatus('');
+  }, [applyFrame, isMobile]);
+
+  const onIntakeSplitPointerDown = useCallback((event: React.PointerEvent) => {
+    if (isMobile || event.button !== 0) return;
+    event.preventDefault();
+    event.stopPropagation();
+    dragRef.current = { kind: 'split', offsetX: 0, offsetY: 0 };
+    (event.currentTarget as HTMLElement).setPointerCapture?.(event.pointerId);
+  }, [isMobile]);
+
+  const clearFeedbackForm = useCallback(() => {
+    setFeedbackMessage('');
+    setFeedbackName('');
+    setFeedbackContact('');
+    setFeedbackNewsletter(false);
+    setFeedbackAttachments([]);
+    setFeedbackPreview(false);
     setFeedbackStatus('');
   }, []);
+
+  const downloadFeedbackMarkdown = useCallback(() => {
+    if (typeof document === 'undefined') return;
+    const body = [
+      `# ${feedbackConfig.moduleTitle}`,
+      '',
+      `- category: ${feedbackCategory}`,
+      feedbackName.trim() ? `- name: ${feedbackName.trim()}` : '',
+      feedbackContact.trim() ? `- email: ${feedbackContact.trim()}` : '',
+      `- newsletter: ${feedbackNewsletter ? 'yes' : 'no'}`,
+      feedbackAttachments.length ? `- attachments: ${feedbackAttachments.map(file => file.name).join(', ')}` : '',
+      '',
+      feedbackMessage.trim(),
+    ].filter(Boolean).join('\n');
+    const blob = new Blob([body], { type: 'text/markdown;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'thia-submit-module.md';
+    link.click();
+    URL.revokeObjectURL(url);
+  }, [feedbackAttachments, feedbackCategory, feedbackConfig.moduleTitle, feedbackContact, feedbackMessage, feedbackName, feedbackNewsletter]);
 
   const feedbackTab = feedbackConfig.enabled ? (
     <button
@@ -897,6 +1245,166 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
       {feedbackConfig.tabLabel}
     </button>
   ) : null;
+
+  const chatMessages = (
+    <div className="dnd-thia-messages">
+      {messages.map((message, index) => (
+        <div key={`${message.role}-${index}`} className="dnd-thia-message" data-role={message.role}>
+          <div className="dnd-thia-message-body">
+            {message.text}
+            {message.quickPrompts && message.quickPrompts.length > 0 && (
+              <div className="dnd-thia-quick">
+                {message.quickPrompts.map(prompt => (
+                  <button key={prompt} type="button" onClick={() => void sendPrompt(prompt)}>
+                    {prompt}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      ))}
+      <div ref={messagesEndRef} />
+    </div>
+  );
+
+  const chatComposer = (
+    <form className="dnd-thia-composer" onSubmit={onSubmit}>
+      {feedbackConfig.enabled && !feedbackOpen && (
+        <div className="dnd-thia-composer-tools">
+          <button
+            type="button"
+            className="dnd-thia-feedback-toggle"
+            onClick={openFeedbackPanel}
+            aria-expanded={feedbackOpen ? 'true' : 'false'}
+          >
+            {feedbackConfig.label}
+          </button>
+        </div>
+      )}
+      <div className="dnd-thia-input-row">
+        <textarea
+          value={input}
+          rows={1}
+          placeholder="Ask about the active surface..."
+          onChange={event => setInput(event.target.value)}
+          onKeyDown={event => {
+            if (event.key === 'Enter' && !event.shiftKey) {
+              event.preventDefault();
+              event.currentTarget.form?.requestSubmit();
+            }
+          }}
+        />
+        <button type="submit" className="dnd-thia-send" aria-label="Send message">&gt;</button>
+      </div>
+    </form>
+  );
+
+  const intakeTitle = `${feedbackConfig.moduleTitle} · ${activeFocus.focus || surfaceTitle || activeFocus.surface || resolvedTitle}`;
+  const attachmentLabel = feedbackAttachments.length
+    ? `${feedbackAttachments.length} file${feedbackAttachments.length === 1 ? '' : 's'} ready in the module.`
+    : '';
+
+  const feedbackForm = (
+    <form className="dnd-thia-module-form" onSubmit={(event) => { event.preventDefault(); void submitFeedback(); }}>
+      <div className="dnd-thia-module-head">
+        <div>
+          <div className="dnd-thia-module-title">{intakeTitle}</div>
+          <div className="dnd-thia-module-subtitle">{feedbackConfig.moduleSubtitle}</div>
+        </div>
+        <div className="dnd-thia-kind-row">
+          {feedbackConfig.categories.map(category => (
+            <button
+              key={category}
+              type="button"
+              className={category === feedbackCategory ? 'is-active' : ''}
+              onClick={() => setFeedbackCategory(category)}
+            >
+              {category}
+            </button>
+          ))}
+          <button type="button" className="dnd-thia-module-close" onClick={() => setFeedbackOpen(false)} aria-label={feedbackConfig.closeLabel}>
+            ×
+          </button>
+        </div>
+      </div>
+
+      {feedbackPreview ? (
+        <div className="dnd-thia-md-preview">{plainMarkdownPreview(feedbackMessage)}</div>
+      ) : (
+        <textarea
+          value={feedbackMessage}
+          maxLength={6000}
+          placeholder={feedbackConfig.messagePlaceholder}
+          onChange={event => setFeedbackMessage(event.target.value)}
+        />
+      )}
+
+      <div className="dnd-thia-file-row">
+        <button type="button" className="dnd-thia-file-button" onClick={() => fileInputRef.current?.click()}>
+          + {feedbackConfig.attachLabel}
+        </button>
+        <input
+          ref={fileInputRef}
+          type="file"
+          multiple
+          hidden
+          onChange={event => {
+            const files = Array.from(event.target.files || []).slice(0, 6).map(file => ({
+              name: file.name,
+              size: file.size,
+              type: file.type,
+            }));
+            setFeedbackAttachments(files);
+            event.currentTarget.value = '';
+          }}
+        />
+        {attachmentLabel && <div className="dnd-thia-file-list">{attachmentLabel}</div>}
+      </div>
+
+      <div className="dnd-thia-module-tools">
+        <button type="button" className="dnd-thia-module-mini" onClick={clearFeedbackForm}>{feedbackConfig.clearLabel}</button>
+        <button type="button" className="dnd-thia-module-mini" onClick={() => setFeedbackPreview(value => !value)}>
+          {feedbackPreview ? feedbackConfig.editLabel : feedbackConfig.previewLabel}
+        </button>
+        <button type="button" className="dnd-thia-module-mini" onClick={downloadFeedbackMarkdown}>{feedbackConfig.downloadLabel}</button>
+      </div>
+
+      <div className="dnd-thia-form-grid">
+        <input
+          value={feedbackName}
+          placeholder={feedbackConfig.namePlaceholder}
+          autoComplete="name"
+          onChange={event => setFeedbackName(event.target.value)}
+        />
+        <input
+          value={feedbackContact}
+          placeholder={feedbackConfig.emailPlaceholder}
+          autoComplete="email"
+          type="email"
+          onChange={event => setFeedbackContact(event.target.value)}
+        />
+      </div>
+
+      <label className="dnd-thia-check">
+        <input type="checkbox" checked={feedbackNewsletter} onChange={event => setFeedbackNewsletter(event.target.checked)} />
+        <span>{feedbackConfig.newsletterLabel}</span>
+      </label>
+
+      <div className="dnd-thia-module-foot">
+        <div className="dnd-thia-feedback-status">{feedbackStatus || feedbackCategory}</div>
+        <button type="submit" className="dnd-thia-module-submit">{feedbackConfig.submitLabel}</button>
+      </div>
+    </form>
+  );
+
+  const windowStyle = isMobile ? undefined : ({
+    left: frame.position.x,
+    top: frame.position.y,
+    width: frame.size.width,
+    height: frame.size.height,
+    '--dnd-thia-intake-split': `${intakeSplitPct}%`,
+  } as React.CSSProperties & Record<'--dnd-thia-intake-split', string>);
 
   if (!open) {
     return (
@@ -914,15 +1422,12 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
     <>
       {feedbackTab}
       <section
+        ref={windowRef}
         className={`dnd-thia dnd-thia-window${className ? ` ${className}` : ''}`}
         data-brand={brand}
         data-expanded={expanded ? 'true' : 'false'}
-        style={isMobile ? undefined : {
-          left: frame.position.x,
-          top: frame.position.y,
-          width: frame.size.width,
-          height: frame.size.height,
-        }}
+        data-intake={feedbackOpen ? 'true' : 'false'}
+        style={windowStyle}
         aria-label={`${resolvedTitle} chat seed`}
       >
       <header className="dnd-thia-head" onPointerDown={onHeaderPointerDown}>
@@ -941,105 +1446,45 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
         </span>
       </header>
 
-      <div className="dnd-thia-context">
-        <p>{activeFocus.focus || surfaceTitle || 'No focused surface selected yet.'}</p>
-        <div className="dnd-thia-context-chips" aria-label="Current awareness">
-          {Object.entries(activeFocus).filter(([, value]) => value).map(([key, value]) => (
-            <span key={key} className="dnd-thia-chip">{key}: {value}</span>
-          ))}
-        </div>
-      </div>
-
-      <div className="dnd-thia-messages">
-        {messages.map((message, index) => (
-          <div key={`${message.role}-${index}`} className="dnd-thia-message" data-role={message.role}>
-            <div className="dnd-thia-message-body">
-              {message.text}
-              {message.quickPrompts && message.quickPrompts.length > 0 && (
-                <div className="dnd-thia-quick">
-                  {message.quickPrompts.map(prompt => (
-                    <button key={prompt} type="button" onClick={() => void sendPrompt(prompt)}>
-                      {prompt}
-                    </button>
-                  ))}
-                </div>
-              )}
+        {feedbackOpen ? (
+          <div className="dnd-thia-intake">
+            <div className="dnd-thia-intake-chat">
+              {chatMessages}
+              <div className="dnd-thia-intake-starters">
+                {['What is useful?', 'Clarify my idea', 'Guide me'].map(prompt => (
+                  <button key={prompt} type="button" onClick={() => void sendPrompt(prompt)}>{prompt}</button>
+                ))}
+              </div>
+              {chatComposer}
+            </div>
+            <button
+              type="button"
+              className="dnd-thia-intake-splitter"
+              aria-label="Resize panels"
+              onPointerDown={onIntakeSplitPointerDown}
+            >
+              <span aria-hidden="true" />
+            </button>
+            <div className="dnd-thia-intake-form-wrap">
+              {feedbackForm}
             </div>
           </div>
-        ))}
-        <div ref={messagesEndRef} />
-      </div>
-
-      <form className="dnd-thia-composer" onSubmit={onSubmit}>
-        {feedbackConfig.enabled && (
+        ) : (
           <>
-            <div className="dnd-thia-composer-tools">
-              <button
-                type="button"
-                className="dnd-thia-feedback-toggle"
-                onClick={() => setFeedbackOpen(open => !open)}
-                aria-expanded={feedbackOpen ? 'true' : 'false'}
-              >
-                {feedbackConfig.label}
-              </button>
-            </div>
-            {feedbackOpen && (
-              <div className="dnd-thia-feedback-panel" role="group" aria-label={feedbackConfig.title}>
-                <div>
-                  <h3>{feedbackConfig.title}</h3>
-                  <p>{feedbackConfig.description}</p>
-                </div>
-                <select
-                  value={feedbackCategory}
-                  onChange={event => setFeedbackCategory(event.target.value)}
-                  aria-label="Feedback category"
-                >
-                  {feedbackConfig.categories.map(category => (
-                    <option key={category} value={category}>{category}</option>
-                  ))}
-                </select>
-                <textarea
-                  value={feedbackMessage}
-                  rows={4}
-                  placeholder={feedbackConfig.messagePlaceholder}
-                  onChange={event => setFeedbackMessage(event.target.value)}
-                />
-                <input
-                  value={feedbackContact}
-                  placeholder={feedbackConfig.contactPlaceholder}
-                  onChange={event => setFeedbackContact(event.target.value)}
-                />
-                <div className="dnd-thia-feedback-actions">
-                  <button type="button" className="dnd-thia-feedback-submit" onClick={() => void submitFeedback()}>
-                    {feedbackConfig.submitLabel}
-                  </button>
-                  <button type="button" className="dnd-thia-feedback-cancel" onClick={() => setFeedbackOpen(false)}>
-                    Cancel
-                  </button>
-                </div>
-                {feedbackStatus && <div className="dnd-thia-feedback-status">{feedbackStatus}</div>}
+            <div className="dnd-thia-context">
+              <p>{activeFocus.focus || surfaceTitle || 'No focused surface selected yet.'}</p>
+              <div className="dnd-thia-context-chips" aria-label="Current awareness">
+                {Object.entries(activeFocus).filter(([, value]) => value).map(([key, value]) => (
+                  <span key={key} className="dnd-thia-chip">{key}: {value}</span>
+                ))}
               </div>
-            )}
+            </div>
+            {chatMessages}
+            {chatComposer}
           </>
         )}
-        <div className="dnd-thia-input-row">
-          <textarea
-            value={input}
-            rows={1}
-            placeholder="Ask about the active surface..."
-            onChange={event => setInput(event.target.value)}
-            onKeyDown={event => {
-              if (event.key === 'Enter' && !event.shiftKey) {
-                event.preventDefault();
-                event.currentTarget.form?.requestSubmit();
-              }
-            }}
-          />
-          <button type="submit" className="dnd-thia-send" aria-label="Send message">&gt;</button>
-        </div>
-      </form>
 
-        <button type="button" className="dnd-thia-resize" aria-label="Resize chat" onPointerDown={onResizePointerDown} />
+        {!expanded && <button type="button" className="dnd-thia-resize" aria-label="Resize chat" onPointerDown={onResizePointerDown} />}
       </section>
     </>
   );
