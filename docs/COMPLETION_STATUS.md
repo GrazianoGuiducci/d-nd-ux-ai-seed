@@ -2,12 +2,14 @@
 
 Status: ready seed baseline.
 
-Last verification: `npm run build`, `npm run pack:dry` and both bundled skill
-validations on 2026-06-17.
+Last verification: `npm run build`, `npm run pack:dry`, both bundled skill
+validations and live Playwright viewport checks on 2026-06-17.
 
 ## Completed Surface
 
 - Three-column shell with external full-height closed gutters.
+- `Shell3Col` `orientation` prop emits public `data-agent-*` and optional
+  `data-thia-*` compatibility attributes directly on the active shell.
 - Inner split panels with independent collapse, click reopen and drag reopen.
 - Mobile inner split conversion from side-by-side to top/bottom.
 - Hidden mobile scrollbars for dense panel surfaces.

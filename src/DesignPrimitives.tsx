@@ -245,12 +245,14 @@ export function DndButton({
   size = 'md',
   fullWidth = false,
   className = '',
+  type = 'button',
   ...props
 }: DndButtonProps) {
   useEffect(() => { injectDesignCSS(); }, []);
   return (
     <button
       {...props}
+      type={type}
       className={`dnd-ui-button ${className}`.trim()}
       data-variant={variant}
       data-size={size}

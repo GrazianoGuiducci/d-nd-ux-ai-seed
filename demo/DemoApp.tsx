@@ -11,7 +11,6 @@ import {
   SplitPanel,
   TaxonomyMap,
   Tooltip,
-  agentOrientationAttributes,
   dispatchAgentContextAsk,
   type ArticleDiagramNode,
   type MegaMenuSeedGroup,
@@ -455,21 +454,19 @@ export default function DemoApp() {
   );
 
   return (
-    <div
-      className="demo-app"
-      {...agentOrientationAttributes({
-        surface: 'ux-ai-seed-demo',
-        active: true,
-        tab: mode,
-        focus: selected.title,
-        item: selected.id,
-        relation: selected.kind,
-        count: `${surfaces.length} patterns`,
-        boundary: selected.boundary,
-      })}
-    >
+    <div className="demo-app">
       <Shell3Col
         flat
+        orientation={{
+          surface: 'ux-ai-seed-demo',
+          active: true,
+          tab: mode,
+          focus: selected.title,
+          item: selected.id,
+          relation: selected.kind,
+          count: `${surfaces.length} patterns`,
+          boundary: selected.boundary,
+        }}
         leftTitle="Patterns"
         rightTitle="Inspector"
         leftStorage="dnd_seed_demo_left"

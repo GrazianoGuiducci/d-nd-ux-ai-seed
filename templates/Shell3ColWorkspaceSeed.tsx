@@ -1,6 +1,5 @@
 import React from 'react';
 import Shell3Col from '../src/Shell3Col';
-import { agentOrientationAttributes } from '../src/agentOrientation';
 import './Shell3ColWorkspaceSeed.css';
 
 type WorkspaceSeedProps = {
@@ -91,20 +90,18 @@ export default function Shell3ColWorkspaceSeed({ en = false, activeItem }: Works
   );
 
   return (
-    <div
-      className="workspace-seed-root"
-      {...agentOrientationAttributes({
-        surface: 'workspace-seed',
-        active: true,
-        tab: labels.tab,
-        focus: activeItem?.title || 'workspace',
-        item: activeItem?.id || 'none',
-        relation: activeItem?.relation || 'none',
-        count: '0 items',
-      })}
-    >
+    <div className="workspace-seed-root">
       <Shell3Col
         flat
+        orientation={{
+          surface: 'workspace-seed',
+          active: true,
+          tab: labels.tab,
+          focus: activeItem?.title || 'workspace',
+          item: activeItem?.id || 'none',
+          relation: activeItem?.relation || 'none',
+          count: '0 items',
+        }}
         leftTitle={labels.left}
         rightTitle={labels.right}
         leftStorage="replace_surface_left"

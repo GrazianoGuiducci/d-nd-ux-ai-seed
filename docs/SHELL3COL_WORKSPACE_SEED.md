@@ -61,6 +61,15 @@ Use these defaults unless the content proves otherwise:
 ```tsx
 <Shell3Col
   flat
+  orientation={{
+    surface: 'workspace-seed',
+    active: true,
+    tab: 'Workspace',
+    focus: activeItem.title,
+    item: activeItem.id,
+    relation: activeItem.relation,
+    count: `${items.length} items`,
+  }}
   minHeight="100%"
   leftOpenWidth={300}
   rightOpenWidth={340}
@@ -172,6 +181,27 @@ data-agent-count="..."
 Internal D-ND / THIA surfaces can also emit `data-thia-*` compatibility
 attributes. These attributes are not copy. They are machine-readable
 orientation.
+
+Prefer the `orientation` prop on `Shell3Col` when the shell is the active
+surface:
+
+```tsx
+<Shell3Col
+  orientation={{
+    surface: 'labgraph',
+    active: true,
+    tab: 'Graph',
+    focus: selectedNode.title,
+    item: selectedNode.id,
+    relation: selectedNode.kind,
+    boundary: 'review-only',
+  }}
+/>
+```
+
+By default this emits both public `data-agent-*` and compatibility
+`data-thia-*` attributes. Set `includeCompatibilityOrientation={false}` only
+for external surfaces that do not need D-ND / THIA compatibility.
 
 ## Action Rules
 

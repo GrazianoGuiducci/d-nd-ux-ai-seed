@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback, ReactNode } from 'react';
 import HoverPopover from './ui/HoverPopover';
+import { agentOrientationAttributes, type AgentOrientation } from './agentOrientation';
 
 // Render inline helper — mantiene il vecchio shape closedTooltip
 // (title/body/link/related/funnelHook) dentro il primitivo HoverPopover.
@@ -61,6 +62,8 @@ interface Shell3ColProps {
   left: ReactNode | SidebarContent;
   main: ReactNode;
   right: ReactNode | SidebarContent;
+  orientation?: AgentOrientation;
+  includeCompatibilityOrientation?: boolean;
   leftStorage?: string;
   rightStorage?: string;
   defaultLeft?: ColState;
@@ -525,6 +528,8 @@ const Shell3Col: React.FC<Shell3ColProps> = ({
   left,
   main,
   right,
+  orientation,
+  includeCompatibilityOrientation = true,
   leftStorage = 'shell3col_left',
   rightStorage = 'shell3col_right',
   defaultLeft = 'open' as ColState,
@@ -703,6 +708,9 @@ const Shell3Col: React.FC<Shell3ColProps> = ({
 
   const leftW = widthFor(leftState, leftManualW);
   const rightW = widthFor(rightState, rightManualW);
+  const orientationAttrs = orientation
+    ? agentOrientationAttributes(orientation, { includeCompatibility: includeCompatibilityOrientation })
+    : {};
 
   const DefaultBookIcon = (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
@@ -719,6 +727,7 @@ const Shell3Col: React.FC<Shell3ColProps> = ({
   return (
     <div
       className={`s3c-shell${flat ? ' s3c-flat' : ''}`}
+      {...orientationAttrs}
       data-left-state={leftState}
       data-right-state={rightState}
       {...(mobileDrawer ? { 'data-mobile-drawer': mobileDrawer } : {})}

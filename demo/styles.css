@@ -502,6 +502,24 @@ textarea {
   }
 }
 
+@container (max-width: 620px) {
+  .demo-route-map {
+    grid-template-columns: minmax(0, 1fr);
+    width: 100%;
+  }
+
+  .demo-route-map span {
+    text-align: left;
+  }
+
+  .demo-route-map i {
+    justify-self: center;
+    width: 1px;
+    height: 1.35rem;
+    background: linear-gradient(180deg, transparent, rgb(var(--border-02)), transparent);
+  }
+}
+
 @container (max-width: 640px) {
   .demo-preview-grid {
     grid-template-columns: minmax(0, 1fr);

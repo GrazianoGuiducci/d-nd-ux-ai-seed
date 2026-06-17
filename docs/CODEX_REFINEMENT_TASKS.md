@@ -22,6 +22,10 @@ adoption contract
 
 ## P0 — Public Generalization Without Breaking Current Users
 
+Status 2026-06-17: complete. Public aliases, `data-agent-*` orientation,
+`agent:context:ask` handoff and generic demo copy are implemented. Internal
+`ThiaChatSeed`, `data-thia-*` and `dnd:thia:ask` compatibility remains.
+
 ### 1. Add public aliases
 
 Add generic names while keeping current exports.
@@ -88,6 +92,10 @@ Keep a small note that D-ND / THIA is the origin of the extraction.
 
 ## P1 — Package Hygiene
 
+Status 2026-06-17: complete for the ready baseline. `package.json` has
+repository metadata, keywords, empty runtime `dependencies`, React peer
+dependencies and `pack:dry` verification.
+
 ### 1. Review dependencies
 
 `package.json` currently contains runtime dependencies that appear to be build-tool transitive packages. For a React library, most should remain in `devDependencies`, while React stays in `peerDependencies`.
@@ -143,7 +151,8 @@ npm pack --dry-run
 
 ### Shell3Col
 
-- Add optional `orientationAttributes` prop or wrapper helper so host apps can use `data-agent-*` without manual duplication.
+- Added optional `orientation` prop so host apps can emit `data-agent-*`
+  and compatibility `data-thia-*` from the shell without manual duplication.
 - Keep current `data-left-state` / `data-right-state` unchanged.
 - Add docs for external storage key naming: `<app>_<surface>_<left|right>`.
 
@@ -180,11 +189,11 @@ npm pack --dry-run
 
 ### ThiaChatSeed / AgentContextChatSeed
 
-- Add generic public alias.
-- Read `data-agent-*` first.
-- Listen to `agent:context:ask` first.
+- Generic public alias added.
+- Reads `data-agent-*` first.
+- Listens to `agent:context:ask` first.
 - Keep internal D-ND / THIA compatibility.
-- Add optional `brand` or `variant` prop so public use does not inherit green THIA styling by default.
+- `brand` prop added so public use does not inherit green THIA styling by default.
 
 ## P3 — Missing Useful Seeds
 
