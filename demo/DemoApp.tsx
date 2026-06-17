@@ -150,6 +150,9 @@ const processNodes: ArticleDiagramNode[] = [
   },
 ];
 
+const seedRepoUrl = 'https://github.com/GrazianoGuiducci/d-nd-ux-ai-seed';
+const seedCloneCommand = 'git clone https://github.com/GrazianoGuiducci/d-nd-ux-ai-seed.git';
+
 function stateLabel(state: DemoSurface['state']) {
   if (state === 'ready') return 'ready';
   if (state === 'candidate') return 'candidate';
@@ -223,6 +226,13 @@ export default function DemoApp() {
           status: 'doc',
           href: './docs/TEMPLATE_SOURCE_INVENTORY.md',
         },
+        {
+          id: 'github',
+          label: 'GitHub repository',
+          description: 'Clone or inspect the public seed package.',
+          status: 'repo',
+          href: seedRepoUrl,
+        },
       ],
     },
   ], []);
@@ -286,6 +296,7 @@ export default function DemoApp() {
           onSelect={(item, group) => {
             if (group.id === 'patterns') setSelectedId(item.id);
             if (item.id === 'template-chat') setMode('patterns');
+            if (item.id === 'github') window.open(seedRepoUrl, '_blank', 'noopener,noreferrer');
             if (item.id === 'guide' || item.id === 'inventory') {
               dispatchAgentContextAsk({
                 source: 'seed-menu',
@@ -443,6 +454,14 @@ export default function DemoApp() {
         </div>
       </div>
 
+      <div className="demo-inspector-block demo-clone-block">
+        <div className="demo-tip-row">
+          <span>Clone seed</span>
+          <a href={seedRepoUrl} target="_blank" rel="noreferrer">GitHub</a>
+        </div>
+        <code>{seedCloneCommand}</code>
+      </div>
+
       <Tooltip
         content={{
           function: 'This marker shows the machine-readable orientation contract used by agentic UI.',
@@ -521,7 +540,10 @@ export default function DemoApp() {
         }}
       />
       <a className="demo-powered" href="https://d-nd.com" target="_blank" rel="noreferrer">
-        Agentic UX Seed
+        D-ND
+      </a>
+      <a className="demo-repo-link" href={seedRepoUrl} target="_blank" rel="noreferrer">
+        Clone repository
       </a>
       <AgentContextChatSeed
         title="Agent"

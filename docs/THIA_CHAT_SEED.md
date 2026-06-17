@@ -85,10 +85,13 @@ flow.
 Desktop behavior should stay limited to these transitions:
 
 - compact bubble opens the chat;
-- clicking the header alone does not resize the chat;
+- avatar open resets to the compact chat home;
+- first header drag from compact home expands to a readable Lab-style frame;
 - dragging the header only repositions the current frame;
 - the expand button opens a full-page frame and restores the previous frame on
   the next click;
+- dragging a full-page frame downward undocks it back to the mode default frame
+  and continues the drag from there;
 - the lower-right grip is the only direct manual resize control.
 
 ## Submit Module Contract

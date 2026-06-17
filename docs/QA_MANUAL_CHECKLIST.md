@@ -117,10 +117,14 @@ Record any breakpoint where behavior changes.
 - Bubble opens the assistant.
 - Header drag works on desktop.
 - Header click without movement does not resize the assistant.
-- Header drag only repositions the assistant; vertical movement does not expand
-  or shrink it.
+- Header drag normally repositions the assistant; only the Lab-derived first
+  compact drag and full-page downward drag change frame size.
+- From compact chat home, first header drag expands to a readable Lab-style
+  frame.
 - Expand and close buttons do not start accidental drag.
 - Expand button opens a full-page frame and next click restores the prior frame.
+- Dragging a full-page frame downward undocks it to the default chat/intake
+  frame without losing pointer control.
 - Resize handle works on desktop.
 - Mobile opens as full-screen panel.
 - Messages scroll without visible nested scrollbar traps.

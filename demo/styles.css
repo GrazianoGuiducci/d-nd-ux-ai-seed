@@ -453,6 +453,32 @@ textarea {
   line-height: 1.48;
 }
 
+.demo-clone-block a {
+  color: var(--c-primary-text);
+  font-size: 0.78rem;
+  text-decoration: none;
+}
+
+.demo-clone-block a:hover,
+.demo-clone-block a:focus-visible {
+  text-decoration: underline;
+}
+
+.demo-clone-block code {
+  display: block;
+  margin-top: 0.72rem;
+  overflow-x: auto;
+  border: 1px solid rgb(var(--border-01));
+  border-radius: var(--dnd-radius-control);
+  background: rgb(var(--elev-00) / 0.72);
+  color: rgb(var(--text-02));
+  padding: 0.62rem;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.72rem;
+  line-height: 1.45;
+  white-space: nowrap;
+}
+
 .demo-primitive-stack {
   display: grid;
   gap: 0.65rem;
@@ -516,8 +542,26 @@ textarea {
   text-decoration: none;
 }
 
+.demo-repo-link {
+  position: fixed;
+  right: 8.7rem;
+  bottom: 0.55rem;
+  z-index: 70;
+  border: 1px solid rgb(var(--border-01));
+  border-radius: var(--dnd-radius-control);
+  background: rgb(var(--elev-01) / 0.82);
+  color: rgb(var(--text-muted));
+  padding: 0.32rem 0.52rem;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.66rem;
+  line-height: 1;
+  text-decoration: none;
+}
+
 .demo-powered:hover,
-.demo-powered:focus-visible {
+.demo-powered:focus-visible,
+.demo-repo-link:hover,
+.demo-repo-link:focus-visible {
   outline: none;
   border-color: var(--c-primary-border-hover);
   color: var(--c-primary-text);
@@ -624,5 +668,9 @@ textarea {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+
+  .demo-repo-link {
+    display: none;
   }
 }

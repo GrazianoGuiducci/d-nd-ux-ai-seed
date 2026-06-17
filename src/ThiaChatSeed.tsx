@@ -90,9 +90,17 @@ type DragState = {
   kind: 'move' | 'resize' | 'split';
   offsetX: number;
   offsetY: number;
+  startX?: number;
+  startY?: number;
+  startSize?: Frame['size'];
+  pendingUndock?: boolean;
+  didShrink?: boolean;
 };
 
 const CHAT_READABLE_WIDTH = 720;
+const CHAT_READABLE_DRAG_WIDTH = 720;
+const CHAT_SHRINK_DRAG_DELTA = 90;
+const CHAT_NATURAL_HOME_TOLERANCE = 56;
 const DEFAULT_INTAKE_SPLIT_PCT = 45;
 const CHAT_GEOMETRY_TRANSITION = 'opacity 410ms ease, transform 1210ms cubic-bezier(.2,.78,.18,1), left 1210ms cubic-bezier(.2,.78,.18,1), top 1210ms cubic-bezier(.2,.78,.18,1), width 1210ms cubic-bezier(.2,.78,.18,1), height 1210ms cubic-bezier(.2,.78,.18,1)';
 const DEFAULT_FEEDBACK_CATEGORIES = ['Contribution', 'Question'];
@@ -196,6 +204,17 @@ const CHAT_CSS = `
   background: rgb(var(--elev-01, 15 18 25) / 0.98);
   box-shadow: 0 30px 90px rgb(0 0 0 / 0.58), 0 0 38px var(--agent-chat-accent-soft);
   transition: ${CHAT_GEOMETRY_TRANSITION};
+  animation: dndThiaWindowIn 280ms ease both;
+}
+@keyframes dndThiaWindowIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 .dnd-thia-window[data-expanded="true"] {
   border-color: var(--agent-chat-accent-border);
@@ -794,6 +813,53 @@ function expandedFrame(pointer?: { x: number; y: number }): Frame {
   return { size, position: clampFramePosition({ x: Math.round(x), y: Math.round(y) }, size) };
 }
 
+function nearValue(value: number, target: number, tolerance = CHAT_NATURAL_HOME_TOLERANCE): boolean {
+  return Math.abs(value - target) <= tolerance;
+}
+
+function compactDragWidthThreshold(intakeMode: boolean): number {
+  return intakeMode ? CHAT_READABLE_DRAG_WIDTH : CHAT_READABLE_DRAG_WIDTH;
+}
+
+function isNaturalChatHome(size: Frame['size'], position: Frame['position']): boolean {
+  if (typeof window === 'undefined') return false;
+  const home = defaultFrame();
+  const nearDefaultHome = nearValue(position.x, home.position.x)
+    && nearValue(position.y, home.position.y)
+    && size.width <= compactDragWidthThreshold(false);
+  const nearLowerLeftHome = position.x <= CHAT_NATURAL_HOME_TOLERANCE
+    && nearValue(position.y + size.height, window.innerHeight - 84, 90)
+    && size.width <= compactDragWidthThreshold(false);
+  return nearDefaultHome || nearLowerLeftHome;
+}
+
+function expandReadableFrameOnDrag(
+  pointer: { x: number; y: number },
+  current: Frame,
+  intakeMode: boolean,
+): Frame {
+  const target = intakeMode
+    ? intakeFrame()
+    : {
+        size: {
+          width: Math.max(CHAT_READABLE_DRAG_WIDTH, current.size.width * 1.45),
+          height: Math.max(560, current.size.height),
+        },
+        position: {
+          x: pointer.x - 130,
+          y: current.position.y,
+        },
+      };
+  const size = clampFrameSize(target.size);
+  return {
+    size,
+    position: clampFramePosition({
+      x: Math.min(current.position.x, target.position.x),
+      y: intakeMode ? Math.min(current.position.y, target.position.y) : target.position.y,
+    }, size),
+  };
+}
+
 function intakeFrame(): Frame {
   if (typeof window === 'undefined') {
     return { size: { width: 960, height: 640 }, position: { x: 24, y: 24 } };
@@ -819,6 +885,31 @@ function fullPageFrame(): Frame {
       height: Math.max(360, window.innerHeight - margin * 2),
     },
     position: { x: margin, y: margin },
+  };
+}
+
+function undockFrameForDrag(pointer: { x: number; y: number }, intakeMode: boolean): Frame {
+  const target = intakeMode ? intakeFrame() : defaultFrame();
+  const size = clampFrameSize(target.size);
+  const headerGripX = Math.min(Math.max(160, size.width * 0.24), size.width - 72);
+  return {
+    size,
+    position: clampFramePosition({
+      x: pointer.x - headerGripX,
+      y: pointer.y - 24,
+    }, size),
+  };
+}
+
+function shrinkReadableFrameOnDrag(pointer: { x: number; y: number }): Frame {
+  const target = defaultFrame();
+  const size = clampFrameSize(target.size);
+  return {
+    size,
+    position: clampFramePosition({
+      x: pointer.x - Math.min(180, size.width * 0.5),
+      y: pointer.y - 32,
+    }, size),
   };
 }
 
@@ -951,6 +1042,7 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
   const dragRef = useRef<DragState | null>(null);
   const frameRef = useRef(frame);
   const restoreFrameRef = useRef<Frame | null>(null);
+  const readableExpandedFromHomeRef = useRef(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const windowRef = useRef<HTMLElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -1096,14 +1188,35 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
   const onHeaderPointerDown = useCallback((event: React.PointerEvent) => {
     if (isMobile || event.button !== 0) return;
     event.preventDefault();
-    const current = frameRef.current;
+    const intakeMode = feedbackOpen;
+    let current = frameRef.current;
+    const canExpandFromNaturalHome = !intakeMode
+      && !readableExpandedFromHomeRef.current
+      && isNaturalChatHome(current.size, current.position);
+    if (canExpandFromNaturalHome) {
+      const expandedFrame = expandReadableFrameOnDrag(
+        { x: event.clientX, y: event.clientY },
+        current,
+        false,
+      );
+      readableExpandedFromHomeRef.current = true;
+      restoreFrameRef.current = null;
+      setExpanded(false);
+      applyFrame(expandedFrame, true);
+      current = expandedFrame;
+    }
     dragRef.current = {
       kind: 'move',
       offsetX: event.clientX - current.position.x,
       offsetY: event.clientY - current.position.y,
+      startX: event.clientX,
+      startY: event.clientY,
+      startSize: current.size,
+      pendingUndock: expanded,
+      didShrink: false,
     };
     (event.currentTarget as HTMLElement).setPointerCapture?.(event.pointerId);
-  }, [isMobile]);
+  }, [applyFrame, expanded, feedbackOpen, isMobile]);
 
   const onResizePointerDown = useCallback((event: React.PointerEvent) => {
     if (isMobile || event.button !== 0) return;
@@ -1142,6 +1255,38 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
       }
 
       const current = frameRef.current;
+      const deltaX = drag.startX == null ? 0 : event.clientX - drag.startX;
+      const deltaY = drag.startY == null ? 0 : event.clientY - drag.startY;
+      if (drag.pendingUndock) {
+        if (deltaY > 28 && deltaY > Math.abs(deltaX) * 0.7) {
+          const undocked = undockFrameForDrag({ x: event.clientX, y: event.clientY }, feedbackOpen);
+          drag.pendingUndock = false;
+          drag.didShrink = true;
+          restoreFrameRef.current = null;
+          readableExpandedFromHomeRef.current = true;
+          setExpanded(false);
+          drag.offsetX = event.clientX - undocked.position.x;
+          drag.offsetY = event.clientY - undocked.position.y;
+          applyFrame(undocked, true);
+          return;
+        }
+        return;
+      }
+      const startSize = drag.startSize || current.size;
+      const canShrink = !feedbackOpen && !drag.didShrink
+        && (startSize.width >= 820 || startSize.height >= 680)
+        && deltaY > CHAT_SHRINK_DRAG_DELTA;
+      if (canShrink) {
+        const shrunk = shrinkReadableFrameOnDrag({ x: event.clientX, y: event.clientY });
+        drag.didShrink = true;
+        restoreFrameRef.current = null;
+        readableExpandedFromHomeRef.current = false;
+        setExpanded(false);
+        drag.offsetX = event.clientX - shrunk.position.x;
+        drag.offsetY = event.clientY - shrunk.position.y;
+        applyFrame(shrunk, true);
+        return;
+      }
       applyFrame({
         size: current.size,
         position: {
@@ -1162,7 +1307,7 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
       window.removeEventListener('pointerup', onPointerUp);
       window.removeEventListener('pointercancel', onPointerUp);
     };
-  }, [applyFrame, saveFrame]);
+  }, [applyFrame, feedbackOpen, saveFrame]);
 
   const toggleExpanded = useCallback(() => {
     if (isMobile) return;
@@ -1178,6 +1323,15 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
     applyFrame(fullPageFrame(), true);
   }, [applyFrame, expanded, feedbackOpen, isMobile]);
 
+  const openChatHome = useCallback(() => {
+    setOpen(true);
+    setFeedbackOpen(false);
+    setExpanded(false);
+    restoreFrameRef.current = null;
+    readableExpandedFromHomeRef.current = false;
+    if (!isMobile) applyFrame(defaultFrame(), true);
+  }, [applyFrame, isMobile]);
+
   const onSubmit = (event: FormEvent) => {
     event.preventDefault();
     void sendPrompt(input);
@@ -1189,6 +1343,7 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
     setIntakeSplitPct(DEFAULT_INTAKE_SPLIT_PCT);
     setExpanded(false);
     restoreFrameRef.current = null;
+    readableExpandedFromHomeRef.current = true;
     if (!isMobile) applyFrame(intakeFrame(), true);
     setFeedbackStatus('');
   }, [applyFrame, isMobile]);
@@ -1412,7 +1567,7 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
         {feedbackTab}
         <div className={`dnd-thia dnd-thia-bubble-wrap${className ? ` ${className}` : ''}`} data-brand={brand}>
           <div className="dnd-thia-greeting">I can orient you on what is open here.</div>
-          <button type="button" className="dnd-thia-avatar" aria-label={`Open ${resolvedTitle}`} onClick={() => setOpen(true)} />
+          <button type="button" className="dnd-thia-avatar" aria-label={`Open ${resolvedTitle}`} onClick={openChatHome} />
         </div>
       </>
     );
