@@ -86,9 +86,9 @@ type ResponseBlock = {
 The chat can then expose the current surface to the assistant:
 
 ```tsx
-data-thia-marker="response-outline"
-data-thia-tab="chat"
-data-thia-focus={activeId}
+data-agent-marker="response-outline"
+data-agent-tab="chat"
+data-agent-focus={activeId}
 ```
 
 This lets an assistant know where the user is without relying on visible copy.

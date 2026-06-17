@@ -1,16 +1,18 @@
 import React, { useMemo, useState } from 'react';
 import {
   ArticleDiagramRail,
-  DndButton,
-  DndCard,
-  DndModal,
+  AgentButton,
+  AgentCard,
+  AgentContextChatSeed,
+  AgentModal,
   LiveBadge,
   MegaMenuSeed,
   Shell3Col,
   SplitPanel,
   TaxonomyMap,
-  ThiaChatSeed,
   Tooltip,
+  agentOrientationAttributes,
+  dispatchAgentContextAsk,
   type ArticleDiagramNode,
   type MegaMenuSeedGroup,
   type TaxonomyEdge,
@@ -100,7 +102,7 @@ const taxonomyNodes: TaxonomyNode[] = [
     type: 'mode',
     status: 'canonical',
     description: 'Interfaces designed for human work and machine-readable orientation.',
-    tags: ['data-thia', 'assistant'],
+    tags: ['data-agent', 'assistant'],
   },
   {
     id: 'taxonomy',
@@ -197,7 +199,7 @@ export default function DemoApp() {
         },
         {
           id: 'template-chat',
-          label: 'THIA chat',
+          label: 'Agent context assistant',
           description: 'Assistant surface aware of open panels and focus.',
           status: 'seed',
         },
@@ -229,7 +231,7 @@ export default function DemoApp() {
   const leftPanel = (
     <div className="demo-panel">
       <div className="demo-panel-head">
-        <p className="demo-kicker">D-ND UX-AI Seed</p>
+        <p className="demo-kicker">Agentic UX Seed</p>
         <h1>Reusable interface patterns for agentic workspaces.</h1>
         <LiveBadge<DemoLivePayload>
           endpoint="/demo-live.json"
@@ -286,14 +288,12 @@ export default function DemoApp() {
             if (group.id === 'patterns') setSelectedId(item.id);
             if (item.id === 'template-chat') setMode('patterns');
             if (item.id === 'guide' || item.id === 'inventory') {
-              window.dispatchEvent(new CustomEvent('dnd:thia:ask', {
-                detail: {
-                  source: 'seed-menu',
-                  focus: item.label,
-                  relation: group.title,
-                  prompt: `Explain how to integrate ${item.label} without losing related elements.`,
-                },
-              }));
+              dispatchAgentContextAsk({
+                source: 'seed-menu',
+                focus: item.label,
+                relation: group.title,
+                prompt: `Explain how to integrate ${item.label} without losing related elements.`,
+              });
             }
           }}
         />
@@ -320,7 +320,7 @@ export default function DemoApp() {
               </div>
               <div>
                 <span>Awareness</span>
-                <strong>data-thia-* preserved</strong>
+                <strong>orientation attributes preserved</strong>
               </div>
             </div>
 
@@ -404,23 +404,23 @@ export default function DemoApp() {
       </div>
 
       <div className="demo-primitive-stack" aria-label="Design primitives">
-        <DndCard className="demo-primitive-card" tone="active">
+        <AgentCard className="demo-primitive-card" tone="active">
           <span>Radius contract</span>
           <p>Cards and modals stop at 8px; controls use 4px; pills are explicit.</p>
-        </DndCard>
+        </AgentCard>
         <div className="demo-button-row">
-          <DndButton type="button" variant="primary" size="sm" onClick={() => setModalOpen(true)}>
+          <AgentButton type="button" variant="primary" size="sm" onClick={() => setModalOpen(true)}>
             Open modal
-          </DndButton>
-          <DndButton type="button" variant="ghost" size="sm">
+          </AgentButton>
+          <AgentButton type="button" variant="ghost" size="sm">
             Ghost
-          </DndButton>
+          </AgentButton>
         </div>
       </div>
 
       <Tooltip
         content={{
-          function: 'This marker shows the machine-readable orientation contract used by D-ND agentic UI.',
+          function: 'This marker shows the machine-readable orientation contract used by agentic UI.',
           mechanism: 'Keep the attributes stable while changing visible copy or component internals.',
           expectation: 'Related seeds: Workspace seed, Taxonomy map.',
         }}
@@ -430,19 +430,19 @@ export default function DemoApp() {
         </button>
       </Tooltip>
 
-      <DndModal
+      <AgentModal
         open={modalOpen}
         title="Modal primitive"
         subtitle="A focused overlay with explicit close, backdrop close, Escape close and stable radius."
         onClose={() => setModalOpen(false)}
         footer={
           <>
-            <DndButton type="button" variant="ghost" onClick={() => setModalOpen(false)}>
+            <AgentButton type="button" variant="ghost" onClick={() => setModalOpen(false)}>
               Cancel
-            </DndButton>
-            <DndButton type="button" variant="primary" onClick={() => setModalOpen(false)}>
+            </AgentButton>
+            <AgentButton type="button" variant="primary" onClick={() => setModalOpen(false)}>
               Accept
-            </DndButton>
+            </AgentButton>
           </>
         }
       >
@@ -450,20 +450,23 @@ export default function DemoApp() {
           Use this for bounded decisions, confirmations or focused editing. Do not use it for
           ordinary side-panel inspection when a drawer or inspector can preserve context.
         </p>
-      </DndModal>
+      </AgentModal>
     </aside>
   );
 
   return (
     <div
       className="demo-app"
-      data-thia-marker="ux-ai-seed-demo"
-      data-thia-active="true"
-      data-thia-tab={mode}
-      data-thia-focus={selected.title}
-      data-thia-item={selected.id}
-      data-thia-relation={selected.kind}
-      data-thia-count={`${surfaces.length} patterns`}
+      {...agentOrientationAttributes({
+        surface: 'ux-ai-seed-demo',
+        active: true,
+        tab: mode,
+        focus: selected.title,
+        item: selected.id,
+        relation: selected.kind,
+        count: `${surfaces.length} patterns`,
+        boundary: selected.boundary,
+      })}
     >
       <Shell3Col
         flat
@@ -495,11 +498,11 @@ export default function DemoApp() {
         }}
       />
       <a className="demo-powered" href="https://d-nd.com" target="_blank" rel="noreferrer">
-        Powered by D-ND Design
+        Agentic UX Seed
       </a>
-      <ThiaChatSeed
-        title="THIA"
-        subtitle="UX seed assistant"
+      <AgentContextChatSeed
+        title="Agent"
+        subtitle="Context assistant"
         surfaceId="dnd-ux-ai-seed"
         surfaceTitle={selected.title}
         focus={{

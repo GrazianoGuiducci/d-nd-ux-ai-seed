@@ -68,9 +68,9 @@ engine.
 Expose taxonomy state near the point of use:
 
 ```tsx
-data-thia-marker="taxonomy-map"
-data-thia-item={node.id}
-data-thia-relation={node.type}
+data-agent-marker="taxonomy-map"
+data-agent-item={node.id}
+data-agent-relation={node.type}
 ```
 
 This allows a chat assistant, internal page helper or agentic tool to know

@@ -448,11 +448,16 @@ textarea {
 }
 
 .demo-action {
-  width: 100%;
+  width: calc(100% - 4.25rem);
+  margin-right: 4.25rem;
   min-height: 2.65rem;
   padding: 0 0.9rem;
   border-color: rgb(var(--border-02));
   color: var(--c-primary-text);
+}
+
+.demo-app .dnd-thia-greeting {
+  display: none;
 }
 
 .demo-powered {

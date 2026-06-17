@@ -1,4 +1,5 @@
 import React from 'react';
+import { agentOrientationAttributes } from './agentOrientation';
 
 export type ArticleDiagramNodeKind =
   | 'source'
@@ -227,8 +228,10 @@ export function ArticleDiagramRail({
   return (
     <section
       className={['adr', `adr-${orientation}`, className].join(' ')}
-      data-thia-marker="article-diagram"
-      data-thia-count={safeNodes.length}
+      {...agentOrientationAttributes({
+        surface: 'article-diagram',
+        count: `${safeNodes.length}`,
+      })}
     >
       <StyleOnce />
       {title && <div className="adr-head">{title}</div>}
@@ -243,8 +246,11 @@ export function ArticleDiagramRail({
                 KIND_CLASS[kind],
                 node.active ? 'is-active' : '',
               ].join(' ')}
-              data-thia-item={node.id}
-              data-thia-focus={node.active ? 'active' : undefined}
+              {...agentOrientationAttributes({
+                item: node.id,
+                relation: kind,
+                focus: node.active ? 'active' : undefined,
+              })}
             >
               <div className="adr-axis" aria-hidden="true">
                 <span className="adr-dot" />

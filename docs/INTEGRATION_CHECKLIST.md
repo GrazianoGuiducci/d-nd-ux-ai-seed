@@ -15,7 +15,8 @@ resize, storage, awareness or mobile contract.
 - unique `leftStorage` and `rightStorage` keys
 - full-height closed side gutters
 - mobile drawer behavior
-- `data-thia-*` or equivalent awareness attributes
+- `data-agent-*` orientation attributes, with `data-thia-*` compatibility only
+  where needed
 
 Use it when context, active field and consequence must stay visible together.
 
@@ -47,9 +48,9 @@ consume the whole top row.
 
 ### Design Primitives
 
-- `DndButton`
-- `DndCard`
-- `DndModal`
+- `AgentButton` / `DndButton`
+- `AgentCard` / `DndCard`
+- `AgentModal` / `DndModal`
 - `DND_RADII`
 - `Tooltip`
 - `HoverPopover`
@@ -63,17 +64,17 @@ or split panels for ordinary inspection so context remains visible.
 
 ### Assistant Surface
 
-- `ThiaChatSeed`
-- `data-thia-*` attributes on the active surface
+- `AgentContextChatSeed` / `ThiaChatSeed`
+- `data-agent-*` attributes on the active surface
 - session storage for open/messages
 - local storage for frame geometry
-- `dnd:thia:ask` event support
+- `agent:context:ask` event support, with `dnd:thia:ask` compatibility where needed
 - drag, slow expansion, shrink and resize behavior
 
 The assistant must know what is open and which surface is in focus. A chat box
-without the awareness contract is not a faithful port of THIA.
+without the orientation contract is not a faithful port.
 
-On mobile, open THIA as a full-screen surface and hide internal scrollbars.
+On mobile, open the assistant as a full-screen surface and hide internal scrollbars.
 
 ### Long Content Orientation
 

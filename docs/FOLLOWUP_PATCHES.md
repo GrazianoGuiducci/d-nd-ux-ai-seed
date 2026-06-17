@@ -1,35 +1,36 @@
 # Follow-Up Patches
 
-Status: remaining local patches for Codex.
+Status: completed on 2026-06-17 by TM7-vps.
 
 The first implementation pass added public aliases, orientation helpers, assistant public events, design primitive refinements, registry, skill, QA checklist, package metadata and README updates.
 
-The current tool session could not patch these component files directly, so Codex should complete them locally and run the build.
+The remaining public-orientation patches have been applied. Keep this file as
+the audit trail for what was closed and what remains optional.
 
 ## Remaining Code Patches
 
-1. `src/ResponseOutlineRail.tsx`
+1. `src/ResponseOutlineRail.tsx` - done
    - Emit public `data-agent-marker`, `data-agent-count`, `data-agent-item` and `data-agent-focus`.
    - Keep existing `data-thia-*` attributes.
    - Preferred approach: use `agentOrientationAttributes` from `src/agentOrientation.ts`.
 
-2. `src/ArticleDiagramRail.tsx`
+2. `src/ArticleDiagramRail.tsx` - done
    - Emit public `data-agent-marker`, `data-agent-count`, `data-agent-item` and `data-agent-focus`.
    - Keep existing `data-thia-*` attributes.
    - Surface value should remain `article-diagram`.
 
-3. `src/TaxonomyMap.tsx`
+3. `src/TaxonomyMap.tsx` - done
    - Emit public `data-agent-marker`, `data-agent-count`, `data-agent-item`, `data-agent-relation` and `data-agent-focus`.
    - Keep existing `data-thia-*` attributes.
    - Surface value should remain `taxonomy-map`.
 
-4. `demo/DemoApp.tsx`
+4. `demo/DemoApp.tsx` - done
    - Prefer the public event path through `dispatchAgentContextAsk`.
    - Keep compatibility with `dnd:thia:ask` through the helper.
    - Use public labels by default: Agentic UX Seed, Agent Context Assistant, orientation attributes.
    - Use `AgentButton`, `AgentCard` and `AgentModal` in public examples.
 
-## Verification
+## Verification Required After Any Future Edit
 
 Run locally:
 
@@ -38,7 +39,7 @@ Run locally:
 - `npm run build`
 - `npm run pack:dry`
 
-No GitHub CI status was available for the final commit in this session, so local verification is required.
+For the 2026-06-17 closure, TM7-vps ran these checks before publication.
 
 ## Optional Next Refinements
 

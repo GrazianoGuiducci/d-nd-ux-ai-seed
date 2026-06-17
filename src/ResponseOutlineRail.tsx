@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { agentOrientationAttributes } from './agentOrientation';
 
 export type ResponseOutlineKind =
   | 'section'
@@ -247,8 +248,10 @@ export function ResponseOutlineRail({
         className,
       ].join(' ')}
       aria-label={title}
-      data-thia-marker="response-outline"
-      data-thia-count={safeItems.length}
+      {...agentOrientationAttributes({
+        surface: 'response-outline',
+        count: `${safeItems.length}`,
+      })}
     >
       <StyleOnce />
       {!railOnly && (
@@ -278,8 +281,11 @@ export function ResponseOutlineRail({
                 aria-current={isActive ? 'true' : undefined}
                 aria-label={railOnly ? item.label : undefined}
                 onClick={() => handleSelect(item)}
-                data-thia-item={item.id}
-                data-thia-focus={isActive ? 'active' : undefined}
+                {...agentOrientationAttributes({
+                  item: item.id,
+                  relation: kind,
+                  focus: isActive ? 'active' : undefined,
+                })}
               >
                 <span className="ro-marker" aria-hidden="true">
                   <span className="ro-dot" />

@@ -1,5 +1,6 @@
 import React from 'react';
 import Shell3Col from '../src/Shell3Col';
+import { agentOrientationAttributes } from '../src/agentOrientation';
 import './Shell3ColWorkspaceSeed.css';
 
 type WorkspaceSeedProps = {
@@ -92,13 +93,15 @@ export default function Shell3ColWorkspaceSeed({ en = false, activeItem }: Works
   return (
     <div
       className="workspace-seed-root"
-      data-thia-marker="workspace-seed"
-      data-thia-active="true"
-      data-thia-tab={labels.tab}
-      data-thia-focus={activeItem?.title || 'workspace'}
-      data-thia-item={activeItem?.id || 'none'}
-      data-thia-relation={activeItem?.relation || 'none'}
-      data-thia-count="0 items"
+      {...agentOrientationAttributes({
+        surface: 'workspace-seed',
+        active: true,
+        tab: labels.tab,
+        focus: activeItem?.title || 'workspace',
+        item: activeItem?.id || 'none',
+        relation: activeItem?.relation || 'none',
+        count: '0 items',
+      })}
     >
       <Shell3Col
         flat

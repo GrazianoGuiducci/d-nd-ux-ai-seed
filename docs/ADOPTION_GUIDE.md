@@ -47,35 +47,36 @@ the active surface, open panels and current focus before discussing changes.
 - Use visible state labels for candidate, review-only, live, stale and error
   states.
 - Expose action boundaries before mutating, publishing, deploying or deleting.
-- Keep `data-thia-*` awareness attributes, or replace them with an equivalent
-  documented agent-orientation schema.
-- If adding THIA chat, preserve drag, resize, slow expansion, shrink and
-  `dnd:thia:ask` handoff behavior.
+- Keep `data-agent-*` orientation attributes and preserve `data-thia-*` only
+  when an internal D-ND / THIA surface still depends on them.
+- If adding an assistant surface, preserve drag, resize, slow expansion, shrink
+  and the `agent:context:ask` handoff behavior. Keep `dnd:thia:ask` as a
+  compatibility event for internal surfaces.
 - If adding megamenu navigation, keep active ids and group boundaries as data,
   not only visual labels.
 - Verify at 375px, 768px, 1024px, 1366px and one wide desktop viewport.
 
 ## Awareness Attributes
 
-The default schema is:
+The public default schema is:
 
 ```tsx
-data-thia-marker="..."
-data-thia-active="true"
-data-thia-tab="..."
-data-thia-focus="..."
-data-thia-item="..."
-data-thia-relation="..."
-data-thia-count="..."
+data-agent-marker="..."
+data-agent-active="true"
+data-agent-tab="..."
+data-agent-focus="..."
+data-agent-item="..."
+data-agent-relation="..."
+data-agent-count="..."
 ```
 
 Optional:
 
 ```tsx
-data-thia-subtab="..."
-data-thia-mode="..."
-data-thia-boundary="..."
-data-thia-action="..."
+data-agent-subtab="..."
+data-agent-mode="..."
+data-agent-boundary="..."
+data-agent-action="..."
 ```
 
 These attributes are not visible copy. They are orientation for assistants,
@@ -83,12 +84,12 @@ automation, browser testing and future UX-AI agents.
 
 ## External Use
 
-External teams can ignore D-ND naming and keep the behavior:
+Internal D-ND / THIA surfaces can keep compatibility attributes:
 
 ```text
-data-thia-marker -> data-agent-marker
-data-thia-focus  -> data-agent-focus
-data-thia-action -> data-agent-action
+data-thia-marker
+data-thia-focus
+data-thia-action
 ```
 
 Do not remove the concept. If agents or browser tools cannot tell where the

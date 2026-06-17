@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { agentOrientationAttributes } from './agentOrientation';
 
 export type TaxonomyNodeStatus =
   | 'canonical'
@@ -194,8 +195,10 @@ export function TaxonomyMap({
   return (
     <section
       className={['tx-map', `tx-${layout}`, className].join(' ')}
-      data-thia-marker="taxonomy-map"
-      data-thia-count={safeNodes.length}
+      {...agentOrientationAttributes({
+        surface: 'taxonomy-map',
+        count: `${safeNodes.length}`,
+      })}
     >
       <StyleOnce />
       <div className="tx-head">
@@ -245,9 +248,11 @@ export function TaxonomyMap({
                   STATUS_CLASS[status],
                   selectedId === node.id ? 'is-selected' : '',
                 ].join(' ')}
-                data-thia-item={node.id}
-                data-thia-relation={node.type}
-                data-thia-focus={selectedId === node.id ? 'active' : undefined}
+                {...agentOrientationAttributes({
+                  item: node.id,
+                  relation: node.type,
+                  focus: selectedId === node.id ? 'active' : undefined,
+                })}
               >
                 {onSelect ? (
                   <button type="button" className="tx-button" onClick={() => onSelect(node)}>

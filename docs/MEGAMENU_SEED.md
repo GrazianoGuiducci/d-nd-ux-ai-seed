@@ -28,7 +28,7 @@ Keep menu data structured:
   items: [
     {
       id: 'template-chat',
-      label: 'THIA chat',
+      label: 'Agent context assistant',
       description: 'Assistant surface aware of open panels and focus.',
       status: 'seed',
     },
@@ -52,4 +52,3 @@ available to screen readers but does not occupy the full top row.
 
 The panel stays compact, scrollable when necessary and hides its internal
 scrollbar to avoid visual noise in dense workspaces.
-

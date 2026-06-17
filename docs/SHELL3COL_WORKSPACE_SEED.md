@@ -139,7 +139,7 @@ Allowed bridge forms:
 - `closedTooltip.related`
 - detail-panel links
 - selected-object actions
-- THIA starters derived from `data-thia-*`
+- assistant starters derived from `data-agent-*`
 - tabs when the surfaces are siblings
 
 Bridge rule:
@@ -157,19 +157,21 @@ For example:
 
 ## Awareness Attributes
 
-For THIA and future agents, the outer workspace should expose:
+For public agentic use, the outer workspace should expose:
 
 ```tsx
-data-thia-marker="..."
-data-thia-active="true"
-data-thia-tab="..."
-data-thia-focus="..."
-data-thia-item="..."
-data-thia-relation="..."
-data-thia-count="..."
+data-agent-marker="..."
+data-agent-active="true"
+data-agent-tab="..."
+data-agent-focus="..."
+data-agent-item="..."
+data-agent-relation="..."
+data-agent-count="..."
 ```
 
-These attributes are not copy. They are machine-readable orientation.
+Internal D-ND / THIA surfaces can also emit `data-thia-*` compatibility
+attributes. These attributes are not copy. They are machine-readable
+orientation.
 
 ## Action Rules
 
@@ -206,4 +208,3 @@ When a local workspace improves a behavior that should exist everywhere:
 2. Update the seed docs.
 3. Update the template if the usage contract changed.
 4. Verify one existing surface did not regress.
-
