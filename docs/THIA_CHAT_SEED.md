@@ -40,11 +40,56 @@ orientation contract.
 - Stores drag/resize geometry in local storage.
 - Supports public `agent:context:ask` handoff events.
 - Supports compatibility `dnd:thia:ask` handoff events.
-- Expands slowly when dragged from the compact home position.
-- Shrinks back when dragged downward from a readable large frame.
+- Expands from compact to readable when the header is first dragged.
+- Expands to a large field through the header button or manual resize.
+- Shrinks from large to medium when dragged downward, without docking back to
+  the home corner.
 - Resizes from the lower-right corner on desktop.
+- Includes an optional in-chat feedback form for "help us improve" flows.
 - Uses a true full-screen mobile panel.
 - Keeps internal scrollbars visually hidden.
+
+## Feedback Form
+
+The feedback form is rendered inside the chat, so a host app can expose a
+"Help us improve" or "Aiutaci a migliorare" action without rebuilding the
+assistant surface.
+
+```tsx
+<AgentContextChatSeed
+  feedback={{
+    label: 'Aiutaci a migliorare',
+    title: 'Aiutaci a migliorare',
+    categories: ['Design', 'Contenuto', 'Comportamento', 'Contributo'],
+  }}
+  onFeedbackSubmit={async (payload) => {
+    await saveFeedback(payload);
+    return 'Feedback registrato per revisione.';
+  }}
+/>
+```
+
+If `onFeedbackSubmit` is omitted, the component only captures the note locally
+and appends a review-ready confirmation message. It does not send network
+requests by itself.
+
+Set `feedback={false}` when a host surface already owns a separate contribution
+flow.
+
+## Drag / Expansion Contract
+
+Desktop behavior should stay limited to these transitions:
+
+- compact bubble opens the chat;
+- dragging the compact/readable header expands to a readable frame;
+- the expand button opens a large field;
+- manual resize can also create a large frame;
+- dragging a large frame downward shrinks it to a medium frame near its current
+  position;
+- ordinary movement only repositions the current frame.
+
+Avoid adding additional auto-dock or auto-resize behavior. More implicit motion
+makes the assistant harder to trust in dense workspaces.
 
 ## Handoff Event
 

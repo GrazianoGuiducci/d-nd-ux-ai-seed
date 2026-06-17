@@ -28,6 +28,25 @@ export type ThiaChatFocus = {
 
 export type ThiaChatAskDetail = AgentContextAskDetail;
 
+export type ThiaChatFeedbackPayload = {
+  category: string;
+  message: string;
+  contact?: string;
+  focus: ThiaChatFocus;
+  surfaceId?: string;
+};
+
+export type ThiaChatFeedbackConfig = {
+  enabled?: boolean;
+  label?: string;
+  title?: string;
+  description?: string;
+  categories?: string[];
+  messagePlaceholder?: string;
+  contactPlaceholder?: string;
+  submitLabel?: string;
+};
+
 export interface ThiaChatSeedProps {
   title?: string;
   subtitle?: string;
@@ -40,7 +59,9 @@ export interface ThiaChatSeedProps {
   openByDefault?: boolean;
   className?: string;
   brand?: ThiaChatBrand;
+  feedback?: boolean | ThiaChatFeedbackConfig;
   onSend?: (prompt: string, focus: ThiaChatFocus) => Promise<string> | string;
+  onFeedbackSubmit?: (payload: ThiaChatFeedbackPayload) => Promise<string | void> | string | void;
 }
 
 type Frame = {
@@ -59,8 +80,11 @@ type DragState = {
 };
 
 const CHAT_READABLE_DRAG_WIDTH = 720;
+const CHAT_MAXIMIZED_DRAG_WIDTH = 820;
+const CHAT_MAXIMIZED_DRAG_HEIGHT = 680;
 const CHAT_SHRINK_DRAG_DELTA = 90;
 const CHAT_GEOMETRY_TRANSITION = 'opacity 410ms ease, transform 1210ms cubic-bezier(.2,.78,.18,1), left 1210ms cubic-bezier(.2,.78,.18,1), top 1210ms cubic-bezier(.2,.78,.18,1), width 1210ms cubic-bezier(.2,.78,.18,1), height 1210ms cubic-bezier(.2,.78,.18,1)';
+const DEFAULT_FEEDBACK_CATEGORIES = ['Design issue', 'Missing context', 'Broken behavior', 'Contribution'];
 
 let chatCssInjected = false;
 const CHAT_CSS = `
@@ -69,8 +93,10 @@ const CHAT_CSS = `
   --agent-chat-accent-soft: rgb(34 211 238 / 0.16);
   --agent-chat-accent-border: rgb(34 211 238 / 0.48);
   --agent-chat-accent-glow: rgb(34 211 238 / 0.22);
+  --agent-chat-radius-card: var(--dnd-radius-card, 8px);
+  --agent-chat-radius-control: var(--dnd-radius-control, 4px);
   position: fixed;
-  z-index: 120;
+  z-index: 10020;
   color: rgb(var(--text-01, 244 247 251));
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
@@ -90,7 +116,7 @@ const CHAT_CSS = `
 .dnd-thia-greeting {
   max-width: 19rem;
   border: 1px solid var(--agent-chat-accent-border);
-  border-radius: 8px;
+  border-radius: var(--agent-chat-radius-card);
   background: rgb(var(--elev-01, 15 18 25) / 0.94);
   color: rgb(var(--text-01, 244 247 251));
   padding: 0.68rem 0.78rem;
@@ -116,7 +142,7 @@ const CHAT_CSS = `
   grid-template-rows: auto auto minmax(0, 1fr) auto;
   overflow: hidden;
   border: 1px solid rgb(var(--border-02, 255 255 255 / 0.16));
-  border-radius: 8px;
+  border-radius: var(--agent-chat-radius-card);
   background: rgb(var(--elev-01, 15 18 25) / 0.98);
   box-shadow: 0 30px 90px rgb(0 0 0 / 0.58), 0 0 38px var(--agent-chat-accent-soft);
   transition: ${CHAT_GEOMETRY_TRANSITION};
@@ -171,7 +197,7 @@ const CHAT_CSS = `
   width: 2rem;
   height: 2rem;
   border: 1px solid rgb(var(--border-02, 255 255 255 / 0.16));
-  border-radius: 4px;
+  border-radius: var(--agent-chat-radius-control);
   background: transparent;
   color: rgb(var(--text-02, 205 213 225));
   cursor: pointer;
@@ -217,7 +243,7 @@ const CHAT_CSS = `
 }
 .dnd-thia-chip {
   border: 1px solid rgb(var(--border-01, 255 255 255 / 0.09));
-  border-radius: 4px;
+  border-radius: var(--agent-chat-radius-control);
   background: rgb(var(--elev-02, 23 28 38) / 0.62);
   color: rgb(var(--text-muted, 147 158 176));
   padding: 0.22rem 0.42rem;
@@ -243,7 +269,7 @@ const CHAT_CSS = `
 .dnd-thia-message-body {
   max-width: 88%;
   border: 1px solid rgb(var(--border-01, 255 255 255 / 0.09));
-  border-radius: 8px;
+  border-radius: var(--agent-chat-radius-card);
   background: rgb(var(--elev-02, 23 28 38) / 0.72);
   padding: 0.62rem 0.75rem;
   color: rgb(var(--text-02, 205 213 225));
@@ -274,11 +300,101 @@ const CHAT_CSS = `
   border-top: 1px solid rgb(var(--border-01, 255 255 255 / 0.09));
   padding: 0.72rem;
 }
+.dnd-thia-composer-tools {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 0.55rem;
+}
+.dnd-thia-feedback-toggle,
+.dnd-thia-feedback-submit,
+.dnd-thia-feedback-cancel {
+  min-height: 1.9rem;
+  border: 1px solid rgb(var(--border-02, 255 255 255 / 0.16));
+  border-radius: var(--agent-chat-radius-control);
+  background: transparent;
+  color: rgb(var(--text-02, 205 213 225));
+  cursor: pointer;
+  font-size: 0.74rem;
+  line-height: 1;
+}
+.dnd-thia-feedback-toggle {
+  padding: 0 0.58rem;
+  color: var(--agent-chat-accent);
+}
+.dnd-thia-feedback-toggle:hover,
+.dnd-thia-feedback-toggle:focus-visible,
+.dnd-thia-feedback-submit:hover,
+.dnd-thia-feedback-submit:focus-visible,
+.dnd-thia-feedback-cancel:hover,
+.dnd-thia-feedback-cancel:focus-visible {
+  outline: none;
+  border-color: var(--agent-chat-accent-border);
+  color: var(--agent-chat-accent);
+}
+.dnd-thia-feedback-panel {
+  display: grid;
+  gap: 0.55rem;
+  margin-bottom: 0.62rem;
+  border: 1px solid rgb(var(--border-02, 255 255 255 / 0.16));
+  border-radius: var(--agent-chat-radius-card);
+  background: rgb(var(--elev-00, 7 9 13) / 0.54);
+  padding: 0.68rem;
+}
+.dnd-thia-feedback-panel h3,
+.dnd-thia-feedback-panel p {
+  margin: 0;
+}
+.dnd-thia-feedback-panel h3 {
+  color: rgb(var(--text-01, 244 247 251));
+  font-size: 0.86rem;
+  line-height: 1.2;
+}
+.dnd-thia-feedback-panel p {
+  color: rgb(var(--text-muted, 147 158 176));
+  font-size: 0.76rem;
+  line-height: 1.38;
+}
+.dnd-thia-feedback-panel select,
+.dnd-thia-feedback-panel textarea,
+.dnd-thia-feedback-panel input {
+  min-width: 0;
+  width: 100%;
+  border: 1px solid rgb(var(--border-01, 255 255 255 / 0.09));
+  border-radius: var(--agent-chat-radius-control);
+  background: rgb(var(--elev-01, 15 18 25) / 0.86);
+  color: rgb(var(--text-01, 244 247 251));
+  padding: 0.5rem 0.56rem;
+  font: inherit;
+  font-size: 0.78rem;
+}
+.dnd-thia-feedback-panel textarea {
+  min-height: 5.25rem;
+  resize: vertical;
+}
+.dnd-thia-feedback-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+.dnd-thia-feedback-submit {
+  border-color: var(--agent-chat-accent-border);
+  background: var(--agent-chat-accent-soft);
+  color: var(--agent-chat-accent);
+  padding: 0 0.65rem;
+}
+.dnd-thia-feedback-cancel {
+  padding: 0 0.58rem;
+}
+.dnd-thia-feedback-status {
+  color: rgb(var(--text-muted, 147 158 176));
+  font-size: 0.74rem;
+  line-height: 1.35;
+}
 .dnd-thia-input-row {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 2.45rem;
   border: 1px solid rgb(var(--border-02, 255 255 255 / 0.16));
-  border-radius: 8px;
+  border-radius: var(--agent-chat-radius-card);
   background: rgb(var(--elev-00, 7 9 13) / 0.62);
 }
 .dnd-thia-input-row:focus-within {
@@ -400,12 +516,27 @@ function defaultFrame(): Frame {
 
 function expandedFrame(pointer?: { x: number; y: number }): Frame {
   if (typeof window === 'undefined') return defaultFrame();
-  const width = Math.min(980, Math.max(CHAT_READABLE_DRAG_WIDTH, window.innerWidth * 0.54));
-  const height = Math.min(720, Math.max(560, window.innerHeight * 0.68));
+  const width = Math.min(1120, Math.max(CHAT_READABLE_DRAG_WIDTH, window.innerWidth * 0.72));
+  const height = Math.min(780, Math.max(560, window.innerHeight * 0.78));
   const size = clampFrameSize({ width, height });
   const x = pointer ? pointer.x - size.width * 0.55 : (window.innerWidth - size.width) / 2;
   const y = pointer ? pointer.y - 56 : (window.innerHeight - size.height) / 2;
   return { size, position: clampFramePosition({ x: Math.round(x), y: Math.round(y) }, size) };
+}
+
+function mediumFrameFrom(current: Frame): Frame {
+  const medium = defaultFrame();
+  const center = {
+    x: current.position.x + current.size.width / 2,
+    y: current.position.y + current.size.height / 2,
+  };
+  return {
+    size: medium.size,
+    position: clampFramePosition({
+      x: Math.round(center.x - medium.size.width / 2),
+      y: Math.round(center.y - medium.size.height / 2),
+    }, medium.size),
+  };
 }
 
 function readStoredFrame(storageKey: string): Frame {
@@ -445,6 +576,22 @@ function compactFocus(focus: ThiaChatFocus): string {
   return bits.join(' / ');
 }
 
+function resolveFeedbackConfig(feedback: ThiaChatSeedProps['feedback']): Required<ThiaChatFeedbackConfig> {
+  const base = {
+    enabled: true,
+    label: 'Help us improve',
+    title: 'Help us improve',
+    description: 'Send a focused note about this surface. The host app decides where it is stored.',
+    categories: DEFAULT_FEEDBACK_CATEGORIES,
+    messagePlaceholder: 'What should be improved, corrected or preserved?',
+    contactPlaceholder: 'Optional contact or reference',
+    submitLabel: 'Send feedback',
+  };
+  if (feedback === false) return { ...base, enabled: false };
+  if (feedback === true || feedback === undefined) return base;
+  return { ...base, ...feedback, categories: feedback.categories?.length ? feedback.categories : base.categories };
+}
+
 export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
   title,
   subtitle,
@@ -457,11 +604,14 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
   openByDefault = false,
   className,
   brand = 'agent',
+  feedback,
   onSend,
+  onFeedbackSubmit,
 }) => {
   const resolvedTitle = title || (brand === 'thia' ? 'THIA' : 'Assistant');
   const resolvedSubtitle = subtitle || (brand === 'thia' ? 'Design assistant' : 'Context assistant');
   const resolvedStorageKey = storageKey || (brand === 'thia' ? 'dnd-thia-chat-seed' : 'agent-context-chat-seed');
+  const feedbackConfig = useMemo(() => resolveFeedbackConfig(feedback), [feedback]);
 
   useEffect(() => { injectChatCss(); }, []);
 
@@ -488,6 +638,11 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
     }];
   });
   const [input, setInput] = useState('');
+  const [feedbackOpen, setFeedbackOpen] = useState(false);
+  const [feedbackCategory, setFeedbackCategory] = useState(() => feedbackConfig.categories[0] || 'Feedback');
+  const [feedbackMessage, setFeedbackMessage] = useState('');
+  const [feedbackContact, setFeedbackContact] = useState('');
+  const [feedbackStatus, setFeedbackStatus] = useState('');
   const dragRef = useRef<DragState | null>(null);
   const frameRef = useRef(frame);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -505,6 +660,12 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
   useEffect(() => {
     frameRef.current = frame;
   }, [frame]);
+
+  useEffect(() => {
+    if (!feedbackConfig.categories.includes(feedbackCategory)) {
+      setFeedbackCategory(feedbackConfig.categories[0] || 'Feedback');
+    }
+  }, [feedbackCategory, feedbackConfig.categories]);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -555,6 +716,38 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
       setMessages(prev => [...prev, { role: 'assistant', text: message }]);
     }
   }, [activeFocus, onSend]);
+
+  const submitFeedback = useCallback(async () => {
+    const clean = feedbackMessage.trim();
+    if (!clean) {
+      setFeedbackStatus('Write a short note before sending.');
+      return;
+    }
+
+    const payload: ThiaChatFeedbackPayload = {
+      category: feedbackCategory,
+      message: clean,
+      contact: feedbackContact.trim() || undefined,
+      focus: { ...readDomFocus(), ...activeFocus },
+      surfaceId,
+    };
+
+    try {
+      const response = await onFeedbackSubmit?.(payload);
+      setMessages(prev => [...prev, {
+        role: 'assistant',
+        text: response || `Feedback received: ${payload.category}. It is ready for the host app review flow.`,
+        transientFocus: true,
+      }]);
+      setFeedbackMessage('');
+      setFeedbackContact('');
+      setFeedbackStatus('Feedback captured.');
+      setFeedbackOpen(false);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Feedback submit failed.';
+      setFeedbackStatus(message);
+    }
+  }, [activeFocus, feedbackCategory, feedbackContact, feedbackMessage, onFeedbackSubmit, surfaceId]);
 
   useEffect(() => {
     const handler = (event: Event) => {
@@ -640,10 +833,10 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
       }
 
       const canShrink = !drag.didShrink
-        && (drag.startSize.width >= 820 || drag.startSize.height >= 680)
+        && (drag.startSize.width >= CHAT_MAXIMIZED_DRAG_WIDTH || drag.startSize.height >= CHAT_MAXIMIZED_DRAG_HEIGHT)
         && event.clientY - drag.startY > CHAT_SHRINK_DRAG_DELTA;
       if (canShrink) {
-        const small = defaultFrame();
+        const small = mediumFrameFrom(frameRef.current);
         drag.didShrink = true;
         setExpanded(false);
         applyFrame(small);
@@ -754,6 +947,57 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
       </div>
 
       <form className="dnd-thia-composer" onSubmit={onSubmit}>
+        {feedbackConfig.enabled && (
+          <>
+            <div className="dnd-thia-composer-tools">
+              <button
+                type="button"
+                className="dnd-thia-feedback-toggle"
+                onClick={() => setFeedbackOpen(open => !open)}
+                aria-expanded={feedbackOpen ? 'true' : 'false'}
+              >
+                {feedbackConfig.label}
+              </button>
+            </div>
+            {feedbackOpen && (
+              <div className="dnd-thia-feedback-panel" role="group" aria-label={feedbackConfig.title}>
+                <div>
+                  <h3>{feedbackConfig.title}</h3>
+                  <p>{feedbackConfig.description}</p>
+                </div>
+                <select
+                  value={feedbackCategory}
+                  onChange={event => setFeedbackCategory(event.target.value)}
+                  aria-label="Feedback category"
+                >
+                  {feedbackConfig.categories.map(category => (
+                    <option key={category} value={category}>{category}</option>
+                  ))}
+                </select>
+                <textarea
+                  value={feedbackMessage}
+                  rows={4}
+                  placeholder={feedbackConfig.messagePlaceholder}
+                  onChange={event => setFeedbackMessage(event.target.value)}
+                />
+                <input
+                  value={feedbackContact}
+                  placeholder={feedbackConfig.contactPlaceholder}
+                  onChange={event => setFeedbackContact(event.target.value)}
+                />
+                <div className="dnd-thia-feedback-actions">
+                  <button type="button" className="dnd-thia-feedback-submit" onClick={() => void submitFeedback()}>
+                    {feedbackConfig.submitLabel}
+                  </button>
+                  <button type="button" className="dnd-thia-feedback-cancel" onClick={() => setFeedbackOpen(false)}>
+                    Cancel
+                  </button>
+                </div>
+                {feedbackStatus && <div className="dnd-thia-feedback-status">{feedbackStatus}</div>}
+              </div>
+            )}
+          </>
+        )}
         <div className="dnd-thia-input-row">
           <textarea
             value={input}

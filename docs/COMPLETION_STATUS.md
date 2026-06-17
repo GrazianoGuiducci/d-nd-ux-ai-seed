@@ -20,6 +20,12 @@ validations and live Playwright viewport checks on 2026-06-17.
 - `ThiaChatSeed` / `AgentContextChatSeed` with awareness, drag, resize, slow
   expansion, shrink, public + compatibility handoff events and full-screen
   mobile behavior.
+- `AgentContextChatSeed` in-chat feedback form for "help us improve" flows,
+  with local fallback confirmation and optional host submit handler.
+- Chat radius aligned to the design primitive contract: 8px surfaces and 4px
+  compact controls.
+- Chat drag contract limited to compact-to-readable expansion and large-to-
+  medium shrink without returning to the home dock.
 - Public `data-agent-*` orientation emitted by workspace demo, template,
   response outline, article diagram and taxonomy map, with `data-thia-*`
   compatibility preserved.

@@ -115,11 +115,17 @@ Record any breakpoint where behavior changes.
 
 - Bubble opens the assistant.
 - Header drag works on desktop.
+- Header drag from compact/readable expands to readable.
+- Header drag downward from a large frame shrinks to medium without returning to
+  the home dock.
 - Expand and close buttons do not start accidental drag.
+- Expand button opens a large field.
 - Resize handle works on desktop.
-- Dragging downward from large frame can shrink.
 - Mobile opens as full-screen panel.
 - Messages scroll without visible nested scrollbar traps.
+- Feedback button opens the in-chat feedback form.
+- Feedback submit uses the host handler when provided and otherwise shows a
+  local review-ready confirmation.
 - `agent:context:ask` opens assistant with context.
 - `dnd:thia:ask` still works for compatibility.
 - `data-agent-*` is read before `data-thia-*`.

@@ -43,6 +43,12 @@ pill: explicit only
 Cards and modals stop at 8px. Controls stay tighter. Pills are reserved for
 status chips, compact tags and segmented option chips, not general containers.
 
+Assistant surfaces follow the same contract:
+
+- chat window, greeting, messages, input and feedback panel: 8px;
+- icon buttons, selects, inputs and small commands: 4px;
+- avatar and intentional status chips may stay circular or pill-shaped.
+
 ## Buttons
 
 Use `AgentButton` for public/generic code and `DndButton` for internal
