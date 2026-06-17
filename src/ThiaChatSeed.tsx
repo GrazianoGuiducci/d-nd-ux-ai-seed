@@ -703,8 +703,21 @@ const CHAT_CSS = `
   display: flex;
   gap: 0.45rem;
   align-items: center;
+  justify-content: flex-start;
   color: rgb(var(--text-02, 205 213 225));
   font-size: 0.78rem;
+}
+.dnd-thia-check input[type="checkbox"] {
+  width: 1rem;
+  min-width: 1rem;
+  height: 1rem;
+  margin: 0;
+  padding: 0;
+  accent-color: var(--agent-chat-accent);
+}
+.dnd-thia-check span {
+  min-width: 0;
+  line-height: 1.3;
 }
 .dnd-thia-module-foot {
   justify-content: space-between;
