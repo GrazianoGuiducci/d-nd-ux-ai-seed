@@ -115,6 +115,9 @@ Record any breakpoint where behavior changes.
 ## Agent Context Chat
 
 - Bubble opens the assistant.
+- Header shows Manager, Reset, Full page and Close controls.
+- Manager is either connected to a host action or visibly inert/documented.
+- Reset requires a second click before clearing messages.
 - Header drag works on desktop.
 - Header click without movement does not resize the assistant.
 - Header drag normally repositions the assistant; only the Lab-derived first
@@ -126,7 +129,10 @@ Record any breakpoint where behavior changes.
 - Dragging a full-page frame downward undocks it to the default chat/intake
   frame without losing pointer control.
 - Resize handle works on desktop.
+- Manual resize does not trigger extra auto-expand or auto-shrink loops.
 - Mobile opens as full-screen panel.
+- Submit Module uses Chat/Form tabs in compact or mobile mode.
+- Help us improve opens compact/mobile mode on the Form tab.
 - Messages scroll without visible nested scrollbar traps.
 - Feedback button opens the split chat / Submit Module frame.
 - Fixed "Help us improve" side tab opens the chat with the Submit Module visible.

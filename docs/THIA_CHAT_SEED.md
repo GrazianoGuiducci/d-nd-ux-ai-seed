@@ -6,6 +6,8 @@ Public export: `AgentContextChatSeed`.
 
 Compatibility export: `ThiaChatSeed`.
 
+Parity contract: `docs/THIA_CHAT_PORT_PARITY_CONTRACT.md`.
+
 The seed extracts portable assistant UI behavior from the D-ND public THIA chat
 without coupling this repo to a live backend.
 
@@ -40,6 +42,8 @@ orientation contract.
 - Stores drag/resize geometry in local storage.
 - Supports public `agent:context:ask` handoff events.
 - Supports compatibility `dnd:thia:ask` handoff events.
+- Header exposes Manager, Reset, Full page and Close controls.
+- Reset uses a second-click confirmation before clearing messages.
 - Header drag repositions the current frame only.
 - Expands to a full-page working frame through the header button, then restores
   the previous frame.
@@ -92,6 +96,8 @@ Desktop behavior should stay limited to these transitions:
   the next click;
 - dragging a full-page frame downward undocks it back to the mode default frame
   and continues the drag from there;
+- dragging a large chat frame downward returns to the compact/default frame once
+  per gesture;
 - the lower-right grip is the only direct manual resize control.
 
 ## Submit Module Contract
@@ -105,6 +111,7 @@ The Lab-derived module preserves these controls:
 - clear, preview, download and submit actions;
 - optional name, email and newsletter checkbox;
 - split chat/form layout with a draggable divider on desktop.
+- compact/mobile mode uses Chat/Form tabs instead of vertical stacking.
 
 Avoid adding additional auto-dock or auto-resize behavior. More implicit motion
 makes the assistant harder to trust in dense workspaces.

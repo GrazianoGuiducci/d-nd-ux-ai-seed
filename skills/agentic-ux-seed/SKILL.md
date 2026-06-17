@@ -93,6 +93,12 @@ Use `ThiaChatSeed` with `brand="thia"` for internal THIA surfaces.
 
 The assistant should read orientation before discussing changes.
 
+When editing, copying or reviewing `ThiaChatSeed`, read
+`docs/THIA_CHAT_PORT_PARITY_CONTRACT.md` first. Preserve the complete
+Lab-derived behavior unit: side tab, Submit Module, header buttons, reset
+confirmation, full-page restore, first-drag expansion, full-page drag-down
+undock, manual resize, split divider and compact/mobile Chat/Form tabs.
+
 ## Orientation Contract
 
 Public attributes:
@@ -174,7 +180,9 @@ Verify:
 - focus remains visible;
 - text does not overflow cards, buttons, chips or drawers;
 - localStorage/sessionStorage keys are unique;
-- orientation attributes are present on the active surface.
+- orientation attributes are present on the active surface;
+- if using `ThiaChatSeed`, reset, full page, drag, resize, Submit Module and
+  compact/mobile tab behavior match `docs/THIA_CHAT_PORT_PARITY_CONTRACT.md`.
 
 ## Do Not Do
 

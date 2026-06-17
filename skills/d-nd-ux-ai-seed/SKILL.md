@@ -42,6 +42,13 @@ Use `MegaMenuSeed` for tab families, route groups and subdomain navigation.
 Use `ThiaChatSeed` when an assistant surface must know the active panel, focus
 and `data-thia-*` context before discussing changes.
 
+When editing, copying or reviewing `ThiaChatSeed`, read
+`docs/THIA_CHAT_PORT_PARITY_CONTRACT.md` first. The chat is a complete
+interaction unit: side tab, Submit Module, header buttons, reset confirmation,
+full-page restore, first-drag expansion, full-page drag-down undock, manual
+resize, split divider and compact/mobile tabs must be preserved together unless
+the target deliberately documents a narrower fork.
+
 Use `DesignPrimitives` before creating new local button, card or modal styling.
 Cards and modals stop at 8px radius; controls use 4px unless they are explicit
 pills.
@@ -54,6 +61,7 @@ pills.
 4. Copy the selected component/template into the target project or import from the package.
 5. Rename storage keys, props, route labels, and awareness attributes for the target domain.
 6. Verify overflow, drawer states, keyboard focus, resize bars, mobile stacking, modal close behavior and closed-book gutters.
+   For `ThiaChatSeed`, also verify the parity contract in `docs/THIA_CHAT_PORT_PARITY_CONTRACT.md`.
 7. Document any new reusable pattern in `docs/PATTERN_CANDIDATES.md` before promoting it.
 
 ## Boundaries
