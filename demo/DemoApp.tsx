@@ -395,7 +395,20 @@ export default function DemoApp() {
       </dl>
 
       <div className="demo-inspector-block">
-        <span>Pattern contract</span>
+        <div className="demo-tip-row">
+          <span>Pattern contract</span>
+          <Tooltip
+            block={false}
+            position="left"
+            content={{
+              function: 'The contract names what must travel with the visual component.',
+              mechanism: 'State, storage, orientation attributes and side-effect boundaries are part of the seed.',
+              expectation: 'Copying only the visible card is incomplete.',
+            }}
+          >
+            <button type="button" className="demo-tip-icon" aria-label="Pattern contract tooltip">?</button>
+          </Tooltip>
+        </div>
         <p>
           Keep visible state, storage keys, awareness attributes and side-effect boundary aligned
           before copying this seed into another project.
@@ -404,7 +417,20 @@ export default function DemoApp() {
 
       <div className="demo-primitive-stack" aria-label="Design primitives">
         <AgentCard className="demo-primitive-card" tone="active">
-          <span>Radius contract</span>
+          <div className="demo-tip-row">
+            <span>Radius contract</span>
+            <Tooltip
+              block={false}
+              position="left"
+              content={{
+                function: 'Radius tokens keep the seed visually compatible across D-ND surfaces.',
+                mechanism: 'Cards and assistant surfaces use 8px. Compact controls use 4px.',
+                expectation: 'Avoid sharp 90 degree corners unless the element is a page edge or divider.',
+              }}
+            >
+              <button type="button" className="demo-tip-icon" aria-label="Radius contract tooltip">?</button>
+            </Tooltip>
+          </div>
           <p>Cards and modals stop at 8px; controls use 4px; pills are explicit.</p>
         </AgentCard>
         <div className="demo-button-row">

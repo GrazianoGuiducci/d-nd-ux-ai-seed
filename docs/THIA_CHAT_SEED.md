@@ -81,7 +81,9 @@ flow.
 Desktop behavior should stay limited to these transitions:
 
 - compact bubble opens the chat;
-- dragging the compact/readable header expands to a readable frame;
+- clicking the header alone does not resize the chat;
+- dragging the compact/readable header beyond the movement threshold expands to
+  a readable frame;
 - the expand button opens a large field;
 - manual resize can also create a large frame;
 - dragging a large frame downward shrinks it to a medium frame near its current

@@ -76,12 +76,14 @@ type DragState = {
   offsetX: number;
   offsetY: number;
   startSize: Frame['size'];
+  didExpand: boolean;
   didShrink: boolean;
 };
 
 const CHAT_READABLE_DRAG_WIDTH = 720;
 const CHAT_MAXIMIZED_DRAG_WIDTH = 820;
 const CHAT_MAXIMIZED_DRAG_HEIGHT = 680;
+const CHAT_EXPAND_DRAG_DELTA = 18;
 const CHAT_SHRINK_DRAG_DELTA = 90;
 const CHAT_GEOMETRY_TRANSITION = 'opacity 410ms ease, transform 1210ms cubic-bezier(.2,.78,.18,1), left 1210ms cubic-bezier(.2,.78,.18,1), top 1210ms cubic-bezier(.2,.78,.18,1), width 1210ms cubic-bezier(.2,.78,.18,1), height 1210ms cubic-bezier(.2,.78,.18,1)';
 const DEFAULT_FEEDBACK_CATEGORIES = ['Design issue', 'Missing context', 'Broken behavior', 'Contribution'];
@@ -645,6 +647,7 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
   const [feedbackStatus, setFeedbackStatus] = useState('');
   const dragRef = useRef<DragState | null>(null);
   const frameRef = useRef(frame);
+  const expandedRef = useRef(expanded);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const activeFocus = useMemo<ThiaChatFocus>(() => {
@@ -660,6 +663,10 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
   useEffect(() => {
     frameRef.current = frame;
   }, [frame]);
+
+  useEffect(() => {
+    expandedRef.current = expanded;
+  }, [expanded]);
 
   useEffect(() => {
     if (!feedbackConfig.categories.includes(feedbackCategory)) {
@@ -781,23 +788,18 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
     if (isMobile || event.button !== 0) return;
     event.preventDefault();
     const current = frameRef.current;
-    let startFrame = current;
-    if (!expanded && current.size.width < CHAT_READABLE_DRAG_WIDTH) {
-      startFrame = expandedFrame({ x: event.clientX, y: event.clientY });
-      setExpanded(true);
-      applyFrame(startFrame, false);
-    }
     dragRef.current = {
       kind: 'move',
       startX: event.clientX,
       startY: event.clientY,
-      offsetX: event.clientX - startFrame.position.x,
-      offsetY: event.clientY - startFrame.position.y,
-      startSize: startFrame.size,
+      offsetX: event.clientX - current.position.x,
+      offsetY: event.clientY - current.position.y,
+      startSize: current.size,
+      didExpand: false,
       didShrink: false,
     };
     (event.currentTarget as HTMLElement).setPointerCapture?.(event.pointerId);
-  }, [applyFrame, expanded, isMobile]);
+  }, [isMobile]);
 
   const onResizePointerDown = useCallback((event: React.PointerEvent) => {
     if (isMobile || event.button !== 0) return;
@@ -810,6 +812,7 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
       offsetX: 0,
       offsetY: 0,
       startSize: frameRef.current.size,
+      didExpand: false,
       didShrink: false,
     };
     (event.currentTarget as HTMLElement).setPointerCapture?.(event.pointerId);
@@ -832,6 +835,22 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
         return;
       }
 
+      const dragDistance = Math.hypot(event.clientX - drag.startX, event.clientY - drag.startY);
+      const canExpandFromDrag = !expandedRef.current
+        && !drag.didExpand
+        && drag.startSize.width < CHAT_READABLE_DRAG_WIDTH
+        && dragDistance >= CHAT_EXPAND_DRAG_DELTA;
+      if (canExpandFromDrag) {
+        const next = expandedFrame({ x: event.clientX, y: event.clientY });
+        drag.didExpand = true;
+        setExpanded(true);
+        expandedRef.current = true;
+        applyFrame(next);
+        drag.offsetX = event.clientX - next.position.x;
+        drag.offsetY = event.clientY - next.position.y;
+        return;
+      }
+
       const canShrink = !drag.didShrink
         && (drag.startSize.width >= CHAT_MAXIMIZED_DRAG_WIDTH || drag.startSize.height >= CHAT_MAXIMIZED_DRAG_HEIGHT)
         && event.clientY - drag.startY > CHAT_SHRINK_DRAG_DELTA;
@@ -839,6 +858,7 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
         const small = mediumFrameFrom(frameRef.current);
         drag.didShrink = true;
         setExpanded(false);
+        expandedRef.current = false;
         applyFrame(small);
         drag.offsetX = event.clientX - small.position.x;
         drag.offsetY = event.clientY - small.position.y;

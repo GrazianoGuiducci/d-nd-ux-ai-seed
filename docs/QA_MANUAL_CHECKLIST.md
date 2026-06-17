@@ -76,6 +76,7 @@ Record any breakpoint where behavior changes.
 - Hover intent allows moving from anchor to popover without immediate loss.
 - Links inside popovers remain clickable.
 - Tooltip copy stays short.
+- Visible tooltip triggers are present where a demo block needs explanation.
 - Mobile does not depend on hover-only content for important information.
 
 ## Response Outline
@@ -115,6 +116,7 @@ Record any breakpoint where behavior changes.
 
 - Bubble opens the assistant.
 - Header drag works on desktop.
+- Header click without movement does not resize the assistant.
 - Header drag from compact/readable expands to readable.
 - Header drag downward from a large frame shrinks to medium without returning to
   the home dock.
