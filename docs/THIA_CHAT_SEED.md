@@ -94,8 +94,8 @@ Desktop behavior should stay limited to these transitions:
 - dragging the header only repositions the current frame;
 - the expand button opens a full-page frame and restores the previous frame on
   the next click;
-- dragging a full-page frame downward undocks it back to the mode default frame
-  and continues the drag from there;
+- dragging a full-page frame downward undocks it to an intermediate readable
+  frame, not the compact home, and continues the drag from there;
 - dragging a large chat frame downward returns to the compact/default frame once
   per gesture;
 - the lower-right grip is the only direct manual resize control.

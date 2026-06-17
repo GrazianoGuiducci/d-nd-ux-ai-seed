@@ -92,8 +92,9 @@ Required transitions:
   continues as a drag.
 - Header drag after that only repositions the current frame.
 - Full-page button opens a viewport-sized frame with small margins.
-- Dragging a full-page frame downward undocks it to the default frame for the
-  current mode and continues the drag.
+- Dragging a full-page frame downward undocks it to an intermediate readable
+  frame for chat, or the wide intake frame for Submit Module, and continues the
+  drag. It must not collapse to the compact/minimum chat home.
 - Dragging a large chat frame downward shrinks it to compact/readable default
   only once per gesture.
 - Manual resize uses the same frame clamp and compact thresholds. It must not
@@ -192,4 +193,3 @@ A chat port is incomplete if any of these are missing:
 - host submit boundary;
 - unique storage keys;
 - manual QA against the behaviors above.
-

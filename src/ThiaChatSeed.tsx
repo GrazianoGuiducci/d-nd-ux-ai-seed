@@ -955,7 +955,7 @@ function fullPageFrame(): Frame {
 }
 
 function undockFrameForDrag(pointer: { x: number; y: number }, intakeMode: boolean): Frame {
-  const target = intakeMode ? intakeFrame() : defaultFrame();
+  const target = intakeMode ? intakeFrame() : expandedFrame();
   const size = clampFrameSize(target.size);
   const headerGripX = Math.min(Math.max(160, size.width * 0.24), size.width - 72);
   return {

@@ -126,8 +126,8 @@ Record any breakpoint where behavior changes.
   frame.
 - Expand and close buttons do not start accidental drag.
 - Expand button opens a full-page frame and next click restores the prior frame.
-- Dragging a full-page frame downward undocks it to the default chat/intake
-  frame without losing pointer control.
+- Dragging a full-page frame downward undocks it to an intermediate readable
+  chat frame or the wide intake frame without losing pointer control.
 - Resize handle works on desktop.
 - Manual resize does not trigger extra auto-expand or auto-shrink loops.
 - Mobile opens as full-screen panel.
