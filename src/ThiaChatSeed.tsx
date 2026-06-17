@@ -39,6 +39,8 @@ export type ThiaChatFeedbackPayload = {
 export type ThiaChatFeedbackConfig = {
   enabled?: boolean;
   label?: string;
+  tabLabel?: string;
+  tabPosition?: 'left' | 'right';
   title?: string;
   description?: string;
   categories?: string[];
@@ -71,20 +73,11 @@ type Frame = {
 
 type DragState = {
   kind: 'move' | 'resize';
-  startX: number;
-  startY: number;
   offsetX: number;
   offsetY: number;
-  startSize: Frame['size'];
-  didExpand: boolean;
-  didShrink: boolean;
 };
 
-const CHAT_READABLE_DRAG_WIDTH = 720;
-const CHAT_MAXIMIZED_DRAG_WIDTH = 820;
-const CHAT_MAXIMIZED_DRAG_HEIGHT = 680;
-const CHAT_EXPAND_DRAG_DELTA = 18;
-const CHAT_SHRINK_DRAG_DELTA = 90;
+const CHAT_READABLE_WIDTH = 720;
 const CHAT_GEOMETRY_TRANSITION = 'opacity 410ms ease, transform 1210ms cubic-bezier(.2,.78,.18,1), left 1210ms cubic-bezier(.2,.78,.18,1), top 1210ms cubic-bezier(.2,.78,.18,1), width 1210ms cubic-bezier(.2,.78,.18,1), height 1210ms cubic-bezier(.2,.78,.18,1)';
 const DEFAULT_FEEDBACK_CATEGORIES = ['Design issue', 'Missing context', 'Broken behavior', 'Contribution'];
 
@@ -107,6 +100,45 @@ const CHAT_CSS = `
   --agent-chat-accent-soft: rgb(57 255 20 / 0.13);
   --agent-chat-accent-border: rgb(57 255 20 / 0.62);
   --agent-chat-accent-glow: rgb(57 255 20 / 0.22);
+}
+.dnd-thia-feedback-tab {
+  position: fixed;
+  top: 42%;
+  z-index: 10012;
+  display: inline-grid;
+  place-items: center;
+  min-height: 8.75rem;
+  border: 1px solid var(--agent-chat-accent-border);
+  border-left: 0;
+  border-radius: 0 var(--agent-chat-radius-card) var(--agent-chat-radius-card) 0;
+  background: rgb(var(--elev-01, 15 18 25) / 0.96);
+  color: var(--agent-chat-accent);
+  box-shadow: 0 0 22px var(--agent-chat-accent-glow);
+  cursor: pointer;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  padding: 0.62rem 0.46rem;
+  text-transform: uppercase;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+.dnd-thia-feedback-tab[data-position="left"] {
+  left: 0;
+}
+.dnd-thia-feedback-tab[data-position="right"] {
+  right: 0;
+  border-right: 0;
+  border-left: 1px solid var(--agent-chat-accent-border);
+  border-radius: var(--agent-chat-radius-card) 0 0 var(--agent-chat-radius-card);
+  transform: none;
+}
+.dnd-thia-feedback-tab:hover,
+.dnd-thia-feedback-tab:focus-visible {
+  outline: none;
+  background: rgb(var(--elev-02, 23 28 38) / 0.98);
 }
 .dnd-thia-bubble-wrap {
   right: 1rem;
@@ -439,6 +471,12 @@ const CHAT_CSS = `
     right: 0.65rem;
     bottom: 2.1rem;
   }
+  .dnd-thia-feedback-tab {
+    top: auto;
+    bottom: 6.25rem;
+    min-height: 7.4rem;
+    font-size: 0.6rem;
+  }
   .dnd-thia-window {
     left: 0 !important;
     top: 0 !important;
@@ -518,27 +556,12 @@ function defaultFrame(): Frame {
 
 function expandedFrame(pointer?: { x: number; y: number }): Frame {
   if (typeof window === 'undefined') return defaultFrame();
-  const width = Math.min(1120, Math.max(CHAT_READABLE_DRAG_WIDTH, window.innerWidth * 0.72));
+  const width = Math.min(1120, Math.max(CHAT_READABLE_WIDTH, window.innerWidth * 0.72));
   const height = Math.min(780, Math.max(560, window.innerHeight * 0.78));
   const size = clampFrameSize({ width, height });
   const x = pointer ? pointer.x - size.width * 0.55 : (window.innerWidth - size.width) / 2;
   const y = pointer ? pointer.y - 56 : (window.innerHeight - size.height) / 2;
   return { size, position: clampFramePosition({ x: Math.round(x), y: Math.round(y) }, size) };
-}
-
-function mediumFrameFrom(current: Frame): Frame {
-  const medium = defaultFrame();
-  const center = {
-    x: current.position.x + current.size.width / 2,
-    y: current.position.y + current.size.height / 2,
-  };
-  return {
-    size: medium.size,
-    position: clampFramePosition({
-      x: Math.round(center.x - medium.size.width / 2),
-      y: Math.round(center.y - medium.size.height / 2),
-    }, medium.size),
-  };
 }
 
 function readStoredFrame(storageKey: string): Frame {
@@ -582,6 +605,8 @@ function resolveFeedbackConfig(feedback: ThiaChatSeedProps['feedback']): Require
   const base = {
     enabled: true,
     label: 'Help us improve',
+    tabLabel: 'Help us improve',
+    tabPosition: 'left' as const,
     title: 'Help us improve',
     description: 'Send a focused note about this surface. The host app decides where it is stored.',
     categories: DEFAULT_FEEDBACK_CATEGORIES,
@@ -647,7 +672,6 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
   const [feedbackStatus, setFeedbackStatus] = useState('');
   const dragRef = useRef<DragState | null>(null);
   const frameRef = useRef(frame);
-  const expandedRef = useRef(expanded);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const activeFocus = useMemo<ThiaChatFocus>(() => {
@@ -663,10 +687,6 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
   useEffect(() => {
     frameRef.current = frame;
   }, [frame]);
-
-  useEffect(() => {
-    expandedRef.current = expanded;
-  }, [expanded]);
 
   useEffect(() => {
     if (!feedbackConfig.categories.includes(feedbackCategory)) {
@@ -790,13 +810,8 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
     const current = frameRef.current;
     dragRef.current = {
       kind: 'move',
-      startX: event.clientX,
-      startY: event.clientY,
       offsetX: event.clientX - current.position.x,
       offsetY: event.clientY - current.position.y,
-      startSize: current.size,
-      didExpand: false,
-      didShrink: false,
     };
     (event.currentTarget as HTMLElement).setPointerCapture?.(event.pointerId);
   }, [isMobile]);
@@ -807,13 +822,8 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
     event.stopPropagation();
     dragRef.current = {
       kind: 'resize',
-      startX: event.clientX,
-      startY: event.clientY,
       offsetX: 0,
       offsetY: 0,
-      startSize: frameRef.current.size,
-      didExpand: false,
-      didShrink: false,
     };
     (event.currentTarget as HTMLElement).setPointerCapture?.(event.pointerId);
   }, [isMobile]);
@@ -832,36 +842,6 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
           },
           position: current.position,
         });
-        return;
-      }
-
-      const dragDistance = Math.hypot(event.clientX - drag.startX, event.clientY - drag.startY);
-      const canExpandFromDrag = !expandedRef.current
-        && !drag.didExpand
-        && drag.startSize.width < CHAT_READABLE_DRAG_WIDTH
-        && dragDistance >= CHAT_EXPAND_DRAG_DELTA;
-      if (canExpandFromDrag) {
-        const next = expandedFrame({ x: event.clientX, y: event.clientY });
-        drag.didExpand = true;
-        setExpanded(true);
-        expandedRef.current = true;
-        applyFrame(next);
-        drag.offsetX = event.clientX - next.position.x;
-        drag.offsetY = event.clientY - next.position.y;
-        return;
-      }
-
-      const canShrink = !drag.didShrink
-        && (drag.startSize.width >= CHAT_MAXIMIZED_DRAG_WIDTH || drag.startSize.height >= CHAT_MAXIMIZED_DRAG_HEIGHT)
-        && event.clientY - drag.startY > CHAT_SHRINK_DRAG_DELTA;
-      if (canShrink) {
-        const small = mediumFrameFrom(frameRef.current);
-        drag.didShrink = true;
-        setExpanded(false);
-        expandedRef.current = false;
-        applyFrame(small);
-        drag.offsetX = event.clientX - small.position.x;
-        drag.offsetY = event.clientY - small.position.y;
         return;
       }
 
@@ -899,28 +879,52 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
     void sendPrompt(input);
   };
 
+  const openFeedbackPanel = useCallback(() => {
+    setOpen(true);
+    setFeedbackOpen(true);
+    setFeedbackStatus('');
+  }, []);
+
+  const feedbackTab = feedbackConfig.enabled ? (
+    <button
+      type="button"
+      className={`dnd-thia dnd-thia-feedback-tab${className ? ` ${className}` : ''}`}
+      data-brand={brand}
+      data-position={feedbackConfig.tabPosition}
+      onClick={openFeedbackPanel}
+      aria-label={feedbackConfig.title}
+    >
+      {feedbackConfig.tabLabel}
+    </button>
+  ) : null;
+
   if (!open) {
     return (
-      <div className={`dnd-thia dnd-thia-bubble-wrap${className ? ` ${className}` : ''}`} data-brand={brand}>
-        <div className="dnd-thia-greeting">I can orient you on what is open here.</div>
-        <button type="button" className="dnd-thia-avatar" aria-label={`Open ${resolvedTitle}`} onClick={() => setOpen(true)} />
-      </div>
+      <>
+        {feedbackTab}
+        <div className={`dnd-thia dnd-thia-bubble-wrap${className ? ` ${className}` : ''}`} data-brand={brand}>
+          <div className="dnd-thia-greeting">I can orient you on what is open here.</div>
+          <button type="button" className="dnd-thia-avatar" aria-label={`Open ${resolvedTitle}`} onClick={() => setOpen(true)} />
+        </div>
+      </>
     );
   }
 
   return (
-    <section
-      className={`dnd-thia dnd-thia-window${className ? ` ${className}` : ''}`}
-      data-brand={brand}
-      data-expanded={expanded ? 'true' : 'false'}
-      style={isMobile ? undefined : {
-        left: frame.position.x,
-        top: frame.position.y,
-        width: frame.size.width,
-        height: frame.size.height,
-      }}
-      aria-label={`${resolvedTitle} chat seed`}
-    >
+    <>
+      {feedbackTab}
+      <section
+        className={`dnd-thia dnd-thia-window${className ? ` ${className}` : ''}`}
+        data-brand={brand}
+        data-expanded={expanded ? 'true' : 'false'}
+        style={isMobile ? undefined : {
+          left: frame.position.x,
+          top: frame.position.y,
+          width: frame.size.width,
+          height: frame.size.height,
+        }}
+        aria-label={`${resolvedTitle} chat seed`}
+      >
       <header className="dnd-thia-head" onPointerDown={onHeaderPointerDown}>
         <span className="dnd-thia-mark" aria-hidden="true" />
         <span>
@@ -1035,8 +1039,9 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
         </div>
       </form>
 
-      <button type="button" className="dnd-thia-resize" aria-label="Resize chat" onPointerDown={onResizePointerDown} />
-    </section>
+        <button type="button" className="dnd-thia-resize" aria-label="Resize chat" onPointerDown={onResizePointerDown} />
+      </section>
+    </>
   );
 };
 

@@ -117,15 +117,15 @@ Record any breakpoint where behavior changes.
 - Bubble opens the assistant.
 - Header drag works on desktop.
 - Header click without movement does not resize the assistant.
-- Header drag from compact/readable expands to readable.
-- Header drag downward from a large frame shrinks to medium without returning to
-  the home dock.
+- Header drag only repositions the assistant; vertical movement does not expand
+  or shrink it.
 - Expand and close buttons do not start accidental drag.
 - Expand button opens a large field.
 - Resize handle works on desktop.
 - Mobile opens as full-screen panel.
 - Messages scroll without visible nested scrollbar traps.
 - Feedback button opens the in-chat feedback form.
+- Fixed "Help us improve" side tab opens the chat with the feedback form visible.
 - Feedback submit uses the host handler when provided and otherwise shows a
   local review-ready confirmation.
 - `agent:context:ask` opens assistant with context.

@@ -2,8 +2,8 @@
 
 Status: ready seed baseline.
 
-Last verification: `npm run build`, `npm run pack:dry`, both bundled skill
-validations and live Playwright viewport checks on 2026-06-17.
+Last verification: `npm run typecheck`, `npm run build`, `npm run pack:dry`,
+`git diff --check` and static `/ux-ai/` preview build on 2026-06-17.
 
 ## Completed Surface
 
@@ -17,15 +17,16 @@ validations and live Playwright viewport checks on 2026-06-17.
 - Point rail removed from generic workspace header and reserved for long
   articles, diagrams and chats.
 - `MegaMenuSeed` for tabs, routes, template families and subdomain navigation.
-- `ThiaChatSeed` / `AgentContextChatSeed` with awareness, drag, resize, slow
-  expansion, shrink, public + compatibility handoff events and full-screen
-  mobile behavior.
+- `ThiaChatSeed` / `AgentContextChatSeed` with awareness, drag, resize, explicit
+  expansion, public + compatibility handoff events and full-screen mobile
+  behavior.
 - `AgentContextChatSeed` in-chat feedback form for "help us improve" flows,
-  with local fallback confirmation and optional host submit handler.
+  with fixed side tab, local fallback confirmation and optional host submit
+  handler.
 - Chat radius aligned to the design primitive contract: 8px surfaces and 4px
   compact controls.
-- Chat drag contract limited to compact-to-readable expansion and large-to-
-  medium shrink without returning to the home dock.
+- Chat drag contract aligned to the Lab surface: header drag only repositions;
+  the expand button and lower-right grip are the only dimension controls.
 - Public `data-agent-*` orientation emitted by workspace demo, template,
   response outline, article diagram and taxonomy map, with `data-thia-*`
   compatibility preserved.
@@ -49,6 +50,6 @@ npm run pack:dry
 - Mobile 500px: THIA opens as a full-screen surface.
 - Mobile 500px: closed internal bottom book opens with click and drag.
 - Desktop: megamenu panel stays grouped and does not lose active state.
-- Desktop: THIA remains draggable and resizable.
+- Desktop: THIA remains draggable and resizable, with no drag-direction resize.
 - Package dry run includes `src`, `dist`, `docs`, `templates`, `demo`,
   `public` and `skills`.

@@ -40,12 +40,11 @@ orientation contract.
 - Stores drag/resize geometry in local storage.
 - Supports public `agent:context:ask` handoff events.
 - Supports compatibility `dnd:thia:ask` handoff events.
-- Expands from compact to readable when the header is first dragged.
-- Expands to a large field through the header button or manual resize.
-- Shrinks from large to medium when dragged downward, without docking back to
-  the home corner.
+- Header drag repositions the current frame only.
+- Expands to a large field through the header button.
 - Resizes from the lower-right corner on desktop.
-- Includes an optional in-chat feedback form for "help us improve" flows.
+- Includes an optional side tab that opens the in-chat feedback form for
+  "help us improve" flows.
 - Uses a true full-screen mobile panel.
 - Keeps internal scrollbars visually hidden.
 
@@ -53,12 +52,15 @@ orientation contract.
 
 The feedback form is rendered inside the chat, so a host app can expose a
 "Help us improve" or "Aiutaci a migliorare" action without rebuilding the
-assistant surface.
+assistant surface. The fixed side tab opens the chat and shows the form
+directly.
 
 ```tsx
 <AgentContextChatSeed
   feedback={{
     label: 'Aiutaci a migliorare',
+    tabLabel: 'Aiutaci a migliorare',
+    tabPosition: 'left',
     title: 'Aiutaci a migliorare',
     categories: ['Design', 'Contenuto', 'Comportamento', 'Contributo'],
   }}
@@ -82,13 +84,9 @@ Desktop behavior should stay limited to these transitions:
 
 - compact bubble opens the chat;
 - clicking the header alone does not resize the chat;
-- dragging the compact/readable header beyond the movement threshold expands to
-  a readable frame;
+- dragging the header only repositions the current frame;
 - the expand button opens a large field;
-- manual resize can also create a large frame;
-- dragging a large frame downward shrinks it to a medium frame near its current
-  position;
-- ordinary movement only repositions the current frame.
+- the lower-right grip is the only direct manual resize control.
 
 Avoid adding additional auto-dock or auto-resize behavior. More implicit motion
 makes the assistant harder to trust in dense workspaces.
