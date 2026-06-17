@@ -847,19 +847,19 @@ function injectChatCss() {
   chatCssInjected = true;
 }
 
-function clampFrameSize(value: Frame['size']): Frame['size'] {
+function clampFrameSize(value: Frame['size'], fullViewport = false): Frame['size'] {
   if (typeof window === 'undefined') return value;
-  const maxWidth = Math.max(320, window.innerWidth * 0.95);
-  const maxHeight = Math.max(360, window.innerHeight * 0.95);
+  const maxWidth = fullViewport ? window.innerWidth : Math.max(320, window.innerWidth * 0.95);
+  const maxHeight = fullViewport ? window.innerHeight : Math.max(360, window.innerHeight * 0.95);
   return {
     width: Math.min(maxWidth, Math.max(360, value.width)),
     height: Math.min(maxHeight, Math.max(360, value.height)),
   };
 }
 
-function clampFramePosition(value: Frame['position'], size: Frame['size']): Frame['position'] {
+function clampFramePosition(value: Frame['position'], size: Frame['size'], fullViewport = false): Frame['position'] {
   if (typeof window === 'undefined') return value;
-  const margin = 8;
+  const margin = fullViewport ? 0 : 8;
   return {
     x: Math.max(margin, Math.min(Math.max(margin, window.innerWidth - size.width - margin), value.x)),
     y: Math.max(margin, Math.min(Math.max(margin, window.innerHeight - size.height - margin), value.y)),
@@ -957,13 +957,12 @@ function intakeFrame(): Frame {
 
 function fullPageFrame(): Frame {
   if (typeof window === 'undefined') return defaultFrame();
-  const margin = 8;
   return {
     size: {
-      width: Math.max(320, window.innerWidth - margin * 2),
-      height: Math.max(360, window.innerHeight - margin * 2),
+      width: Math.max(320, window.innerWidth),
+      height: Math.max(360, window.innerHeight),
     },
-    position: { x: margin, y: margin },
+    position: { x: 0, y: 0 },
   };
 }
 
@@ -1187,9 +1186,9 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
     window.localStorage.setItem(`${resolvedStorageKey}:frame`, JSON.stringify(next));
   }, [resolvedStorageKey]);
 
-  const applyFrame = useCallback((next: Frame, persist = false) => {
-    const size = clampFrameSize(next.size);
-    const nextFrame = { size, position: clampFramePosition(next.position, size) };
+  const applyFrame = useCallback((next: Frame, persist = false, fullViewport = false) => {
+    const size = clampFrameSize(next.size, fullViewport);
+    const nextFrame = { size, position: clampFramePosition(next.position, size, fullViewport) };
     frameRef.current = nextFrame;
     setFrame(nextFrame);
     if (persist) saveFrame(nextFrame);
@@ -1450,7 +1449,7 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
     }
     restoreFrameRef.current = frameRef.current;
     setExpanded(true);
-    applyFrame(fullPageFrame(), true);
+    applyFrame(fullPageFrame(), true, true);
   }, [applyFrame, expanded, feedbackOpen, isMobile]);
 
   const openChatHome = useCallback(() => {
@@ -1817,7 +1816,7 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
           </>
         )}
 
-        {!expanded && <button type="button" className="dnd-thia-resize" aria-label="Resize chat" onPointerDown={onResizePointerDown} />}
+        {!isMobile && <button type="button" className="dnd-thia-resize" aria-label="Resize chat" onPointerDown={onResizePointerDown} />}
       </section>
     </>
   );

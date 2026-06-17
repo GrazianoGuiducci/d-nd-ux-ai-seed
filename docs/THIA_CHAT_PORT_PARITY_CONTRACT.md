@@ -91,7 +91,7 @@ Required transitions:
 - First header drag from compact chat home expands to a readable frame and then
   continues as a drag.
 - Header drag after that only repositions the current frame.
-- Full-page button opens a viewport-sized frame with small margins.
+- Full-page button opens an edge-to-edge viewport frame.
 - Dragging a full-page frame downward undocks it to an intermediate readable
   frame for chat, or the wide intake frame for Submit Module, and continues the
   drag. It must not collapse to the compact/minimum chat home.
@@ -176,7 +176,8 @@ Manual browser checks after publish:
 - first compact drag expands once;
 - ordinary drag repositions only;
 - full-page drag downward undocks;
-- resize grip changes size without surprise transitions;
+- resize grip remains visible in desktop full page and changes size without
+  surprise transitions;
 - Submit Module split divider respects form minimum width;
 - mobile or narrow frame shows Chat/Form tabs and one pane at a time.
 

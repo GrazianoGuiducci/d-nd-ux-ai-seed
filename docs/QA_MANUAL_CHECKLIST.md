@@ -125,10 +125,11 @@ Record any breakpoint where behavior changes.
 - From compact chat home, first header drag expands to a readable Lab-style
   frame.
 - Expand and close buttons do not start accidental drag.
-- Expand button opens a full-page frame and next click restores the prior frame.
+- Expand button opens an edge-to-edge full-page frame and next click restores
+  the prior frame.
 - Dragging a full-page frame downward undocks it to an intermediate readable
   chat frame or the wide intake frame without losing pointer control.
-- Resize handle works on desktop.
+- Resize handle works on desktop, including in full-page state.
 - Manual resize does not trigger extra auto-expand or auto-shrink loops.
 - Mobile opens as full-screen panel.
 - Submit Module uses Chat/Form tabs in compact or mobile mode.

@@ -47,7 +47,8 @@ orientation contract.
 - Header drag repositions the current frame only.
 - Expands to a full-page working frame through the header button, then restores
   the previous frame.
-- Resizes from the lower-right corner on desktop.
+- Resizes from the lower-right corner on desktop, including while full page is
+  active.
 - Includes an optional side tab that opens a Lab-style Submit Module inside the
   chat: chat on the left, contribution/question form on the right.
 - Uses a true full-screen mobile panel.
@@ -92,13 +93,14 @@ Desktop behavior should stay limited to these transitions:
 - avatar open resets to the compact chat home;
 - first header drag from compact home expands to a readable Lab-style frame;
 - dragging the header only repositions the current frame;
-- the expand button opens a full-page frame and restores the previous frame on
-  the next click;
+- the expand button opens an edge-to-edge full-page frame and restores the
+  previous frame on the next click;
 - dragging a full-page frame downward undocks it to an intermediate readable
   frame, not the compact home, and continues the drag from there;
 - dragging a large chat frame downward returns to the compact/default frame once
   per gesture;
-- the lower-right grip is the only direct manual resize control.
+- the lower-right grip is the only direct manual resize control and remains
+  visible in desktop full page.
 
 ## Submit Module Contract
 
