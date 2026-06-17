@@ -1,3 +1,8 @@
+---
+name: agentic-ux-seed
+description: Reuse the public Agentic UX Seed layer from d-nd-ux-ai-seed for agentic workspaces, state-aware UI, response outlines, taxonomy inspectors, assistant context panels, design primitives, and portable human-AI interface adoption. Use when Codex or another coding assistant needs to select, copy, adapt, or review public agentic UX components while preserving orientation, state visibility, responsive recovery, and side-effect boundaries.
+---
+
 # Agentic UX Seed Skill
 
 Use this skill when editing or adopting `d-nd-ux-ai-seed` components in another project.
