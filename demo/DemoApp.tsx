@@ -1,4 +1,8 @@
 import React, { useMemo, useState } from 'react';
+import adoptionGuideRaw from '../docs/ADOPTION_GUIDE.md?raw';
+import integrationChecklistRaw from '../docs/INTEGRATION_CHECKLIST.md?raw';
+import promotionWorkflowRaw from '../docs/PROMOTION_WORKFLOW.md?raw';
+import systemSpecRaw from '../docs/AGENTIC_UX_SYSTEM_SPEC.md?raw';
 import {
   ArticleDiagramRail,
   AgentButton,
@@ -34,6 +38,59 @@ type DemoLivePayload = {
   count: number;
   updated: string;
 };
+
+type GuideCard = {
+  id: string;
+  title: string;
+  summary: string;
+  href: string;
+  raw: string;
+  tag: string;
+};
+
+const seedRelease = {
+  version: '0.1.0',
+  channel: 'public baseline',
+  baselineDate: '2026-06-17',
+  registrySchema: 'registry schema v1',
+  promotedCount: 9,
+  candidateCount: 2,
+};
+
+const guideCards: GuideCard[] = [
+  {
+    id: 'adoption',
+    title: 'Adoption Guide',
+    summary: 'Choose the right seed surface before copying components into a product.',
+    href: './docs/ADOPTION_GUIDE.md',
+    raw: adoptionGuideRaw,
+    tag: 'selection',
+  },
+  {
+    id: 'integration',
+    title: 'Integration Checklist',
+    summary: 'Carry resize, storage, awareness and mobile contracts together.',
+    href: './docs/INTEGRATION_CHECKLIST.md',
+    raw: integrationChecklistRaw,
+    tag: 'implementation',
+  },
+  {
+    id: 'system',
+    title: 'System Spec',
+    summary: 'Read the agentic UX model: visible state, boundaries and machine-readable orientation.',
+    href: './docs/AGENTIC_UX_SYSTEM_SPEC.md',
+    raw: systemSpecRaw,
+    tag: 'model',
+  },
+  {
+    id: 'promotion',
+    title: 'Promotion Workflow',
+    summary: 'Promote candidates only after behavior, docs and checks are stable.',
+    href: './docs/PROMOTION_WORKFLOW.md',
+    raw: promotionWorkflowRaw,
+    tag: 'governance',
+  },
+];
 
 const surfaces: DemoSurface[] = [
   {
@@ -159,14 +216,28 @@ function stateLabel(state: DemoSurface['state']) {
   return 'review';
 }
 
+function guidePreview(raw: string) {
+  return raw
+    .split(/\r?\n/)
+    .filter(line => line.trim().length > 0)
+    .slice(0, 26)
+    .join('\n');
+}
+
 export default function DemoApp() {
   const [selectedId, setSelectedId] = useState(surfaces[0].id);
   const [mode, setMode] = useState<'patterns' | 'taxonomy'>('patterns');
   const [modalOpen, setModalOpen] = useState(false);
+  const [activeGuideId, setActiveGuideId] = useState(guideCards[0].id);
+  const [guideModalOpen, setGuideModalOpen] = useState(false);
 
   const selected = useMemo(
     () => surfaces.find((surface) => surface.id === selectedId) || surfaces[0],
     [selectedId],
+  );
+  const activeGuide = useMemo(
+    () => guideCards.find((guide) => guide.id === activeGuideId) || guideCards[0],
+    [activeGuideId],
   );
 
   const megaGroups = useMemo<MegaMenuSeedGroup[]>(() => [
@@ -242,6 +313,12 @@ export default function DemoApp() {
       <div className="demo-panel-head">
         <p className="demo-kicker">Agentic UX Seed</p>
         <h1>Reusable interface patterns for agentic workspaces.</h1>
+        <div className="demo-release-strip" aria-label="Seed version state">
+          <span>v{seedRelease.version}</span>
+          <span>{seedRelease.channel}</span>
+          <span>{seedRelease.promotedCount} promoted</span>
+          <span>{seedRelease.candidateCount} candidate</span>
+        </div>
         <LiveBadge<DemoLivePayload>
           endpoint="/demo-live.json"
           pollInterval={45000}
@@ -276,6 +353,28 @@ export default function DemoApp() {
           </button>
         ))}
       </div>
+
+      <div className="demo-guide-launcher" aria-label="Seed guides">
+        <div>
+          <p className="demo-kicker">Guides</p>
+          <span>{seedRelease.registrySchema} · baseline {seedRelease.baselineDate}</span>
+        </div>
+        <div className="demo-guide-grid">
+          {guideCards.map((guide) => (
+            <button
+              key={guide.id}
+              type="button"
+              onClick={() => {
+                setActiveGuideId(guide.id);
+                setGuideModalOpen(true);
+              }}
+            >
+              <small>{guide.tag}</small>
+              <strong>{guide.title}</strong>
+            </button>
+          ))}
+        </div>
+      </div>
     </div>
   );
 
@@ -286,6 +385,11 @@ export default function DemoApp() {
           <p className="demo-kicker">selected pattern</p>
           <h2>{selected.title}</h2>
           <p>{selected.description}</p>
+          <div className="demo-main-release" aria-label="Seed version state compact">
+            <span>v{seedRelease.version}</span>
+            <span>{seedRelease.promotedCount} promoted</span>
+            <span>{seedRelease.candidateCount} candidate</span>
+          </div>
         </div>
         <MegaMenuSeed
           className="demo-top-menu"
@@ -494,6 +598,36 @@ export default function DemoApp() {
           Use this for bounded decisions, confirmations or focused editing. Do not use it for
           ordinary side-panel inspection when a drawer or inspector can preserve context.
         </p>
+      </AgentModal>
+
+      <AgentModal
+        open={guideModalOpen}
+        title={activeGuide.title}
+        subtitle={activeGuide.summary}
+        onClose={() => setGuideModalOpen(false)}
+        footer={
+          <>
+            <AgentButton type="button" variant="ghost" onClick={() => setGuideModalOpen(false)}>
+              Close
+            </AgentButton>
+            <AgentButton
+              type="button"
+              variant="primary"
+              onClick={() => window.open(activeGuide.href, '_blank', 'noopener,noreferrer')}
+            >
+              Open markdown
+            </AgentButton>
+          </>
+        }
+      >
+        <div className="demo-guide-modal">
+          <div className="demo-guide-meta">
+            <span>v{seedRelease.version}</span>
+            <span>{activeGuide.tag}</span>
+            <span>{seedRelease.channel}</span>
+          </div>
+          <pre>{guidePreview(activeGuide.raw)}</pre>
+        </div>
       </AgentModal>
     </aside>
   );

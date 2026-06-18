@@ -71,7 +71,7 @@ const MEGA_MENU_CSS = `
   position: absolute;
   top: calc(100% + 0.55rem);
   left: 0;
-  width: min(62rem, calc(100vw - 3rem));
+  width: min(46rem, calc(100vw - 3rem));
   max-height: min(32rem, calc(100dvh - 7rem));
   overflow: auto;
   padding: 1rem;
@@ -94,7 +94,7 @@ const MEGA_MENU_CSS = `
 }
 .dnd-mega-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(12rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(12rem, 100%), 1fr));
   gap: 0.8rem;
 }
 .dnd-mega-group {
