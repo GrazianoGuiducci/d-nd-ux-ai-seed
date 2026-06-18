@@ -672,7 +672,7 @@ export default function DemoApp() {
           body: rightPanel,
           closedTooltip: {
             title: 'Inspector',
-            body: <>Selected pattern, boundary and next safe action.</>,
+            body: <>Selected contract, boundary and next safe action.</>,
             related: [{ label: selected.title }],
           },
         }}
@@ -681,7 +681,7 @@ export default function DemoApp() {
         D-ND
       </a>
       <a className="demo-repo-link" href={seedRepoUrl} target="_blank" rel="noreferrer">
-        Clone repository
+        Skill repository
       </a>
       <AgentContextChatSeed
         title="Agent"
