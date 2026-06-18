@@ -72,21 +72,16 @@ const MEGA_MENU_CSS = `
   top: calc(100% + 0.55rem);
   left: 0;
   width: min(46rem, calc(100vw - 3rem));
-  max-height: min(32rem, calc(100dvh - 7rem));
-  overflow: auto;
+  overflow: visible;
   padding: 1rem;
   border: 1px solid rgb(var(--border-02, 255 255 255 / 0.16));
-  border-radius: 10px;
+  border-radius: 8px;
   background:
     radial-gradient(circle at 72% 22%, rgb(34 211 238 / 0.08), transparent 17rem),
     radial-gradient(circle at 88% 18%, rgb(250 204 21 / 0.08), transparent 15rem),
     rgb(var(--elev-01, 15 18 25) / 0.96);
   box-shadow: 0 24px 70px rgb(0 0 0 / 0.48);
   backdrop-filter: blur(18px);
-  scrollbar-width: none;
-}
-.dnd-mega-panel::-webkit-scrollbar {
-  display: none;
 }
 .dnd-mega[data-align="right"] .dnd-mega-panel {
   left: auto;
@@ -196,11 +191,7 @@ const MEGA_MENU_CSS = `
     left: 0;
     right: auto;
     width: min(26rem, calc(100vw - 1.25rem));
-    max-height: 68dvh;
-    scrollbar-width: none;
-  }
-  .dnd-mega-panel::-webkit-scrollbar {
-    display: none;
+    overflow: visible;
   }
   .dnd-mega[data-align="right"] .dnd-mega-panel {
     left: auto;

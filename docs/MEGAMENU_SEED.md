@@ -50,5 +50,6 @@ Required integration points:
 On mobile the trigger becomes a hamburger icon. The text label remains
 available to screen readers but does not occupy the full top row.
 
-The panel stays compact, scrollable when necessary and hides its internal
-scrollbar to avoid visual noise in dense workspaces.
+The panel stays compact and sizes to its grouped content. Do not add an
+internal scroll region to the megamenu; if the content becomes too tall, reduce
+or regroup the menu items instead of hiding navigation behind nested scrolling.
