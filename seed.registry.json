@@ -1,7 +1,12 @@
 {
   "schemaVersion": 1,
-  "name": "Agentic UX Seed Registry",
+  "name": "Agentic UX Skill Registry",
   "repository": "GrazianoGuiducci/d-nd-ux-ai-seed",
+  "adoptionModel": {
+    "type": "skill-first",
+    "summary": "The agent skill selects the smallest complete UX unit before any component or template is copied.",
+    "not": ["template-pack", "visual-design-kit", "component-gallery"]
+  },
   "orientation": {
     "publicPrefix": "data-agent-*",
     "compatibilityPrefix": "data-thia-*",

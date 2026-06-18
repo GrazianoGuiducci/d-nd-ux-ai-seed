@@ -2,31 +2,31 @@
 
 Status: recommended integration model.
 
-Design seeds keep their own repository. The THIA/D-ND Seed repository should
-offer a pointer to them during install and in its docs, not copy or absorb the
-design seed source.
+UX-AI skill seeds keep their own repository. The THIA/D-ND Seed repository
+should offer a pointer to them during install and in its docs, not copy or
+absorb the UX skill/source.
 
 The safer model is:
 
 ```text
 d-nd-seed
--> tells installers that d-nd-ux-ai-seed exists for UX/UI/design work
+-> tells installers that d-nd-ux-ai-seed exists for skill-first UX/UI work
 -> points to the portfolio for public examples and adoption context
--> reads integration checklist before UI work
+-> reads the Agentic UX skill and integration checklist before UI work
 -> uses data-thia-* attributes to know the active surface
--> imports or copies only the needed component/template
+-> imports or copies only the complete UX unit selected by the skill
 ```
 
-This keeps the design system reusable by humans, Codex, Claude Code and future
-agents, while Seed can still route UI/design work to the correct source when a
-user asks about layout, navigation, assistant UI, domain templates or responsive
-behavior.
+This keeps the UX behavior contracts reusable by humans, Codex, Claude Code and
+future agents, while Seed can still route UI/design work to the correct source
+when a user asks about layout, navigation, assistant UI, domain templates or
+responsive behavior.
 
 ## Why Link Instead Of Duplicate
 
 - One source of truth for responsive fixes.
 - One package/export surface for external users.
-- One docs set for adoption and promotion gates.
+- One skill/docs set for adoption and promotion gates.
 - THIA runtime can stay focused on assistant behavior, memory and user dialogue.
 - `d-nd-seed` can stay focused on portable THIA/D-ND functions and kernels.
 - Design seeds can evolve without forcing a THIA runtime update.
@@ -45,9 +45,9 @@ At minimum, `d-nd-seed` install/docs should point to:
 ## Suggested Seed Install Note
 
 ```text
-If the target project needs UX/UI/design consistency, workspace shells,
+If the target project needs UX/UI behavior consistency, workspace shells,
 navigation models, domain templates or THIA-aware assistant surfaces, use the
-separate design seed repo:
+separate skill-first UX seed repo:
 https://github.com/GrazianoGuiducci/d-nd-ux-ai-seed
 
 For public examples and adoption context, also inspect the D-ND portfolio.

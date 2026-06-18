@@ -5,9 +5,12 @@ design repository with business/outreach state or runtime memory.
 
 ## What This Repository Is
 
-`d-nd-ux-ai-seed` is a reusable UX-AI seed library for agentic workspaces,
-navigation models, inspector layouts, taxonomy views, assistant response
-outlines and domain page templates.
+`d-nd-ux-ai-seed` is a skill-first UX-AI repository. Its primary object is an
+agent skill that guides complete UX ports for agentic workspaces, navigation
+models, inspector layouts, taxonomy views and assistant response outlines.
+
+The React components, templates and docs are reference evidence used by the
+skill. They are not the product by themselves.
 
 It is not the D-ND business manager, not the public portfolio, not a live site,
 and not a runtime memory repository.
@@ -22,9 +25,9 @@ skills/d-nd-ux-ai-seed/references/adoption-checklist.md
 skills/d-nd-ux-ai-seed/agents/openai.yaml
 ```
 
-This is the skill to review for design-seed adoption. It should guide an agent
-that needs to choose the smallest reusable unit from this repo: component,
-template, or documented pattern.
+This is the skill to review for UX-seed adoption. It should guide an agent that
+needs to choose the smallest complete UX unit from this repo: behavior contract,
+required components, storage keys, responsive states and documented pattern.
 
 Current local validation result:
 
@@ -37,7 +40,7 @@ Skill is valid!
 
 Review the repository for:
 
-- clarity of the seed model: component library, copyable templates, pattern docs;
+- clarity of the seed model: skill-first behavior contracts, with components and templates as references;
 - consistency between `README.md`, `docs/`, `templates/`, `src/` and the skill;
 - whether the skill gives enough guidance for another agent to adopt the seeds;
 - missing adoption boundaries, validation steps or anti-confusion notes;

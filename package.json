@@ -1,7 +1,7 @@
 {
   "name": "d-nd-ux-ai-seed",
   "version": "0.1.0",
-  "description": "Reusable UX-AI workspace seeds and portable agentic interface primitives.",
+  "description": "Skill-first agentic UX behavior contracts for complete UI ports.",
   "license": "PolyForm-Noncommercial-1.0.0",
   "type": "module",
   "private": false,
@@ -14,9 +14,11 @@
   "keywords": [
     "agentic-ui",
     "ux-ai",
+    "agent-skill",
+    "codex-skill",
     "react",
     "workspace",
-    "design-system",
+    "behavior-contracts",
     "ai-agents",
     "interface-primitives"
   ],

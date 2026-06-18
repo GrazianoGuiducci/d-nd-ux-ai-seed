@@ -12,7 +12,7 @@ Use:
 
 ```text
 Agentic UX Seed
-Reusable interface contracts for agentic workspaces.
+Portable agent skill for complete UX ports.
 ```
 
 Avoid making external users decode internal project names before they understand the value.
@@ -20,7 +20,9 @@ Avoid making external users decode internal project names before they understand
 The public explanation should be:
 
 ```text
-A portable set of React components, templates and operating guides for interfaces where humans and AI agents need shared orientation: visible context, active work field, consequence panels, machine-readable state and safe action boundaries.
+A portable agent skill and behavior contract map for interfaces where humans
+and AI agents need shared orientation: visible context, active work field,
+consequence panels, machine-readable state and safe action boundaries.
 ```
 
 ## Naming Map
@@ -138,12 +140,15 @@ Demo and templates should use public names by default. D-ND / THIA examples can 
 
 Do not remove the orientation schema. Rename it if needed, but preserve the behavior.
 
-Do not flatten the repository into a visual design kit. It is a behavioral UX seed system for agentic interfaces.
+Do not flatten the repository into a visual design kit, portable design pack or
+component gallery. It is a skill-first behavioral UX seed system for agentic
+interfaces.
 
 Do not publish domain-heavy D-ND content as reusable seed content. The reusable part is the contract, not the mythology, copy or private workflow.
 
 ## Public One-Liner
 
 ```text
-Reusable interface contracts for agentic workspaces: context panels, active fields, detail inspectors, machine-readable orientation and safe action boundaries.
+Portable agent skill for complete UX ports: context panels, active fields,
+detail inspectors, machine-readable orientation and safe action boundaries.
 ```

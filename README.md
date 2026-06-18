@@ -2,6 +2,11 @@
 
 Public name: **Agentic UX Seed**.
 
+Short definition: **a portable agent skill for complete UX ports**.
+
+This is skill-first infrastructure. It is not a portable design pack, template
+marketplace or component gallery.
+
 Portable agent skill, UX behavior contracts and reference components for
 agentic workspaces, public navigation surfaces, labs, dashboards and tools.
 
