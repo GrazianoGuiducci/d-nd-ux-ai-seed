@@ -5,6 +5,11 @@ Status: public and internal adoption contract.
 Use this guide when a D-ND project or an external project wants to adopt these
 seeds without importing accidental project-specific assumptions.
 
+Start with the agent skill, not with a visual template. The skill decides which
+complete UX unit is needed and which linked behavior contracts must travel with
+it: resize, storage, mobile states, awareness attributes, assistant handoff and
+side-effect boundaries.
+
 ## Choose The Surface Type
 
 Use `Shell3Col` when the user must keep three things visible:
@@ -97,11 +102,13 @@ user is, the UI will be harder to inspect, test and coordinate.
 
 ## Copying Into A Product
 
-1. Start from the demo to understand the behavior.
-2. Copy the smallest component set required by the target surface.
-3. Replace demo data with real domain data.
-4. Keep the same side-effect boundaries.
-5. Run browser checks before changing copy, routes or persistence.
+1. Install or read `skills/agentic-ux-seed/SKILL.md`.
+2. Let the skill classify the surface and choose the smallest complete unit.
+3. Start from the demo to understand the behavior.
+4. Copy the smallest component set required by the target surface.
+5. Replace demo data with real domain data.
+6. Keep the same side-effect boundaries.
+7. Run browser checks before changing copy, routes or persistence.
 
 See `docs/INTEGRATION_CHECKLIST.md` before copying components into another
 domain.

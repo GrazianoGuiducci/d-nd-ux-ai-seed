@@ -61,7 +61,7 @@ const guideCards: GuideCard[] = [
   {
     id: 'adoption',
     title: 'Adoption Guide',
-    summary: 'Choose the right seed surface before copying components into a product.',
+    summary: 'Use the skill to choose the smallest complete unit before copying UI.',
     href: './docs/ADOPTION_GUIDE.md',
     raw: adoptionGuideRaw,
     tag: 'selection',
@@ -69,7 +69,7 @@ const guideCards: GuideCard[] = [
   {
     id: 'integration',
     title: 'Integration Checklist',
-    summary: 'Carry resize, storage, awareness and mobile contracts together.',
+    summary: 'Carry resize, storage, awareness, motion and mobile contracts together.',
     href: './docs/INTEGRATION_CHECKLIST.md',
     raw: integrationChecklistRaw,
     tag: 'implementation',
@@ -101,7 +101,7 @@ const surfaces: DemoSurface[] = [
     description: 'Keeps context, active field and consequences visible while the user inspects and acts.',
     owner: 'shared UX',
     boundary: 'layout and orientation only',
-    next: 'Copy the shell and replace panel bodies with domain content.',
+    next: 'Use the skill to carry shell, resize, storage and orientation together.',
   },
   {
     id: 'navigation',
@@ -111,7 +111,7 @@ const surfaces: DemoSurface[] = [
     description: 'Turns page families into a visible contract before copy, routing or CMS metadata change.',
     owner: 'site teams',
     boundary: 'no deploy side effect',
-    next: 'Map route, intent, adjacent surfaces and safe transition.',
+    next: 'Use the skill to map route, intent, adjacent surfaces and safe transition.',
   },
   {
     id: 'agent',
@@ -121,7 +121,7 @@ const surfaces: DemoSurface[] = [
     description: 'Gives long responses a scannable map of sections, claims, actions, warnings and results.',
     owner: 'AI products',
     boundary: 'orientation, not hidden reasoning',
-    next: 'Generate outline from response metadata when available.',
+    next: 'Use the skill to preserve outline sections, claims, warnings and actions.',
   },
   {
     id: 'taxonomy',
@@ -131,7 +131,7 @@ const surfaces: DemoSurface[] = [
     description: 'Shows canonical, candidate and ambiguous terms without promoting uncertain concepts.',
     owner: 'knowledge systems',
     boundary: 'visible status before authority',
-    next: 'Attach edges and preserve rejected/ambiguous residue.',
+    next: 'Use the skill to preserve edges, status and rejected/ambiguous residue.',
   },
 ];
 
@@ -178,32 +178,32 @@ const taxonomyEdges: TaxonomyEdge[] = [
 
 const processNodes: ArticleDiagramNode[] = [
   {
-    id: 'source',
-    label: 'Source',
-    meta: 'existing UI',
+    id: 'skill',
+    label: 'Skill',
+    meta: 'agent instruction',
     kind: 'source',
-    body: 'Extract the behavior without carrying private project content.',
+    body: 'Read the UX-AI skill before editing so the agent knows what must travel together.',
   },
   {
-    id: 'contract',
-    label: 'Contract',
-    meta: 'seed API',
+    id: 'select',
+    label: 'Select',
+    meta: 'smallest unit',
     kind: 'field',
-    body: 'Name props, data attributes, storage keys and responsive behavior.',
+    body: 'Choose the component, docs, storage keys, responsive states and assistant hooks as one unit.',
+  },
+  {
+    id: 'port',
+    label: 'Port',
+    meta: 'behavior',
+    kind: 'test',
+    body: 'Replace domain content without dropping resize, motion, awareness or side-effect boundaries.',
   },
   {
     id: 'verify',
     label: 'Verify',
-    meta: 'browser',
-    kind: 'test',
-    body: 'Check desktop, mobile, overflow, drawers, focus and resize.',
-  },
-  {
-    id: 'promote',
-    label: 'Promote',
     meta: 'shared model',
     kind: 'result',
-    body: 'Use it across projects only after the contract is documented.',
+    body: 'Use it across projects only after desktop, mobile and agent-orientation checks survive.',
   },
 ];
 
@@ -243,8 +243,8 @@ export default function DemoApp() {
   const megaGroups = useMemo<MegaMenuSeedGroup[]>(() => [
     {
       id: 'patterns',
-      title: 'Workspace tabs',
-      summary: 'Surfaces that can become tabs or routed panels.',
+      title: 'Skill choices',
+      summary: 'Complete UX units the agent can select before editing.',
       items: surfaces.map(surface => ({
         id: surface.id,
         label: surface.title,
@@ -255,25 +255,25 @@ export default function DemoApp() {
     },
     {
       id: 'templates',
-      title: 'Templates',
-      summary: 'Copyable starts for new domains.',
+      title: 'Complete units',
+      summary: 'Copyable starts only when their behavior contract travels too.',
       items: [
         {
           id: 'template-shell',
           label: 'Three-column shell',
-          description: 'Context, active field and consequence panels.',
+          description: 'Shell plus resize, collapse, storage and orientation contract.',
           status: 'seed',
         },
         {
           id: 'template-domain',
           label: 'Domain page',
-          description: 'Public page structure with diagram and menu contract.',
+          description: 'Public page structure with diagram, menu and handoff contract.',
           status: 'candidate',
         },
         {
           id: 'template-chat',
           label: 'Agent context assistant',
-          description: 'Assistant surface aware of open panels and focus.',
+          description: 'Chat plus frame, form, motion, resize and context handoff.',
           status: 'seed',
         },
       ],
@@ -281,12 +281,12 @@ export default function DemoApp() {
     {
       id: 'integration',
       title: 'Integration',
-      summary: 'What coders should carry together.',
+      summary: 'What agents and coders must carry together.',
       items: [
         {
           id: 'guide',
           label: 'Adoption guide',
-          description: 'Checklist, awareness attributes, storage keys and responsive checks.',
+          description: 'Skill-first adoption path and boundary checks.',
           status: 'doc',
           href: './docs/ADOPTION_GUIDE.md',
         },
@@ -311,10 +311,14 @@ export default function DemoApp() {
   const leftPanel = (
     <div className="demo-panel">
       <div className="demo-panel-head">
-        <p className="demo-kicker">Agentic UX Seed</p>
-        <h1>Reusable interface patterns for agentic workspaces.</h1>
-        <div className="demo-release-strip" aria-label="Seed version state">
-          <span>v{seedRelease.version}</span>
+        <p className="demo-kicker">Agentic UX Skill</p>
+        <h1>Agent skill for complete UX ports.</h1>
+        <p>
+          This is not a template pack. It is a skill-backed map for carrying
+          behavior, state, resize, mobile and assistant context together.
+        </p>
+        <div className="demo-release-strip" aria-label="Skill version state">
+          <span>skill v{seedRelease.version}</span>
           <span>{seedRelease.channel}</span>
           <span>{seedRelease.promotedCount} promoted</span>
           <span>{seedRelease.candidateCount} candidate</span>
@@ -324,13 +328,13 @@ export default function DemoApp() {
           pollInterval={45000}
           staleAfter={90000}
           fallback={<span className="demo-muted">loading local signal</span>}
-          render={(data, status) => `${data.count} patterns / ${status}`}
+          render={(data, status) => `${data.count} contracts / ${status}`}
         />
       </div>
 
       <div className="demo-segmented" aria-label="Demo mode">
         <button type="button" className={mode === 'patterns' ? 'is-active' : ''} onClick={() => setMode('patterns')}>
-          Patterns
+          Contracts
         </button>
         <button type="button" className={mode === 'taxonomy' ? 'is-active' : ''} onClick={() => setMode('taxonomy')}>
           Taxonomy
@@ -382,10 +386,10 @@ export default function DemoApp() {
     <main className="demo-main-field">
       <div className="demo-main-top">
         <div className="demo-main-copy">
-          <p className="demo-kicker">selected pattern</p>
+          <p className="demo-kicker">selected contract</p>
           <h2>{selected.title}</h2>
           <p>{selected.description}</p>
-          <div className="demo-main-release" aria-label="Seed version state compact">
+          <div className="demo-main-release" aria-label="Skill version state compact">
             <span>v{seedRelease.version}</span>
             <span>{seedRelease.promotedCount} promoted</span>
             <span>{seedRelease.candidateCount} candidate</span>
@@ -393,7 +397,7 @@ export default function DemoApp() {
         </div>
         <MegaMenuSeed
           className="demo-top-menu"
-          label="Seed menu"
+          label="Skill menu"
           align="right"
           groups={megaGroups}
           activeId={selected.id}
@@ -440,11 +444,11 @@ export default function DemoApp() {
 
             <div className="demo-canvas" data-state={selected.state}>
               <div className="demo-route-map" aria-label="Route model">
-                <span>context</span>
+                <span>skill reads context</span>
                 <i />
                 <span className="is-active">{selected.kind}</span>
                 <i />
-                <span>consequence</span>
+                <span>verified port</span>
               </div>
               <div className="demo-preview-grid">
                 {surfaces.map((surface) => (
@@ -511,22 +515,22 @@ export default function DemoApp() {
 
       <div className="demo-inspector-block">
         <div className="demo-tip-row">
-          <span>Pattern contract</span>
+          <span>Skill contract</span>
           <Tooltip
             block={false}
             position="left"
             content={{
-              function: 'The contract names what must travel with the visual component.',
-              mechanism: 'State, storage, orientation attributes and side-effect boundaries are part of the seed.',
-              expectation: 'Copying only the visible card is incomplete.',
+              function: 'The skill names what must travel with the visible component.',
+              mechanism: 'State, storage, orientation attributes, motion and side-effect boundaries are part of the seed.',
+              expectation: 'Copying only the visible template is incomplete.',
             }}
           >
             <button type="button" className="demo-tip-icon" aria-label="Pattern contract tooltip">?</button>
           </Tooltip>
         </div>
         <p>
-          Keep visible state, storage keys, awareness attributes and side-effect boundary aligned
-          before copying this seed into another project.
+          Install or read the skill before copying. The useful object is the complete
+          behavior contract, not the visual shell by itself.
         </p>
       </div>
 
@@ -560,7 +564,7 @@ export default function DemoApp() {
 
       <div className="demo-inspector-block demo-clone-block">
         <div className="demo-tip-row">
-          <span>Clone seed</span>
+          <span>Install / clone skill</span>
           <a href={seedRepoUrl} target="_blank" rel="noreferrer">GitHub</a>
         </div>
         <code>{seedCloneCommand}</code>
@@ -643,10 +647,10 @@ export default function DemoApp() {
           focus: selected.title,
           item: selected.id,
           relation: selected.kind,
-          count: `${surfaces.length} patterns`,
+          count: `${surfaces.length} contracts`,
           boundary: selected.boundary,
         }}
-        leftTitle="Patterns"
+        leftTitle="Skill Map"
         rightTitle="Inspector"
         leftStorage="dnd_seed_demo_left"
         rightStorage="dnd_seed_demo_right"
@@ -658,8 +662,8 @@ export default function DemoApp() {
         left={{
           body: leftPanel,
           closedTooltip: {
-            title: 'Patterns',
-            body: <>Reusable seeds, candidate patterns and current design-system signals.</>,
+            title: 'Skill Map',
+            body: <>Agent skill, behavior contracts and reusable reference surfaces.</>,
             related: [{ label: 'Main field' }, { label: 'Inspector' }],
           },
         }}
@@ -690,10 +694,10 @@ export default function DemoApp() {
           item: selected.id,
           relation: selected.kind,
           boundary: selected.boundary,
-          count: `${surfaces.length} patterns`,
+          count: `${surfaces.length} contracts`,
         }}
         starterPrompts={[
-          'What is open now?',
+          'How do I use the skill?',
           'Which elements must travel together?',
           'What changes on mobile?',
         ]}

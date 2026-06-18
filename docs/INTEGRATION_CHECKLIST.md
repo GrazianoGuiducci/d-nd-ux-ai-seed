@@ -2,9 +2,9 @@
 
 Status: practical guide for coders and agents.
 
-Use this list before copying a single component into another project. Most
-breakage happens when a coder takes the visible component but leaves behind the
-resize, storage, awareness or mobile contract.
+Use this list after the agent skill has classified the surface. Most breakage
+happens when a coder takes the visible component but leaves behind the resize,
+storage, awareness, motion or mobile contract.
 
 ## Carry These Together
 
@@ -97,14 +97,16 @@ Use it where the user must see uncertainty before a concept becomes canonical.
 
 ## Minimum Copy Order
 
-1. Copy the smallest working template.
-2. Copy the components it imports.
-3. Copy the related CSS or injected-style contract.
-4. Rename storage keys for the target app.
-5. Replace demo data with domain data.
-6. Preserve awareness attributes.
-7. Test desktop, tablet and mobile.
-8. Only then adapt visuals.
+1. Install or read `skills/agentic-ux-seed/SKILL.md`.
+2. Let the skill select the smallest complete UX unit.
+3. Copy the smallest working template or component set.
+4. Copy the components it imports.
+5. Copy the related CSS or injected-style contract.
+6. Rename storage keys for the target app.
+7. Replace demo data with domain data.
+8. Preserve awareness attributes.
+9. Test desktop, tablet and mobile.
+10. Only then adapt visuals.
 
 ## Verification Targets
 

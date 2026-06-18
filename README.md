@@ -2,14 +2,22 @@
 
 Public name: **Agentic UX Seed**.
 
-Reusable UX and UI seeds for agentic workspaces, public navigation surfaces,
-labs, dashboards and tools.
+Portable agent skill, UX behavior contracts and reference components for
+agentic workspaces, public navigation surfaces, labs, dashboards and tools.
 
 This repository exists for D-ND internal consistency across projects, and for
 external teams that need a clear model for dense human+AI interfaces. It is not
-a landing-page kit and it is not a finished design system with every component
-prebuilt. It is a seed library: copy, adapt, verify, then promote useful
-patterns back into the shared model.
+a landing-page kit, a template marketplace or a finished design system with
+every component prebuilt.
+
+The main object is the adoption skill: it tells a coding agent what must travel
+together when a UX pattern is ported. Components, templates and docs are the
+evidence the skill uses to preserve behavior: resize, storage, mobile states,
+orientation attributes, assistant handoff and side-effect boundaries.
+
+Use it as a seed library only after the skill has selected the smallest complete
+unit. Copy, adapt, verify, then promote useful patterns back into the shared
+model.
 
 ## Included
 
@@ -92,6 +100,17 @@ react-dom >= 18
 The primitives inject their own minimal CSS where needed. The demo and template
 CSS are intentionally plain CSS so consumers are not required to use Tailwind.
 
+## Use As An Agent Skill
+
+For Codex-style systems that support skills, copy `skills/agentic-ux-seed/`
+into the local skills directory and invoke the skill when selecting a workspace,
+navigation, taxonomy, inspector or assistant-response pattern.
+
+For systems without native skills, copy the `SKILL.md` body into the project
+agent instructions and keep the repo docs/templates available as local
+references. The important rule is that the agent must select the smallest
+complete unit before editing: component, template, or documented pattern.
+
 ## Use As A Copyable Seed
 
 Recommended for product surfaces that need local adaptation:
@@ -109,17 +128,6 @@ Recommended for product surfaces that need local adaptation:
    keys.
 7. Prefer `data-agent-*` for public orientation. Keep `data-thia-*` only for
    internal compatibility.
-
-## Use As An Agent Skill
-
-For Codex-style systems that support skills, copy `skills/agentic-ux-seed/`
-into the local skills directory and invoke the skill when selecting a workspace,
-navigation, taxonomy, inspector or assistant-response pattern.
-
-For systems without native skills, copy the `SKILL.md` body into the project
-agent instructions and keep the repo docs/templates available as local
-references. The important rule is that the agent must select the smallest
-reusable unit before editing: component, template, or documented pattern.
 
 ## Design Rule
 
