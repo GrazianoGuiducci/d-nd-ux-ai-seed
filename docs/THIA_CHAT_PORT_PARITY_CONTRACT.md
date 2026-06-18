@@ -37,6 +37,7 @@ Before changing or porting this surface, read the source blocks for:
 `ThiaChatSeed` must travel as one unit when a host needs the Lab-derived chat:
 
 - bubble/avatar closed state;
+- desktop open/close motion between avatar and the active chat frame;
 - floating window frame;
 - header controls: Manager, Reset, Full page, Close;
 - context-aware chat body;
@@ -67,6 +68,8 @@ Rules:
 - Reset clears the chat conversation and input, not the whole frame geometry.
 - Full page stores the previous frame and restores it on the next click.
 - Close hides the chat and returns to the bubble/avatar state.
+- Close should animate toward the avatar/bubble on desktop before the frame is
+  removed from interaction.
 
 ## Frame States
 
@@ -87,7 +90,12 @@ wide centered intake frame
 Required transitions:
 
 - Avatar open always returns to compact chat home.
+- Desktop avatar open should animate from the avatar position into the target
+  frame.
 - Help us improve opens the Submit Module directly in the wide intake frame.
+- Help us improve opens the chat frame first, then mounts the whole Submit
+  Module section after the reveal delay. Do not mount an empty split/form area
+  immediately and animate only the form fields.
 - First header drag from compact chat home expands to a readable frame and then
   continues as a drag.
 - Header drag after that only repositions the current frame.
@@ -107,6 +115,7 @@ The module opens inside the chat window, not as a separate page:
 - chat pane on the left;
 - form pane on the right;
 - draggable divider on desktop;
+- delayed section reveal: chat frame first, entire intake split second;
 - Contribution / Question mode buttons;
 - large trace textarea;
 - markdown preview/edit toggle;
@@ -189,6 +198,8 @@ A chat port is incomplete if any of these are missing:
 - full-page restore;
 - first-drag readable expansion;
 - full-page downward undock;
+- avatar open/close motion;
+- delayed full-section Submit Module reveal;
 - Submit Module side tab;
 - compact/mobile tabs;
 - host submit boundary;

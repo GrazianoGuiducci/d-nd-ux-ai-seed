@@ -42,6 +42,8 @@ orientation contract.
 - Stores drag/resize geometry in local storage.
 - Supports public `agent:context:ask` handoff events.
 - Supports compatibility `dnd:thia:ask` handoff events.
+- Opens from and closes toward the avatar/bubble position on desktop instead
+  of appearing or disappearing abruptly.
 - Header exposes Manager, Reset, Full page and Close controls.
 - Reset uses a second-click confirmation before clearing messages.
 - Header drag repositions the current frame only.
@@ -51,6 +53,9 @@ orientation contract.
   active.
 - Includes an optional side tab that opens a Lab-style Submit Module inside the
   chat: chat on the left, contribution/question form on the right.
+- Delays the Submit Module section mount, so the whole split/form area opens
+  inside the chat after the chat frame is present rather than showing an empty
+  form section immediately.
 - Uses a true full-screen mobile panel.
 - Keeps internal scrollbars visually hidden.
 
@@ -107,6 +112,8 @@ Desktop behavior should stay limited to these transitions:
 The Lab-derived module preserves these controls:
 
 - side tab opens the module directly;
+- the chat opens first, then the whole module section appears after the reveal
+  delay;
 - `Contribution` / `Question` mode buttons;
 - large trace textarea with markdown preview/edit toggle;
 - attach-file affordance retained locally for host handoff;

@@ -3,7 +3,7 @@
 Status: ready seed baseline.
 
 Last verification: `npm run typecheck`, `npm run build`, `npm run pack:dry`,
-`git diff --check` and static `/ux-ai/` preview build on 2026-06-17.
+`git diff --check` and static `/ux-ai/` preview build on 2026-06-18.
 
 ## Completed Surface
 
@@ -23,6 +23,8 @@ Last verification: `npm run typecheck`, `npm run build`, `npm run pack:dry`,
 - `AgentContextChatSeed` Lab-style Submit Module for "help us improve" flows,
   with fixed side tab, split chat/form layout, local fallback confirmation and
   optional host submit handler.
+- Chat opens from and closes toward the desktop avatar, and the Submit Module
+  appears as a delayed full-section reveal inside the chat frame.
 - Chat radius aligned to the design primitive contract: 8px surfaces and 4px
   compact controls.
 - Chat drag contract aligned to the Lab surface: header drag only repositions;

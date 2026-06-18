@@ -107,6 +107,8 @@ const DEFAULT_INTAKE_SPLIT_PCT = 45;
 const INTAKE_COMPACT_WIDTH = 500;
 const INTAKE_FORM_MIN_WIDTH = 320;
 const RESET_CONFIRM_TIMEOUT_MS = 2600;
+const INTAKE_REVEAL_DELAY_MS = 1000;
+const CHAT_AVATAR_FLIGHT_MS = 1120;
 const CHAT_GEOMETRY_TRANSITION = 'opacity 410ms ease, transform 1210ms cubic-bezier(.2,.78,.18,1), left 1210ms cubic-bezier(.2,.78,.18,1), top 1210ms cubic-bezier(.2,.78,.18,1), width 1210ms cubic-bezier(.2,.78,.18,1), height 1210ms cubic-bezier(.2,.78,.18,1)';
 const DEFAULT_FEEDBACK_CATEGORIES = ['Contribution', 'Question'];
 
@@ -210,6 +212,13 @@ const CHAT_CSS = `
   box-shadow: 0 30px 90px rgb(0 0 0 / 0.58), 0 0 38px var(--agent-chat-accent-soft);
   transition: ${CHAT_GEOMETRY_TRANSITION};
   animation: dndThiaWindowIn 280ms ease both;
+}
+.dnd-thia-window[data-opening="true"],
+.dnd-thia-window[data-closing="true"] {
+  animation: none;
+}
+.dnd-thia-window[data-closing="true"] {
+  pointer-events: none;
 }
 @keyframes dndThiaWindowIn {
   from {
@@ -966,6 +975,19 @@ function fullPageFrame(): Frame {
   };
 }
 
+function avatarFlightTransform(frameSize: Frame['size'], framePosition: Frame['position']): string {
+  if (typeof window === 'undefined') return 'translate3d(0, 0, 0) scale(1)';
+  const avatarCenter = {
+    x: window.innerWidth - 56,
+    y: window.innerHeight - 56,
+  };
+  const frameCenter = {
+    x: framePosition.x + frameSize.width / 2,
+    y: framePosition.y + frameSize.height / 2,
+  };
+  return `translate3d(${Math.round(avatarCenter.x - frameCenter.x)}px, ${Math.round(avatarCenter.y - frameCenter.y)}px, 0) scale(0.14)`;
+}
+
 function undockFrameForDrag(pointer: { x: number; y: number }, intakeMode: boolean): Frame {
   const target = intakeMode ? intakeFrame() : expandedFrame();
   const size = clampFrameSize(target.size);
@@ -1117,6 +1139,7 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
   });
   const [input, setInput] = useState('');
   const [feedbackOpen, setFeedbackOpen] = useState(false);
+  const [feedbackPending, setFeedbackPending] = useState(false);
   const [mobileIntakePane, setMobileIntakePane] = useState<'chat' | 'form'>('form');
   const [feedbackCategory, setFeedbackCategory] = useState(() => feedbackConfig.categories[0] || 'Feedback');
   const [feedbackMessage, setFeedbackMessage] = useState('');
@@ -1136,6 +1159,11 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
   const windowRef = useRef<HTMLElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const resetTimerRef = useRef<number | null>(null);
+  const intakeRevealTimerRef = useRef<number | null>(null);
+  const closeTimerRef = useRef<number | null>(null);
+  const openAnimationFrameRef = useRef<number | null>(null);
+  const [closingToAvatar, setClosingToAvatar] = useState(false);
+  const [openingFromAvatar, setOpeningFromAvatar] = useState(false);
 
   const activeFocus = useMemo<ThiaChatFocus>(() => {
     const domFocus = readDomFocus();
@@ -1179,6 +1207,23 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
 
   useEffect(() => () => {
     if (resetTimerRef.current != null) window.clearTimeout(resetTimerRef.current);
+    if (intakeRevealTimerRef.current != null) window.clearTimeout(intakeRevealTimerRef.current);
+    if (closeTimerRef.current != null) window.clearTimeout(closeTimerRef.current);
+    if (openAnimationFrameRef.current != null) window.cancelAnimationFrame(openAnimationFrameRef.current);
+  }, []);
+
+  const clearIntakeRevealTimer = useCallback(() => {
+    if (intakeRevealTimerRef.current != null) {
+      window.clearTimeout(intakeRevealTimerRef.current);
+      intakeRevealTimerRef.current = null;
+    }
+  }, []);
+
+  const clearCloseTimer = useCallback(() => {
+    if (closeTimerRef.current != null) {
+      window.clearTimeout(closeTimerRef.current);
+      closeTimerRef.current = null;
+    }
   }, []);
 
   const saveFrame = useCallback((next: Frame) => {
@@ -1194,11 +1239,48 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
     if (persist) saveFrame(nextFrame);
   }, [saveFrame]);
 
+  const openFromAvatar = useCallback((target?: Frame, persist = false, fullViewport = false) => {
+    clearCloseTimer();
+    setClosingToAvatar(false);
+    if (target && !isMobile) applyFrame(target, persist, fullViewport);
+    if (!open && !isMobile) {
+      setOpeningFromAvatar(true);
+      setOpen(true);
+      if (openAnimationFrameRef.current != null) window.cancelAnimationFrame(openAnimationFrameRef.current);
+      openAnimationFrameRef.current = window.requestAnimationFrame(() => {
+        openAnimationFrameRef.current = window.requestAnimationFrame(() => {
+          setOpeningFromAvatar(false);
+          openAnimationFrameRef.current = null;
+        });
+      });
+      return;
+    }
+    setOpen(true);
+  }, [applyFrame, clearCloseTimer, isMobile, open]);
+
+  const closeToAvatar = useCallback(() => {
+    clearIntakeRevealTimer();
+    clearCloseTimer();
+    setFeedbackPending(false);
+    if (isMobile) {
+      setOpen(false);
+      return;
+    }
+    saveFrame(frameRef.current);
+    setClosingToAvatar(true);
+    setOpeningFromAvatar(false);
+    closeTimerRef.current = window.setTimeout(() => {
+      setOpen(false);
+      setClosingToAvatar(false);
+      closeTimerRef.current = null;
+    }, CHAT_AVATAR_FLIGHT_MS);
+  }, [clearCloseTimer, clearIntakeRevealTimer, isMobile, saveFrame]);
+
   const sendPrompt = useCallback(async (prompt: string) => {
     const clean = prompt.trim();
     if (!clean) return;
     setInput('');
-    setOpen(true);
+    openFromAvatar();
     setMessages(prev => [...prev, { role: 'user', text: clean }]);
     const currentFocus = { ...readDomFocus(), ...activeFocus };
     const fallback = `Current focus: ${compactFocus(currentFocus) || 'no active surface marker found'}. Preserve visible state, storage keys, panel boundaries and responsive behavior before porting.`;
@@ -1209,7 +1291,7 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
       const message = error instanceof Error ? error.message : 'Assistant handoff failed.';
       setMessages(prev => [...prev, { role: 'assistant', text: message }]);
     }
-  }, [activeFocus, onSend]);
+  }, [activeFocus, onSend, openFromAvatar]);
 
   const submitFeedback = useCallback(async () => {
     const clean = feedbackMessage.trim();
@@ -1289,12 +1371,17 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
         transientFocus: true,
         quickPrompts: starterPrompts,
       }]);
-      setOpen(true);
+      clearIntakeRevealTimer();
+      setFeedbackPending(false);
+      setFeedbackOpen(false);
+      setMobileIntakePane('chat');
       if (!isMobile) {
         const next = expandedFrame();
         setExpanded(false);
         restoreFrameRef.current = null;
-        applyFrame(next, true);
+        openFromAvatar(next, true);
+      } else {
+        openFromAvatar();
       }
       if (detail.autoSend && detail.prompt) {
         window.setTimeout(() => void sendPrompt(detail.prompt || ''), 120);
@@ -1306,7 +1393,7 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
       window.removeEventListener(AGENT_CONTEXT_ASK_EVENT, handler);
       window.removeEventListener(THIA_CONTEXT_ASK_EVENT, handler);
     };
-  }, [activeFocus, applyFrame, isMobile, sendPrompt, starterPrompts]);
+  }, [activeFocus, clearIntakeRevealTimer, isMobile, openFromAvatar, sendPrompt, starterPrompts]);
 
   const onHeaderPointerDown = useCallback((event: React.PointerEvent) => {
     if (isMobile || event.button !== 0) return;
@@ -1453,14 +1540,16 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
   }, [applyFrame, expanded, feedbackOpen, isMobile]);
 
   const openChatHome = useCallback(() => {
-    setOpen(true);
+    clearIntakeRevealTimer();
+    setFeedbackPending(false);
     setFeedbackOpen(false);
     setMobileIntakePane('chat');
     setExpanded(false);
     restoreFrameRef.current = null;
     readableExpandedFromHomeRef.current = false;
-    if (!isMobile) applyFrame(defaultFrame(), true);
-  }, [applyFrame, isMobile]);
+    const target = !isMobile ? defaultFrame() : undefined;
+    openFromAvatar(target, true);
+  }, [clearIntakeRevealTimer, isMobile, openFromAvatar]);
 
   const onSubmit = (event: FormEvent) => {
     event.preventDefault();
@@ -1468,16 +1557,24 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
   };
 
   const openFeedbackPanel = useCallback(() => {
-    setOpen(true);
-    setFeedbackOpen(true);
-    setMobileIntakePane('form');
+    clearIntakeRevealTimer();
+    setFeedbackPending(true);
+    setFeedbackOpen(false);
+    setMobileIntakePane('chat');
     setIntakeSplitPct(DEFAULT_INTAKE_SPLIT_PCT);
     setExpanded(false);
     restoreFrameRef.current = null;
     readableExpandedFromHomeRef.current = true;
-    if (!isMobile) applyFrame(intakeFrame(), true);
+    const target = !isMobile ? intakeFrame() : undefined;
+    openFromAvatar(target, true);
     setFeedbackStatus('');
-  }, [applyFrame, isMobile]);
+    intakeRevealTimerRef.current = window.setTimeout(() => {
+      setFeedbackPending(false);
+      setFeedbackOpen(true);
+      setMobileIntakePane('form');
+      intakeRevealTimerRef.current = null;
+    }, INTAKE_REVEAL_DELAY_MS);
+  }, [clearIntakeRevealTimer, isMobile, openFromAvatar]);
 
   const handleManagerClick = useCallback(() => {
     if (onManagerClick) {
@@ -1568,7 +1665,7 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
 
   const chatComposer = (
     <form className="dnd-thia-composer" onSubmit={onSubmit}>
-      {feedbackConfig.enabled && !feedbackOpen && (
+      {feedbackConfig.enabled && !feedbackOpen && !feedbackPending && (
         <div className="dnd-thia-composer-tools">
           <button
             type="button"
@@ -1696,11 +1793,18 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
     </form>
   );
 
+  const avatarTransform = !isMobile && (closingToAvatar || openingFromAvatar)
+    ? avatarFlightTransform(frame.size, frame.position)
+    : 'translate3d(0, 0, 0) scale(1)';
   const windowStyle = isMobile ? undefined : ({
     left: frame.position.x,
     top: frame.position.y,
     width: frame.size.width,
     height: frame.size.height,
+    opacity: closingToAvatar || openingFromAvatar ? 0.18 : 1,
+    transform: avatarTransform,
+    transformOrigin: 'center center',
+    willChange: 'left, top, width, height, transform, opacity',
     '--dnd-thia-intake-split': `${intakeSplitPct}%`,
   } as React.CSSProperties & Record<'--dnd-thia-intake-split', string>);
   const isIntakeCompact = feedbackOpen && (isMobile || frame.size.width < INTAKE_COMPACT_WIDTH);
@@ -1726,7 +1830,10 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
         data-brand={brand}
         data-expanded={expanded ? 'true' : 'false'}
         data-intake={feedbackOpen ? 'true' : 'false'}
+        data-intake-pending={feedbackPending ? 'true' : 'false'}
         data-intake-compact={isIntakeCompact ? 'true' : 'false'}
+        data-opening={openingFromAvatar ? 'true' : 'false'}
+        data-closing={closingToAvatar ? 'true' : 'false'}
         data-pane={mobileIntakePane}
         style={windowStyle}
         aria-label={`${resolvedTitle} chat seed`}
@@ -1755,7 +1862,7 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
           <button type="button" className="dnd-thia-icon" data-action="expand" onClick={toggleExpanded} aria-label={expanded ? 'Restore chat' : 'Full page'} title={expanded ? 'Restore chat' : 'Full page'}>
             <span className="dnd-thia-icon-glyph" aria-hidden="true">{expanded ? '↙' : '⛶'}</span>
           </button>
-          <button type="button" className="dnd-thia-icon" data-action="close" onClick={() => setOpen(false)} aria-label="Close chat" title="Close chat">
+          <button type="button" className="dnd-thia-icon" data-action="close" onClick={closeToAvatar} aria-label="Close chat" title="Close chat">
             <span className="dnd-thia-icon-glyph" aria-hidden="true">×</span>
           </button>
         </span>
