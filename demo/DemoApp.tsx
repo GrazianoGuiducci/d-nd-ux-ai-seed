@@ -314,8 +314,8 @@ export default function DemoApp() {
         <p className="demo-kicker">Agentic UX Skill</p>
         <h1>Agent skill for complete UX ports.</h1>
         <p>
-          This is not a template pack. It is a skill-backed map for carrying
-          behavior, state, resize, mobile and assistant context together.
+          A skill-backed map for carrying behavior, state, resize, mobile flow
+          and assistant context together.
         </p>
         <div className="demo-release-strip" aria-label="Skill version state">
           <span>skill v{seedRelease.version}</span>
