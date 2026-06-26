@@ -204,7 +204,9 @@ See `docs/ADOPTION_GUIDE.md`, `docs/INTEGRATION_CHECKLIST.md`,
 `docs/DESIGN_PRIMITIVES.md`, `docs/AGENTIC_UX_SYSTEM_SPEC.md`,
 `docs/EXTERNAL_GENERALIZATION_PLAN.md`, `docs/CODEX_REFINEMENT_TASKS.md`,
 `docs/QA_MANUAL_CHECKLIST.md`, `docs/MEGAMENU_SEED.md`,
-`docs/THIA_CHAT_SEED.md` and `docs/PROMOTION_WORKFLOW.md`.
+`docs/THIA_CHAT_SEED.md`,
+`docs/GUIDED_SETUP_OPERATION_CENTER_SEED.md` and
+`docs/PROMOTION_WORKFLOW.md`.
 
 Use `seed.registry.json` when a coding agent needs a machine-readable list of
 promoted and candidate seeds.

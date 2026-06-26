@@ -145,6 +145,18 @@
       "doNotUseWhen": "The copy text contains private data without explicit user control.",
       "requiredAttributes": ["data-agent-action"],
       "responsiveChecks": ["copy-feedback", "mobile-copy", "privacy-boundary"]
+    },
+    {
+      "id": "guided-setup-operation-center",
+      "status": "candidate",
+      "name": "Guided Setup Operation Center",
+      "exports": [],
+      "components": [],
+      "docs": ["docs/GUIDED_SETUP_OPERATION_CENTER_SEED.md", "docs/SHELL3COL_WORKSPACE_SEED.md"],
+      "useWhen": "A product needs an ultra-simple setup path that unlocks a multifunction agentic operation center with voice, inspector and multidevice use.",
+      "doNotUseWhen": "The surface is only a landing page, static article, or a single-context tool with no setup/action boundary.",
+      "requiredAttributes": ["data-agent-marker", "data-agent-active", "data-agent-tab", "data-agent-boundary"],
+      "responsiveChecks": ["setup-first", "mobile-action-first", "voice-commands-visible", "inspector-collapsible", "technical-labels-hidden-from-primary-copy"]
     }
   ]
 }

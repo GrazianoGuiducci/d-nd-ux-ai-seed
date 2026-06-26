@@ -39,6 +39,7 @@ behavior, then rebuild the domain content outside the primitive.
 | Site map mega-panel | d-nd.com map navigation | Wide orientation panel for complex public ecosystems. | Medium: must not obscure current task or mobile reading. |
 | Side action rail | Lab feedback/support rails | Persistent feedback/support/contact entry point. | Low: keep labels short and avoid content overlap. |
 | Assistant surface pack | THIA / DOMUS chat | Floating assistant, intake split, contextual starters and page awareness. | High: state, API and copy are coupled. |
+| Guided setup operation center | AIMAIL P1.6/P1.7 pressure | Non-technical setup unlocks a multifunction agentic operation center with voice, inspector and multidevice control. | Medium: must not turn every product into a dashboard; copy must stay user-facing while logs remain inspectable. |
 
 ## Priority Order
 
@@ -54,6 +55,7 @@ behavior, then rebuild the domain content outside the primitive.
 10. `PublicDomainTemplatePack`
 11. `SiteMapMegaPanel`
 12. `SideActionRail`
+13. `GuidedSetupOperationCenter`
 
 ## Extraction Rule
 
@@ -156,6 +158,20 @@ Required:
 - no automatic candidate promotion;
 - relation labels are data, not hardcoded copy;
 - usable as context for AI without claiming authority.
+
+### GuidedSetupOperationCenter
+
+Required:
+
+- setup-first entry for non-technical users;
+- safe baseline before operational tabs unlock;
+- separate primary product flow from reviewer/debug inspector;
+- voice/hands-free control with 2-4 commands per event;
+- explicit mode/policy boundary before any action;
+- technical labels kept in logs and data, not primary copy;
+- multidevice model: desktop workspace, mobile action-first layout,
+  hands-free command surface and inspector details sheet;
+- no live/mutating action without visible side-effect and confirmation gate.
 
 ## Do Not Promote Yet
 
