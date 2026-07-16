@@ -135,6 +135,24 @@
       "responsiveChecks": ["mobile-drawer", "active-route", "external-links"]
     },
     {
+      "id": "adaptive-semantic-surface",
+      "status": "candidate",
+      "name": "Adaptive Semantic Surface",
+      "exports": [],
+      "components": [],
+      "docs": [
+        "docs/ADAPTIVE_SEMANTIC_SURFACE.md",
+        "references/adaptive-semantic-surface/README.md",
+        "references/adaptive-semantic-surface/MAIOS_PROFILE.md",
+        "references/adaptive-semantic-surface/maios.tokens.json",
+        "references/adaptive-semantic-surface/landing-blueprint.svg"
+      ],
+      "useWhen": "A changing AI-system surface needs one coherent entry point, semantic negative space, truthful diagrams, progressive disclosure and Paper/Ink/Hybrid visual modes.",
+      "doNotUseWhen": "The surface is a simple linear page, or visual motion and diagrams would imply unverified system activity.",
+      "requiredAttributes": ["data-agent-marker", "data-agent-active", "data-agent-focus", "data-agent-relation", "data-agent-boundary"],
+      "responsiveChecks": ["paper-ink-hybrid", "375px", "768px", "1024px", "1366px", "reduced-motion", "keyboard-disclosure", "baseline-restore", "no-fabricated-state"]
+    },
+    {
       "id": "copy-to-ai-bridge",
       "status": "candidate",
       "name": "Copy To AI Bridge",
