@@ -1,6 +1,6 @@
 ---
 name: d-nd-ux-ai-seed
-description: Reuse the D-ND UX-AI seed system for agentic workspaces, navigation models, inspector layouts, taxonomy views, assistant response outlines, and domain page templates. Use when Codex or another coding assistant needs to clone/adopt this repo, select coherent UI/UX patterns, create a new domain surface from existing templates, preserve D-ND design consistency, or evaluate which component/template/interaction should be copied into another project.
+description: Reuse the D-ND UX-AI seed system for agentic workspaces, navigation models, inspector layouts, taxonomy views, assistant response outlines, adaptive semantic public surfaces, and domain page templates. Use when Codex or another coding assistant needs to clone/adopt this repo, select coherent UI/UX patterns, create a new domain surface from existing templates, preserve D-ND design consistency, or evaluate which component/template/interaction should be copied into another project.
 ---
 
 # D-ND UX-AI Seed
@@ -17,6 +17,7 @@ The repo is both a component library and a source cabinet for reusable D-ND UI/U
    - `docs/PATTERN_CANDIDATES.md` for candidate pattern maturity.
    - `docs/INTEGRATION_CHECKLIST.md` before copying components.
    - `docs/DESIGN_PRIMITIVES.md` before creating local buttons, cards, modals or tooltip styles.
+   - `docs/ADAPTIVE_SEMANTIC_SURFACE.md` when a changing AI-system page needs one coherent entry point, semantic negative space, truthful diagrams, progressive disclosure or Paper/Ink/Hybrid visual modes.
    - `docs/THIA_DESIGN_SEED_LINKING.md` when the target is THIA or an assistant runtime.
    - `docs/SHELL3COL_WORKSPACE_SEED.md` for the three-column workspace contract.
 3. Choose the smallest reusable unit:
@@ -53,6 +54,14 @@ Use `DesignPrimitives` before creating new local button, card or modal styling.
 Cards and modals stop at 8px radius; controls use 4px unless they are explicit
 pills.
 
+Use the `Adaptive Semantic Surface` candidate when a public or mixed AI-system
+surface must hide fragmentation at the primary level while keeping projects,
+contexts, tools, state and verification recoverable. Read
+`references/adaptive-semantic-surface/README.md` and the target-specific profile
+only as evidence. Inspect the target repository again at implementation time,
+preserve its current truth and do not copy stale project copy or simulated
+operational state.
+
 ## Adoption Workflow
 
 1. Clone or vendor the repo.
@@ -62,6 +71,7 @@ pills.
 5. Rename storage keys, props, route labels, and awareness attributes for the target domain.
 6. Verify overflow, drawer states, keyboard focus, resize bars, mobile stacking, modal close behavior and closed-book gutters.
    For `ThiaChatSeed`, also verify the parity contract in `docs/THIA_CHAT_PORT_PARITY_CONTRACT.md`.
+   For `Adaptive Semantic Surface`, also verify Paper/Ink/Hybrid contrast, reduced motion, progressive-disclosure recovery, baseline-layout restore and that every diagram reflects real state or a clearly labelled concept.
 7. Document any new reusable pattern in `docs/PATTERN_CANDIDATES.md` before promoting it.
 
 ## Boundaries
@@ -71,6 +81,8 @@ Do not copy private domain data, project-specific claims, live endpoint secrets,
 Do not promote a pattern as stable until it has a documented contract, responsive behavior, and at least one rendered verification pass.
 
 Do not invent a new shell when `Shell3Col` plus `SplitPanel` can express the workflow with configured panels.
+
+Do not use adaptive color, motion, diagrams or activity indicators to imply a capability, live process, learning state or continuity that the target cannot verify.
 
 ## Extra Reference
 
