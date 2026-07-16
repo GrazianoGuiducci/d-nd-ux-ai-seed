@@ -1,0 +1,307 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="2040" viewBox="0 0 1440 2040" role="img" aria-labelledby="title desc" data-agent-marker="adaptive-semantic-surface" data-agent-active="true">
+  <title id="title">MAIOS Adaptive Semantic Surface landing blueprint</title>
+  <desc id="desc">A vector reference showing a paper, blue and red hybrid landing page with a living grid, semantic continuity thread, progressive disclosure and an MMK coordination field.</desc>
+
+  <defs>
+    <pattern id="paperDots" width="18" height="18" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="0.7" fill="#111827" opacity="0.07"/>
+    </pattern>
+    <pattern id="blueDots" width="16" height="16" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="0.75" fill="#FFFFFF" opacity="0.12"/>
+    </pattern>
+    <pattern id="redDots" width="14" height="14" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="0.7" fill="#FFFFFF" opacity="0.14"/>
+    </pattern>
+    <filter id="softLift" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#111827" flood-opacity="0.12"/>
+    </filter>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#0A3D91"/>
+    </marker>
+    <marker id="arrowWhite" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#FFFFFF"/>
+    </marker>
+    <style>
+      .display { font-family: Arial Narrow, Helvetica Neue, Arial, sans-serif; font-weight: 800; letter-spacing: -2px; }
+      .title { font-family: Helvetica Neue, Arial, sans-serif; font-weight: 700; }
+      .body { font-family: Helvetica Neue, Arial, sans-serif; font-weight: 400; }
+      .label { font-family: Helvetica Neue, Arial, sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; }
+      .mono { font-family: IBM Plex Mono, Consolas, monospace; }
+      .ink { fill: #111827; }
+      .paper { fill: #F5EFE3; }
+      .blue { fill: #0A3D91; }
+      .red { fill: #C52F24; }
+      .green { fill: #0F7A31; }
+      .yellow { fill: #F2C94C; }
+      .muted { fill: #6D675F; }
+      .line { stroke: #C9C2B7; stroke-width: 1; }
+      .lineDark { stroke: #34404A; stroke-width: 1; }
+      .hair { fill: none; stroke-width: 2; vector-effect: non-scaling-stroke; }
+    </style>
+  </defs>
+
+  <rect width="1440" height="2040" fill="#F5EFE3"/>
+  <rect width="1440" height="2040" fill="url(#paperDots)"/>
+
+  <!-- perimeter rhythm -->
+  <rect x="0" y="0" width="26" height="2040" fill="#0A0F13"/>
+  <rect x="26" y="0" width="36" height="160" fill="#0F7A31"/>
+  <rect x="26" y="160" width="36" height="520" fill="#F5EFE3" stroke="#111827"/>
+  <rect x="26" y="680" width="36" height="190" fill="#0A3D91"/>
+  <rect x="26" y="870" width="36" height="610" fill="#F5EFE3" stroke="#111827"/>
+  <rect x="26" y="1480" width="36" height="260" fill="#C52F24"/>
+  <rect x="26" y="1740" width="36" height="300" fill="#F5EFE3" stroke="#111827"/>
+
+  <rect x="1378" y="0" width="62" height="2040" fill="#0A0F13"/>
+  <rect x="1378" y="270" width="62" height="170" fill="#0A3D91"/>
+  <rect x="1378" y="440" width="62" height="155" fill="#F2C94C"/>
+  <rect x="1378" y="595" width="62" height="275" fill="#0A0F13"/>
+  <rect x="1378" y="870" width="62" height="180" fill="#C52F24"/>
+  <rect x="1378" y="1050" width="62" height="990" fill="#0A0F13"/>
+
+  <!-- header -->
+  <g id="header" data-agent-marker="navigation" data-agent-disclosure="primary">
+    <rect x="62" y="0" width="1316" height="92" fill="#F5EFE3" stroke="#C9C2B7"/>
+    <g transform="translate(102 28)">
+      <g fill="#0F7A31">
+        <rect x="16" y="0" width="10" height="28" rx="5"/>
+        <rect x="16" y="34" width="10" height="28" rx="5"/>
+        <rect x="0" y="16" width="28" height="10" rx="5"/>
+        <rect x="34" y="16" width="28" height="10" rx="5"/>
+        <rect x="5" y="5" width="10" height="28" rx="5" transform="rotate(-45 10 19)"/>
+        <rect x="39" y="5" width="10" height="28" rx="5" transform="rotate(45 44 19)"/>
+        <rect x="5" y="29" width="10" height="28" rx="5" transform="rotate(45 10 43)"/>
+        <rect x="39" y="29" width="10" height="28" rx="5" transform="rotate(-45 44 43)"/>
+      </g>
+      <text x="78" y="36" class="title ink" font-size="30">MAIOS</text>
+    </g>
+    <g class="body ink" font-size="15">
+      <text x="650" y="53">Visione</text>
+      <text x="735" y="53">MMK</text>
+      <text x="807" y="53">Sistema</text>
+      <text x="900" y="53">Progetti</text>
+      <text x="990" y="53">Approccio</text>
+      <text x="1095" y="53">Risorse</text>
+    </g>
+    <rect x="1194" y="23" width="132" height="46" rx="4" fill="none" stroke="#0A3D91"/>
+    <text x="1260" y="52" text-anchor="middle" class="label blue">Accedi</text>
+  </g>
+
+  <!-- hero -->
+  <g id="hero" data-agent-focus="current-intent" data-agent-view-state="focus">
+    <rect x="62" y="92" width="1316" height="640" fill="#F5EFE3"/>
+    <line x1="92" y1="118" x2="92" y2="705" stroke="#C52F24" stroke-width="3"/>
+
+    <text x="124" y="150" class="label green">MAIOS / ADAPTIVE SEMANTIC SURFACE</text>
+    <text x="124" y="250" class="display red" font-size="92">ONE ENTRY.</text>
+    <text x="124" y="342" class="display ink" font-size="92">EVERY CONTEXT.</text>
+    <text x="124" y="400" class="title ink" font-size="25">Un’unica intelligenza. Tutti i contesti, sempre connessi.</text>
+    <text x="124" y="448" class="body ink" font-size="19">
+      <tspan x="124" dy="0">MAIOS mantiene il filo tra progetti, strumenti e conoscenza.</tspan>
+      <tspan x="124" dy="30">La profondità appare quando serve. La direzione resta all’utente.</tspan>
+    </text>
+
+    <rect x="124" y="535" width="190" height="54" rx="4" fill="#C52F24"/>
+    <text x="219" y="568" text-anchor="middle" class="label paper">Scopri MAIOS →</text>
+    <rect x="334" y="535" width="190" height="54" rx="4" fill="none" stroke="#0A3D91" stroke-width="2"/>
+    <text x="429" y="568" text-anchor="middle" class="label blue">Esplora MMK →</text>
+
+    <!-- large decision field -->
+    <path d="M790 118 H1342 V705 H930 C870 625 840 560 842 480 C846 360 920 220 790 118 Z" fill="#C52F24"/>
+    <path d="M790 118 H1342 V705 H930 C870 625 840 560 842 480 C846 360 920 220 790 118 Z" fill="url(#redDots)"/>
+
+    <!-- abstract topography -->
+    <g fill="none" stroke="#0A3D91" stroke-width="1.8" opacity="0.66">
+      <path d="M578 410 C640 350 695 312 760 354 C812 388 828 440 842 480"/>
+      <path d="M560 438 C630 386 700 354 770 390 C810 410 830 448 842 480"/>
+      <path d="M548 468 C632 426 704 400 780 420 C815 430 832 460 842 480"/>
+      <path d="M540 498 C620 474 710 452 792 454 C820 456 835 468 842 480"/>
+      <path d="M558 520 C650 510 722 492 808 492"/>
+    </g>
+
+    <!-- semantic thread -->
+    <path d="M480 246 C585 238 584 142 642 150 C720 160 624 566 756 576 C848 583 824 476 874 468 C956 454 982 350 1060 350 C1138 350 1132 552 1286 552" fill="none" stroke="#0A3D91" stroke-width="4" stroke-linecap="round" marker-end="url(#arrowBlue)" data-agent-relation="source-to-result"/>
+    <circle cx="480" cy="246" r="7" fill="#0A3D91"/>
+    <circle cx="756" cy="576" r="7" fill="#0A3D91"/>
+    <circle cx="1060" cy="350" r="7" fill="#FFFFFF" stroke="#0A3D91" stroke-width="4"/>
+
+    <!-- MMK paper interruption -->
+    <g filter="url(#softLift)" data-agent-plane="kernel">
+      <rect x="854" y="255" width="252" height="286" fill="#F5EFE3" stroke="#C52F24" stroke-width="3"/>
+      <text x="892" y="330" class="display blue" font-size="62">MMK</text>
+      <text x="892" y="365" class="label green">MetaMasterKernel</text>
+      <text x="892" y="420" class="body ink" font-size="18">Comprende.</text>
+      <text x="892" y="450" class="body ink" font-size="18">Coordina.</text>
+      <text x="892" y="480" class="body ink" font-size="18">Verifica.</text>
+      <text x="892" y="510" class="body green" font-size="18" font-weight="700">Continua.</text>
+    </g>
+
+    <g class="label paper">
+      <rect x="1160" y="176" width="10" height="10" fill="#FFFFFF"/>
+      <text x="1184" y="187">Contesto sempre attivo</text>
+      <rect x="1160" y="280" width="10" height="10" fill="#0A0F13"/>
+      <text x="1184" y="291">Continuità senza reset</text>
+      <rect x="1160" y="384" width="10" height="10" fill="#0A3D91"/>
+      <text x="1184" y="395">Intenzione al centro</text>
+    </g>
+  </g>
+
+  <!-- planes / negative space -->
+  <g id="planes" data-agent-view-state="constellation">
+    <rect x="62" y="732" width="1316" height="310" fill="#FFFDF7"/>
+    <line x1="62" y1="732" x2="1378" y2="732" class="line"/>
+    <text x="124" y="780" class="label red">I tuoi piani, un sistema</text>
+    <text x="124" y="830" class="title ink" font-size="34">Ogni aspetto della tua vita.</text>
+    <text x="124" y="870" class="title ink" font-size="34">Un solo sistema.</text>
+    <text x="720" y="790" class="body ink" font-size="18">
+      <tspan x="720" dy="0">Il dettaglio resta latente finché non diventa rilevante.</tspan>
+      <tspan x="720" dy="28">Lo spazio mostra le relazioni prima dei menu.</tspan>
+    </text>
+
+    <g transform="translate(124 920)">
+      <circle cx="30" cy="20" r="18" fill="none" stroke="#0A3D91" stroke-width="2"/>
+      <circle cx="52" cy="20" r="18" fill="none" stroke="#0A3D91" stroke-width="2"/>
+      <circle cx="41" cy="40" r="18" fill="none" stroke="#0A3D91" stroke-width="2"/>
+      <text x="88" y="24" class="title blue" font-size="21">CREARE</text>
+      <text x="88" y="52" class="body ink" font-size="17">Progetti · lavoro · comunicazione</text>
+    </g>
+
+    <g transform="translate(530 920)">
+      <rect x="8" y="0" width="38" height="38" fill="none" stroke="#C52F24" stroke-width="2"/>
+      <circle cx="54" cy="32" r="19" fill="none" stroke="#C52F24" stroke-width="2"/>
+      <text x="92" y="24" class="title red" font-size="21">GOVERNARE</text>
+      <text x="92" y="52" class="body ink" font-size="17">Finanza · tempo · decisioni</text>
+    </g>
+
+    <g transform="translate(945 920)">
+      <path d="M0 17 Q24 -2 48 17 T96 17" fill="none" stroke="#0F7A31" stroke-width="2"/>
+      <path d="M0 35 Q24 16 48 35 T96 35" fill="none" stroke="#0F7A31" stroke-width="2"/>
+      <text x="118" y="24" class="title green" font-size="21">VIVERE ED EVOLVERE</text>
+      <text x="118" y="52" class="body ink" font-size="17">Benessere · apprendimento · relazioni</text>
+    </g>
+  </g>
+
+  <!-- blue system field -->
+  <g id="mmk-field" data-agent-plane="coordination" data-agent-view-state="control">
+    <rect x="62" y="1042" width="1316" height="340" fill="#0A3D91"/>
+    <rect x="62" y="1042" width="1316" height="340" fill="url(#blueDots)"/>
+    <text x="124" y="1094" class="label yellow">Il kernel che rende tutto possibile</text>
+    <text x="124" y="1160" class="display paper" font-size="64">MMK ORIENTA.</text>
+    <text x="124" y="1222" class="display paper" font-size="64">MAIOS OPERA.</text>
+    <text x="124" y="1270" class="body paper" font-size="18">
+      <tspan x="124" dy="0">La profondità è disponibile, non imposta.</tspan>
+      <tspan x="124" dy="28">Ogni passaggio conserva fonte, stato e possibilità di verifica.</tspan>
+    </text>
+
+    <path d="M560 1160 H1284" fill="none" stroke="#F2C94C" stroke-width="2" stroke-dasharray="8 10"/>
+    <g class="body paper" text-anchor="middle" font-size="16">
+      <g transform="translate(592 1128)">
+        <circle cx="0" cy="32" r="30" fill="none" stroke="#F2C94C" stroke-width="3"/>
+        <circle cx="0" cy="32" r="8" fill="#F2C94C"/>
+        <text x="0" y="102">Comprende</text>
+      </g>
+      <g transform="translate(764 1128)">
+        <circle cx="0" cy="32" r="30" fill="none" stroke="#F2C94C" stroke-width="3"/>
+        <path d="M-12 22 L12 42 M12 22 L-12 42" stroke="#F2C94C" stroke-width="3"/>
+        <text x="0" y="102">Coordina</text>
+      </g>
+      <g transform="translate(936 1128)">
+        <circle cx="0" cy="32" r="30" fill="none" stroke="#F2C94C" stroke-width="3"/>
+        <path d="M-12 32 L-2 42 L16 20" fill="none" stroke="#F2C94C" stroke-width="4"/>
+        <text x="0" y="102">Verifica</text>
+      </g>
+      <g transform="translate(1108 1128)">
+        <circle cx="0" cy="32" r="30" fill="none" stroke="#F2C94C" stroke-width="3"/>
+        <path d="M-12 32 Q0 12 12 32 Q0 52 -12 32" fill="none" stroke="#F2C94C" stroke-width="3"/>
+        <text x="0" y="102">Apprende</text>
+      </g>
+      <g transform="translate(1280 1128)">
+        <circle cx="0" cy="32" r="30" fill="none" stroke="#F2C94C" stroke-width="3"/>
+        <path d="M-16 32 C-8 14 8 50 16 32 C8 14 -8 50 -16 32" fill="none" stroke="#F2C94C" stroke-width="3"/>
+        <text x="0" y="102">Continua</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- UI evidence -->
+  <g id="ui-evidence" data-agent-boundary="human-review" data-agent-disclosure="secondary">
+    <rect x="62" y="1382" width="1316" height="430" fill="#F5EFE3"/>
+    <text x="94" y="1440" class="label red">Una nuova esperienza</text>
+    <text x="94" y="1496" class="title ink" font-size="34">Un’interfaccia che si adatta</text>
+    <text x="94" y="1538" class="title ink" font-size="34">al contesto, non il contrario.</text>
+    <text x="94" y="1584" class="body ink" font-size="17">
+      <tspan x="94" dy="0">Il primo livello mostra intento, contesto e azione.</tspan>
+      <tspan x="94" dy="28">Specifiche e gestionali compaiono a scomparsa.</tspan>
+    </text>
+    <g class="body ink" font-size="16">
+      <text x="104" y="1650">✓ Un solo punto di ingresso</text>
+      <text x="104" y="1680">✓ Contesto sempre preservato</text>
+      <text x="104" y="1710">✓ Piani visibili solo quando servono</text>
+      <text x="104" y="1740">✓ Verifica prima degli effetti</text>
+    </g>
+
+    <!-- interface frame -->
+    <g filter="url(#softLift)">
+      <rect x="430" y="1425" width="860" height="332" rx="8" fill="#FFFDF7" stroke="#C9C2B7"/>
+      <rect x="430" y="1425" width="168" height="332" rx="8" fill="#F0ECE4"/>
+      <text x="458" y="1462" class="title ink" font-size="18">✣ MAIOS</text>
+      <g class="body ink" font-size="14">
+        <text x="462" y="1510">Home</text>
+        <text x="462" y="1544">Contesto attivo</text>
+        <text x="462" y="1578">Progetti</text>
+        <text x="462" y="1612">Piani</text>
+        <text x="462" y="1646">Verifiche</text>
+        <text x="462" y="1680">Cronologia</text>
+      </g>
+      <text x="632" y="1462" class="title ink" font-size="18">Contesto attivo</text>
+      <rect x="630" y="1482" width="452" height="36" rx="4" fill="#F5EFE3" stroke="#C9C2B7"/>
+      <text x="646" y="1505" class="body muted" font-size="13">Progetto: MAIOS redesign · Obiettivo: landing page · Stato: in corso</text>
+      <text x="632" y="1565" class="title ink" font-size="24">Cosa vuoi realizzare oggi?</text>
+      <rect x="630" y="1586" width="452" height="50" rx="4" fill="#FFFDF7" stroke="#C9C2B7"/>
+      <text x="648" y="1618" class="body muted" font-size="15">Scrivi o chiedi a MAIOS</text>
+      <rect x="1038" y="1594" width="36" height="34" rx="4" fill="#0F7A31"/>
+      <text x="1056" y="1618" text-anchor="middle" class="title paper" font-size="18">↗</text>
+      <text x="632" y="1672" class="label green">Suggerimenti</text>
+      <g class="body ink" font-size="13">
+        <rect x="630" y="1688" width="108" height="30" rx="15" fill="#F5EFE3" stroke="#C9C2B7"/>
+        <text x="684" y="1708" text-anchor="middle">Analizza</text>
+        <rect x="748" y="1688" width="120" height="30" rx="15" fill="#F5EFE3" stroke="#C9C2B7"/>
+        <text x="808" y="1708" text-anchor="middle">Scrivi contenuto</text>
+        <rect x="878" y="1688" width="118" height="30" rx="15" fill="#F5EFE3" stroke="#C9C2B7"/>
+        <text x="937" y="1708" text-anchor="middle">Pianifica</text>
+      </g>
+
+      <!-- progressive decision inspector -->
+      <rect x="1094" y="1425" width="196" height="332" rx="8" fill="#C52F24"/>
+      <rect x="1094" y="1425" width="196" height="332" rx="8" fill="url(#redDots)"/>
+      <text x="1120" y="1465" class="label paper">Intenzione al centro</text>
+      <text x="1120" y="1518" class="body paper" font-size="15">Stai decidendo:</text>
+      <text x="1120" y="1550" class="title paper" font-size="19">Pubblicare la nuova</text>
+      <text x="1120" y="1576" class="title paper" font-size="19">landing page.</text>
+      <rect x="1120" y="1620" width="144" height="42" rx="4" fill="#FFFDF7"/>
+      <text x="1192" y="1646" text-anchor="middle" class="label red">Conferma →</text>
+      <rect x="1120" y="1676" width="144" height="42" rx="4" fill="none" stroke="#FFFFFF"/>
+      <text x="1192" y="1702" text-anchor="middle" class="label paper">Rivedi dettagli</text>
+    </g>
+  </g>
+
+  <!-- manifesto field -->
+  <g id="manifesto" data-agent-marker="manifesto">
+    <rect x="62" y="1812" width="1316" height="164" fill="#C52F24"/>
+    <rect x="62" y="1812" width="1316" height="164" fill="url(#redDots)"/>
+    <text x="100" y="1864" class="title paper" font-size="22">MAIOS NON È UNA CHAT DA GESTIRE.</text>
+    <text x="100" y="1896" class="title paper" font-size="22">È UN CONTINUUM DA ABITARE.</text>
+    <text x="720" y="1864" class="display paper" font-size="42">UNA LOGICA.</text>
+    <text x="720" y="1912" class="display paper" font-size="42">MOLTE SUPERFICI.</text>
+    <path d="M430 1928 H1240" fill="none" stroke="#FFFFFF" stroke-width="3" marker-end="url(#arrowWhite)"/>
+  </g>
+
+  <!-- footer -->
+  <g id="footer">
+    <rect x="62" y="1976" width="1316" height="64" fill="#F5EFE3"/>
+    <text x="100" y="2018" class="title ink" font-size="22">✣ MAIOS</text>
+    <text x="292" y="2018" class="body muted" font-size="14">Structure by system · Space by meaning · Color by intent</text>
+    <text x="1236" y="2018" class="body ink" font-size="14">IT · EN</text>
+    <circle cx="1324" cy="2012" r="5" fill="#0F7A31"/>
+  </g>
+</svg>
