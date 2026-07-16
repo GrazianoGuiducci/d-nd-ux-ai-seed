@@ -1,0 +1,293 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "name": "MAIOS Adaptive Semantic Surface",
+  "version": "0.1.0-candidate",
+  "status": "candidate",
+  "source": "MAIOS Living Grid study",
+  "purpose": "Machine-readable visual and interaction roles for a changing public AI-system surface.",
+  "color": {
+    "raw": {
+      "paper": "#F5EFE3",
+      "paperRaised": "#FFFDF7",
+      "ink": "#0A0F13",
+      "inkSoft": "#111827",
+      "systemBlue": "#0A3D91",
+      "systemBlueDeep": "#072B67",
+      "intentRed": "#C52F24",
+      "intentRedDeep": "#9F241C",
+      "attentionYellow": "#F2C94C",
+      "adaptiveGreen": "#0F7A31",
+      "adaptiveGreenLight": "#32A852",
+      "lineLight": "#C9C2B7",
+      "lineDark": "#34404A",
+      "mutedLight": "#6D675F",
+      "mutedDark": "#B8C0C7",
+      "white": "#FFFFFF",
+      "black": "#000000"
+    },
+    "semantic": {
+      "surfaceReading": "{color.raw.paper}",
+      "surfaceReadingRaised": "{color.raw.paperRaised}",
+      "surfaceInspection": "{color.raw.ink}",
+      "surfaceCoordination": "{color.raw.systemBlue}",
+      "surfaceDecision": "{color.raw.intentRed}",
+      "surfaceAttention": "{color.raw.attentionYellow}",
+      "surfaceActive": "{color.raw.adaptiveGreen}",
+      "textOnReading": "{color.raw.inkSoft}",
+      "textOnInspection": "{color.raw.paper}",
+      "textOnCoordination": "{color.raw.white}",
+      "textOnDecision": "{color.raw.white}",
+      "textOnAttention": "{color.raw.inkSoft}",
+      "textOnActive": "{color.raw.white}",
+      "borderOnReading": "{color.raw.lineLight}",
+      "borderOnInspection": "{color.raw.lineDark}",
+      "focus": "{color.raw.systemBlue}",
+      "danger": "{color.raw.intentRedDeep}",
+      "verified": "{color.raw.adaptiveGreen}",
+      "pending": "{color.raw.attentionYellow}"
+    },
+    "contrast": {
+      "whiteOnSystemBlue": 10.05,
+      "whiteOnIntentRed": 5.52,
+      "inkOnAttentionYellow": 11.18,
+      "whiteOnAdaptiveGreen": 5.46,
+      "inkOnPaper": 15.49
+    }
+  },
+  "typography": {
+    "families": {
+      "display": "Arial Narrow, Inter Tight, Helvetica Neue, Arial, sans-serif",
+      "body": "Inter, Instrument Sans, Helvetica Neue, Arial, sans-serif",
+      "data": "IBM Plex Mono, SFMono-Regular, Consolas, monospace"
+    },
+    "weight": {
+      "regular": 400,
+      "medium": 500,
+      "semibold": 600,
+      "bold": 700,
+      "black": 800
+    },
+    "size": {
+      "caption": "0.75rem",
+      "label": "0.8125rem",
+      "bodySmall": "0.875rem",
+      "body": "1rem",
+      "bodyLarge": "1.125rem",
+      "titleSmall": "1.5rem",
+      "title": "2rem",
+      "displaySmall": "clamp(2.5rem, 7vw, 5rem)",
+      "display": "clamp(3.5rem, 10vw, 8rem)"
+    },
+    "lineHeight": {
+      "tight": 0.92,
+      "title": 1.05,
+      "body": 1.55,
+      "relaxed": 1.72
+    },
+    "measure": {
+      "body": "68ch",
+      "compact": "46ch",
+      "manifesto": "14ch"
+    }
+  },
+  "space": {
+    "0": "0",
+    "1": "0.25rem",
+    "2": "0.5rem",
+    "3": "0.75rem",
+    "4": "1rem",
+    "5": "1.5rem",
+    "6": "2rem",
+    "7": "2.5rem",
+    "8": "4rem",
+    "9": "6rem",
+    "10": "8rem",
+    "focusMultiplier": 1.6,
+    "controlMultiplier": 0.8
+  },
+  "radius": {
+    "hairline": "2px",
+    "control": "4px",
+    "panel": "6px",
+    "card": "8px",
+    "modal": "8px",
+    "circle": "999px"
+  },
+  "border": {
+    "hairline": "1px",
+    "active": "2px",
+    "editorial": "3px",
+    "style": "solid"
+  },
+  "shadow": {
+    "none": "none",
+    "paperLift": "0 12px 30px rgba(17, 24, 39, 0.08)",
+    "inspectionLift": "0 18px 48px rgba(0, 0, 0, 0.28)",
+    "focusRing": "0 0 0 3px rgba(10, 61, 145, 0.28)"
+  },
+  "grid": {
+    "desktopColumns": 12,
+    "tabletColumns": 6,
+    "mobileColumns": 4,
+    "gutterDesktop": "2rem",
+    "gutterTablet": "1.5rem",
+    "gutterMobile": "1rem",
+    "maxContentWidth": "90rem",
+    "baseline": "0.5rem"
+  },
+  "motion": {
+    "duration": {
+      "micro": "120ms",
+      "local": "220ms",
+      "relational": "340ms",
+      "maximum": "480ms"
+    },
+    "easing": {
+      "standard": "cubic-bezier(0.2, 0, 0, 1)",
+      "enter": "cubic-bezier(0, 0, 0.2, 1)",
+      "exit": "cubic-bezier(0.4, 0, 1, 1)"
+    },
+    "distance": {
+      "micro": "4px",
+      "local": "12px",
+      "relational": "24px"
+    },
+    "reducedMotion": {
+      "translation": "0px",
+      "duration": "80ms",
+      "allowOpacity": true,
+      "allowInfiniteAnimation": false
+    }
+  },
+  "themes": {
+    "paper": {
+      "primarySurface": "{color.semantic.surfaceReading}",
+      "secondarySurface": "{color.semantic.surfaceReadingRaised}",
+      "text": "{color.semantic.textOnReading}",
+      "coordinationField": "{color.semantic.surfaceCoordination}",
+      "decisionField": "{color.semantic.surfaceDecision}",
+      "activeSignal": "{color.semantic.surfaceActive}"
+    },
+    "ink": {
+      "primarySurface": "{color.semantic.surfaceInspection}",
+      "secondarySurface": "{color.raw.systemBlueDeep}",
+      "text": "{color.semantic.textOnInspection}",
+      "coordinationField": "{color.semantic.surfaceCoordination}",
+      "decisionField": "{color.semantic.surfaceDecision}",
+      "activeSignal": "{color.raw.adaptiveGreenLight}"
+    },
+    "hybrid": {
+      "intentSurface": "{color.semantic.surfaceReading}",
+      "coordinationSurface": "{color.semantic.surfaceCoordination}",
+      "inspectionSurface": "{color.semantic.surfaceInspection}",
+      "decisionSurface": "{color.semantic.surfaceDecision}",
+      "attentionSurface": "{color.semantic.surfaceAttention}",
+      "activeSignal": "{color.semantic.surfaceActive}"
+    }
+  },
+  "viewState": {
+    "focus": {
+      "density": "low",
+      "secondaryDisclosure": "latent",
+      "spaceMultiplier": 1.6,
+      "motionLevel": "minimal"
+    },
+    "constellation": {
+      "density": "medium",
+      "secondaryDisclosure": "related-only",
+      "spaceMultiplier": 1.1,
+      "motionLevel": "relational"
+    },
+    "control": {
+      "density": "high",
+      "secondaryDisclosure": "inspectable",
+      "spaceMultiplier": 0.8,
+      "motionLevel": "functional"
+    },
+    "transition": {
+      "density": "medium",
+      "secondaryDisclosure": "origin-and-destination",
+      "spaceMultiplier": 1,
+      "motionLevel": "relational"
+    }
+  },
+  "components": {
+    "button": {
+      "height": "2.75rem",
+      "radius": "{radius.control}",
+      "primaryReading": "{color.raw.systemBlue}",
+      "primaryDecision": "{color.raw.intentRed}",
+      "primaryVerified": "{color.raw.adaptiveGreen}",
+      "attentionText": "{color.raw.inkSoft}"
+    },
+    "card": {
+      "radius": "{radius.card}",
+      "use": "discrete-record-or-interactive-object",
+      "defaultShadow": "{shadow.none}",
+      "hoverShadow": "{shadow.paperLift}"
+    },
+    "inspector": {
+      "desktopPlacement": "inline-edge-or-split",
+      "mobilePlacement": "bottom-sheet-or-inline",
+      "defaultDisclosure": "secondary"
+    },
+    "diagram": {
+      "maxVisibleNodes": 7,
+      "requiresStaticSummary": true,
+      "requiresKeyboardSelection": true,
+      "allowsDecorativeNetwork": false
+    }
+  },
+  "adaptation": {
+    "mayChange": [
+      "density",
+      "suggested-next-actions",
+      "disclosure-depth",
+      "local-field-balance",
+      "diagram-detail",
+      "motion-detail",
+      "non-critical-supporting-order"
+    ],
+    "mustNotChangeSilently": [
+      "destructive-action-position",
+      "action-meaning",
+      "action-label",
+      "keyboard-order",
+      "consent-boundary",
+      "verification-boundary",
+      "accessibility-preference",
+      "public-capability-claim"
+    ],
+    "requiresUserOverride": true,
+    "requiresBaselineRestore": true,
+    "allowsHiddenProfiling": false
+  },
+  "orientation": {
+    "required": [
+      "data-agent-marker",
+      "data-agent-active",
+      "data-agent-focus",
+      "data-agent-relation",
+      "data-agent-boundary"
+    ],
+    "candidate": [
+      "data-agent-plane",
+      "data-agent-view-state",
+      "data-agent-disclosure"
+    ]
+  },
+  "verification": {
+    "viewports": ["375px", "768px", "1024px", "1366px", "wide-desktop"],
+    "required": [
+      "no-horizontal-page-overflow",
+      "keyboard-navigation",
+      "visible-focus",
+      "reduced-motion",
+      "contrast-pairs",
+      "screen-reader-disclosure-state",
+      "theme-persistence",
+      "baseline-layout-restore",
+      "no-fabricated-operational-state"
+    ]
+  }
+}
