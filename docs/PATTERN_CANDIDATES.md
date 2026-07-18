@@ -35,6 +35,7 @@ behavior, then rebuild the domain content outside the primitive.
 | Glossary / concept sheet | `GlossaryLayer` | Inline concept bridge; desktop tooltip, mobile bottom sheet. | Medium-high: current glossary is domain-specific. |
 | Awareness markers | `data-thia-*` across Lab/Chat/Forms | Machine-readable UI orientation for agents. | Low: codify schema first. |
 | Navigation surface model | Public pages, app tabs, workspace route groups | Route intent, adjacent surfaces, selected item and next safe action. | Medium: copy and routing must stay separate. |
+| Adaptive semantic surface | MAIOS / MMK public surfaces and Living Grid study | Semantic negative space, chromatic fields, continuity thread, progressive disclosure and truthful explanatory motion. | Medium-high: visual expression must not imply unverified state or become tied to MAIOS copy. |
 | Public domain template pack | Lab D-ND / start / Seed public pages | New domain pages assembled from tested sections, diagrams, menus and intake blocks. | Medium: content slots and route model must be separated. |
 | Site map mega-panel | d-nd.com map navigation | Wide orientation panel for complex public ecosystems. | Medium: must not obscure current task or mobile reading. |
 | Side action rail | Lab feedback/support rails | Persistent feedback/support/contact entry point. | Low: keep labels short and avoid content overlap. |
@@ -52,10 +53,11 @@ behavior, then rebuild the domain content outside the primitive.
 7. `SectionPath`
 8. `ConceptSheet`
 9. `NavigationSurfaceModel`
-10. `PublicDomainTemplatePack`
-11. `SiteMapMegaPanel`
-12. `SideActionRail`
-13. `GuidedSetupOperationCenter`
+10. `AdaptiveSemanticSurface`
+11. `PublicDomainTemplatePack`
+12. `SiteMapMegaPanel`
+13. `SideActionRail`
+14. `GuidedSetupOperationCenter`
 
 ## Extraction Rule
 
@@ -172,6 +174,23 @@ Required:
 - multidevice model: desktop workspace, mobile action-first layout,
   hands-free command surface and inspector details sheet;
 - no live/mutating action without visible side-effect and confirmation gate.
+
+### AdaptiveSemanticSurface
+
+Required:
+
+- one dominant intent, active context and next-safe-action triad per viewport;
+- a living grid that preserves alignment without boxing every section;
+- semantic negative space reinforced by labels, alignment, lines or state;
+- Paper, Ink and Hybrid modes that are semantic arrangements rather than automatic inversions;
+- verified contrast pairs and no white text on the yellow attention field;
+- a continuity thread or equivalent relation cue that connects only real source/result relations;
+- progressive disclosure with visible recovery, keyboard behavior and mobile sheet/inline fallback;
+- diagrams that explain real process, relation, state or boundary and include a static accessible summary;
+- reduced-motion behavior and no infinite animation as evidence of activity;
+- explicit user override and baseline-layout restore for adaptive presentation;
+- preservation of current/candidate/public/private claim boundaries in the target project;
+- no decorative agent swarm, neural network or orchestration map presented as current operation.
 
 ## Do Not Promote Yet
 
