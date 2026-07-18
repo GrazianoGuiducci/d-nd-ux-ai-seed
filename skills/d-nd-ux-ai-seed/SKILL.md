@@ -18,13 +18,14 @@ The repo is both a component library and a source cabinet for reusable D-ND UI/U
    - `docs/INTEGRATION_CHECKLIST.md` before copying components.
    - `docs/DESIGN_PRIMITIVES.md` before creating local buttons, cards, modals or tooltip styles.
    - `docs/ADAPTIVE_SEMANTIC_SURFACE.md` when a changing AI-system page needs one coherent entry point, semantic negative space, truthful diagrams, progressive disclosure or Paper/Ink/Hybrid visual modes.
+   - `docs/DND_ADAPTIVE_PERCEPTUAL_DESIGN_COMPETENCE.md` before adapting palette, attention, density, negative space or artistic references to context and user needs.
    - `docs/THIA_DESIGN_SEED_LINKING.md` when the target is THIA or an assistant runtime.
    - `docs/SHELL3COL_WORKSPACE_SEED.md` for the three-column workspace contract.
 3. Choose the smallest reusable unit:
    - Component: `src/Shell3Col.tsx`, `src/ui/SplitPanel.tsx`, `src/ui/HoverPopover.tsx`, `src/DesignPrimitives.tsx`.
    - Template: `templates/Shell3ColWorkspaceSeed.tsx` plus CSS.
    - Pattern documentation: docs-only guidance when code is not mature enough.
-4. Preserve `data-thia-*` and awareness markers when moving UI across domains.
+4. Preserve `data-agent-*` orientation markers and keep `data-thia-*` only where internal compatibility is required.
 
 ## Pattern Selection
 
@@ -62,6 +63,13 @@ only as evidence. Inspect the target repository again at implementation time,
 preserve its current truth and do not copy stale project copy or simulated
 operational state.
 
+Use the `D-ND Adaptive Perceptual Design Competence` as the visual reasoning
+layer inside that surface. Map semantic roles before choosing colors. Treat
+Mondrian, Bauhaus, Scandinavian ergonomics, modern Japanese print, Kandinsky and
+impressionist color as operators with distinct responsibilities, not as styles
+to imitate simultaneously. Preserve the invariant meaning while allowing the
+perceptual expression to adapt.
+
 ## Adoption Workflow
 
 1. Clone or vendor the repo.
@@ -72,6 +80,7 @@ operational state.
 6. Verify overflow, drawer states, keyboard focus, resize bars, mobile stacking, modal close behavior and closed-book gutters.
    For `ThiaChatSeed`, also verify the parity contract in `docs/THIA_CHAT_PORT_PARITY_CONTRACT.md`.
    For `Adaptive Semantic Surface`, also verify Paper/Ink/Hybrid contrast, reduced motion, progressive-disclosure recovery, baseline-layout restore and that every diagram reflects real state or a clearly labelled concept.
+   For adaptive perceptual design, also verify the attention map, palette recipe, semantic role consistency and that no color, spacing or animation implies an unverified state.
 7. Document any new reusable pattern in `docs/PATTERN_CANDIDATES.md` before promoting it.
 
 ## Boundaries
