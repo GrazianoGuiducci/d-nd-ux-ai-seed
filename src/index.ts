@@ -10,6 +10,10 @@ export { default as TaxonomyMap } from './TaxonomyMap';
 export { default as MegaMenuSeed } from './MegaMenuSeed';
 export { default as ThiaChatSeed } from './ThiaChatSeed';
 export { default as AgentContextChatSeed } from './ThiaChatSeed';
+export {
+  serializeThiaChatConversation,
+  thiaChatConversationFilename,
+} from './ThiaChatSeed';
 export { default as AgenticChatSystem } from './AgenticChatSystem';
 export {
   createAgenticChatSituation,

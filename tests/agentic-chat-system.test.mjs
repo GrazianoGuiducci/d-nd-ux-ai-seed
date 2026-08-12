@@ -4,6 +4,8 @@ import {
   compileSituatedChatCompetenceContext,
   routeSituatedChatCompetences,
   runAgenticChatTurn,
+  serializeThiaChatConversation,
+  thiaChatConversationFilename,
 } from '../dist/d-nd-ux-ai-seed.js';
 
 const localized = (it, en) => ({ it, en });
@@ -148,4 +150,22 @@ test('complete turn composes host context, knowledge and transport without invok
   assert.equal(receivedRequest.knowledge.sections.length, 2);
   assert.match(receivedRequest.competenceContext, /HOST_GATED/);
   assert.equal(effectCalls, 0);
+});
+
+test('conversation export remains local, complete and portable', () => {
+  const exportedAt = new Date('2026-08-12T14:00:00.000Z');
+  const markdown = serializeThiaChatConversation([
+    { role: 'user', text: 'What changed?' },
+    { role: 'assistant', text: 'The relation changed.' },
+    { role: 'operator', text: 'Keep the source visible.' },
+  ], 'en', 'Research surface', exportedAt);
+
+  assert.match(markdown, /surface: Research surface/);
+  assert.match(markdown, /## User\n\nWhat changed\?/);
+  assert.match(markdown, /## Assistant\n\nThe relation changed\./);
+  assert.match(markdown, /## Operator\n\nKeep the source visible\./);
+  assert.equal(
+    thiaChatConversationFilename('Research surface', exportedAt),
+    'agentic-chat-research-surface-2026-08-12.md',
+  );
 });

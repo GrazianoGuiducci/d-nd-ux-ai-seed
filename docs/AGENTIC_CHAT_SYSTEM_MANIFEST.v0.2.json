@@ -1,13 +1,15 @@
 {
   "schema": "dnd.agentic-chat-system-manifest.v0.2",
   "product": "D-ND Portable Agentic Chat System",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "status": "implemented_public_transfer_source",
   "repository": "GrazianoGuiducci/d-nd-ux-ai-seed",
   "canonical_exports": [
     "AgenticChatSystem",
     "runAgenticChatTurn",
     "AgentContextChatSeed",
+    "serializeThiaChatConversation",
+    "thiaChatConversationFilename",
     "routeSituatedChatCompetences",
     "compileSituatedChatCompetenceContext"
   ],
@@ -49,7 +51,9 @@
     "effect_authority_remains_host_owned",
     "benefit_starts_unobserved",
     "host_context_is_adapted_not_replaced",
-    "it_en_interface_copy_is_host_selectable"
+    "it_en_interface_copy_is_host_selectable",
+    "conversation_export_is_local_and_effect_free",
+    "visual_representation_remains_host_adapted_and_non_evidentiary"
   ],
   "transfer_paths": {
     "new_site_complete": "AgenticChatSystem",

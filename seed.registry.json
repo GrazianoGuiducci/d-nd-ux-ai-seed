@@ -114,19 +114,19 @@
       "id": "agent-context-chat",
       "status": "promoted",
       "name": "Agent Context Chat Interaction Layer",
-      "exports": ["AgentContextChatSeed", "ThiaChatSeed"],
+      "exports": ["AgentContextChatSeed", "ThiaChatSeed", "serializeThiaChatConversation", "thiaChatConversationFilename"],
       "components": ["src/ThiaChatSeed.tsx", "src/agentOrientation.ts"],
       "docs": ["docs/THIA_CHAT_SEED.md", "docs/THIA_CHAT_PORT_PARITY_CONTRACT.md"],
       "useWhen": "An existing assistant runtime needs the portable THIA interaction, orientation, storage and Submit Module layer.",
       "doNotUseWhen": "The target needs the complete cognitive assistant and does not already own context, knowledge, competence composition and transport; use agentic-chat-system instead.",
       "requiredAttributes": ["data-agent-active", "data-agent-marker", "data-agent-focus"],
-      "responsiveChecks": ["desktop-drag", "desktop-resize", "mobile-fullscreen", "agent-context-event", "compatibility-event", "it-en-copy"]
+      "responsiveChecks": ["desktop-drag", "desktop-resize", "mobile-fullscreen", "agent-context-event", "compatibility-event", "it-en-copy", "local-copy-and-download"]
     },
     {
       "id": "agentic-chat-system",
       "status": "promoted",
       "name": "Portable Agentic Chat System",
-      "exports": ["AgenticChatSystem", "runAgenticChatTurn", "routeSituatedChatCompetences"],
+      "exports": ["AgenticChatSystem", "runAgenticChatTurn", "routeSituatedChatCompetences", "serializeThiaChatConversation", "thiaChatConversationFilename"],
       "components": ["src/AgenticChatSystem.tsx", "src/chat-kernel/situatedChatKernel.ts", "src/ThiaChatSeed.tsx", "src/agentOrientation.ts"],
       "docs": ["docs/AGENTIC_CHAT_SYSTEM.md", "docs/AGENTIC_CHAT_SYSTEM_MANIFEST.v0.2.json", "docs/THIA_CHAT_PORT_PARITY_CONTRACT.md"],
       "useWhen": "A new site or application needs a complete situated assistant with host-owned context, knowledge, competences, transport, receipts and the portable THIA interaction layer.",

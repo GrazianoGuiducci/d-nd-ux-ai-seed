@@ -1,6 +1,6 @@
 # Portable Agentic Chat System
 
-Status: implemented public transfer source, package `0.2.0`.
+Status: implemented public transfer source, package `0.2.1`.
 
 This repository now contains both the portable THIA interaction surface and the
 generalized situated chat system behind it. They are two layers of one product,
@@ -209,6 +209,19 @@ even where commands are unavailable, without silently granting authority.
 Submit Module follow that language. Hosts can override individual strings with
 the `copy` and `feedback` props. Knowledge content is not translated by the
 kernel; source language and translation policy remain host-owned.
+
+The interaction layer also exposes two local conversation actions: copy the
+complete turn history as Markdown and download the same Markdown trace. These
+actions do not call the model, invoke host effects or create a second memory.
+Hosts with their own UI can use `serializeThiaChatConversation` and
+`thiaChatConversationFilename` directly.
+
+Visual response representations remain a separate host adapter. A host may
+route one completed answer into `ArticleDiagramRail`, its own diagram renderer
+or another visual grammar, but the visual must remain linked to the selected
+answer and must not be presented as evidence, measurement or a new conclusion.
+The neutral kernel does not assume one visual ontology or force every answer
+into a diagram.
 
 ## Receipts and benefit
 

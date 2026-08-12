@@ -38,6 +38,11 @@ export type ThiaChatCopy = {
   composerPlaceholder: string;
   sendMessage: string;
   openChat: string;
+  copyChat: string;
+  downloadChat: string;
+  copiedChat: string;
+  downloadedChat: string;
+  copyFailed: string;
   resetChat: string;
   resetConfirm: string;
   restoreChat: string;
@@ -165,6 +170,11 @@ const CHAT_COPY: Record<ThiaChatLanguage, ThiaChatCopy> = {
     composerPlaceholder: 'Ask about the active surface...',
     sendMessage: 'Send message',
     openChat: 'Open',
+    copyChat: 'Copy conversation',
+    downloadChat: 'Download conversation',
+    copiedChat: 'Conversation copied.',
+    downloadedChat: 'Conversation downloaded.',
+    copyFailed: 'Copy unavailable in this browser.',
     resetChat: 'Reset chat',
     resetConfirm: 'Click reset again to clear the chat.',
     restoreChat: 'Restore chat',
@@ -198,6 +208,11 @@ const CHAT_COPY: Record<ThiaChatLanguage, ThiaChatCopy> = {
     composerPlaceholder: 'Chiedi della superficie attiva...',
     sendMessage: 'Invia messaggio',
     openChat: 'Apri',
+    copyChat: 'Copia conversazione',
+    downloadChat: 'Scarica conversazione',
+    copiedChat: 'Conversazione copiata.',
+    downloadedChat: 'Conversazione scaricata.',
+    copyFailed: 'Copia non disponibile in questo browser.',
     resetChat: 'Azzera chat',
     resetConfirm: 'Premi di nuovo per azzerare la chat.',
     restoreChat: 'Ripristina chat',
@@ -392,6 +407,17 @@ const CHAT_CSS = `
   display: flex;
   gap: 0.3rem;
   align-items: center;
+}
+.dnd-thia-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 .dnd-thia-manager {
   min-height: 2rem;
@@ -920,6 +946,9 @@ const CHAT_CSS = `
   .dnd-thia-head {
     cursor: default;
   }
+  .dnd-thia-icon[data-action="expand"] {
+    display: none;
+  }
   .dnd-thia-resize {
     display: none;
   }
@@ -1165,6 +1194,47 @@ function compactFocus(focus: ThiaChatFocus): string {
   return bits.join(' / ');
 }
 
+function safeExportSegment(value: string): string {
+  return value
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 48) || 'conversation';
+}
+
+export function serializeThiaChatConversation(
+  messages: ThiaChatMessage[],
+  language: ThiaChatLanguage,
+  surface = 'assistant',
+  exportedAt = new Date(),
+): string {
+  const roleLabel = (role: ThiaChatRole) => {
+    if (role === 'user') return language === 'it' ? 'Utente' : 'User';
+    if (role === 'operator') return 'Operator';
+    return 'Assistant';
+  };
+  return [
+    '# Agentic Chat — Conversation',
+    '',
+    `- surface: ${surface}`,
+    `- exported_at: ${exportedAt.toISOString()}`,
+    `- language: ${language}`,
+    '',
+    ...messages.filter(message => message.text.trim()).flatMap(message => [
+      `## ${roleLabel(message.role)}`,
+      '',
+      message.text.trim(),
+      '',
+    ]),
+  ].join('\n').trimEnd() + '\n';
+}
+
+export function thiaChatConversationFilename(surface: string, exportedAt = new Date()): string {
+  return `agentic-chat-${safeExportSegment(surface)}-${exportedAt.toISOString().slice(0, 10)}.md`;
+}
+
 function initialChatMessages(
   initialMessages: ThiaChatMessage[] | undefined,
   starterPrompts: string[],
@@ -1302,6 +1372,7 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
   const [feedbackPreview, setFeedbackPreview] = useState(false);
   const [feedbackAttachments, setFeedbackAttachments] = useState<{ name: string; size: number; type: string }[]>([]);
   const [feedbackStatus, setFeedbackStatus] = useState('');
+  const [conversationAction, setConversationAction] = useState<'copied' | 'downloaded' | 'copy-error' | null>(null);
   const [resetConfirming, setResetConfirming] = useState(false);
   const [intakeSplitPct, setIntakeSplitPct] = useState(DEFAULT_INTAKE_SPLIT_PCT);
   const dragRef = useRef<DragState | null>(null);
@@ -1487,6 +1558,47 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
       setFeedbackStatus(message);
     }
   }, [activeFocus, feedbackAttachments, feedbackCategory, feedbackContact, feedbackMessage, feedbackName, feedbackNewsletter, onFeedbackSubmit, resolvedCopy, surfaceId]);
+
+  const copyConversation = useCallback(async () => {
+    const surface = activeFocus.focus || surfaceTitle || activeFocus.surface || resolvedTitle;
+    const markdown = serializeThiaChatConversation(messages, language, surface);
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(markdown);
+      } else {
+        const textarea = document.createElement('textarea');
+        textarea.value = markdown;
+        textarea.setAttribute('readonly', '');
+        textarea.style.position = 'fixed';
+        textarea.style.left = '-9999px';
+        document.body.appendChild(textarea);
+        textarea.select();
+        const copied = document.execCommand('copy');
+        textarea.remove();
+        if (!copied) throw new Error('Clipboard unavailable');
+      }
+      setConversationAction('copied');
+    } catch {
+      setConversationAction('copy-error');
+    }
+    window.setTimeout(() => setConversationAction(null), 2200);
+  }, [activeFocus.focus, activeFocus.surface, language, messages, resolvedTitle, surfaceTitle]);
+
+  const downloadConversation = useCallback(() => {
+    const surface = activeFocus.focus || surfaceTitle || activeFocus.surface || resolvedTitle;
+    const markdown = serializeThiaChatConversation(messages, language, surface);
+    const blob = new Blob([markdown], { type: 'text/markdown;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = thiaChatConversationFilename(surface);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+    setConversationAction('downloaded');
+    window.setTimeout(() => setConversationAction(null), 2200);
+  }, [activeFocus.focus, activeFocus.surface, language, messages, resolvedTitle, surfaceTitle]);
 
   const clearResetConfirm = useCallback(() => {
     if (resetTimerRef.current != null) {
@@ -2001,9 +2113,42 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
           <span className="dnd-thia-subtitle">{resolvedSubtitle}</span>
         </span>
         <span className="dnd-thia-actions" onPointerDown={(event) => event.stopPropagation()}>
+          <span className="dnd-thia-sr-only" role="status" aria-live="polite">
+            {conversationAction === 'copied'
+              ? resolvedCopy.copiedChat
+              : conversationAction === 'downloaded'
+                ? resolvedCopy.downloadedChat
+                : conversationAction === 'copy-error'
+                  ? resolvedCopy.copyFailed
+                  : ''}
+          </span>
           <button type="button" className="dnd-thia-manager" onClick={handleManagerClick}>
             {managerLabel}
           </button>
+          {messages.length > 1 && (
+            <button
+              type="button"
+              className="dnd-thia-icon"
+              data-action="copy"
+              onClick={() => void copyConversation()}
+              aria-label={resolvedCopy.copyChat}
+              title={conversationAction === 'copied' ? resolvedCopy.copiedChat : conversationAction === 'copy-error' ? resolvedCopy.copyFailed : resolvedCopy.copyChat}
+            >
+              <span className="dnd-thia-icon-glyph" aria-hidden="true">⧉</span>
+            </button>
+          )}
+          {messages.length > 1 && (
+            <button
+              type="button"
+              className="dnd-thia-icon"
+              data-action="download"
+              onClick={downloadConversation}
+              aria-label={resolvedCopy.downloadChat}
+              title={conversationAction === 'downloaded' ? resolvedCopy.downloadedChat : resolvedCopy.downloadChat}
+            >
+              <span className="dnd-thia-icon-glyph" aria-hidden="true">↓</span>
+            </button>
+          )}
           <button
             type="button"
             className="dnd-thia-icon"

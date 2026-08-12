@@ -46,7 +46,7 @@ Before changing or porting this surface, read the source blocks for:
 - bubble/avatar closed state;
 - desktop open/close motion between avatar and the active chat frame;
 - floating window frame;
-- header controls: Manager, Reset, Full page, Close;
+- header controls: Manager, Copy, Download, Reset, Full page, Close;
 - context-aware chat body;
 - lower-right desktop resize grip;
 - Help us improve side tab;
@@ -63,7 +63,7 @@ its dynamics.
 Desktop header controls, left to right after title:
 
 ```text
-Manager -> Reset chat -> Full page / Restore -> Close
+Manager -> Copy -> Download -> Reset chat -> Full page / Restore -> Close
 ```
 
 Rules:
@@ -71,6 +71,8 @@ Rules:
 - Header drag starts only from the header area, not from buttons.
 - Manager is a host hook. In a reusable seed it may be inert unless the host
   provides `onManagerClick`, but the button position remains reserved.
+- Copy and Download serialize the same complete local conversation as Markdown.
+  They do not call the model, invoke host effects or create another memory.
 - Reset uses a confirmation state before clearing messages.
 - Reset clears the chat conversation and input, not the whole frame geometry.
 - Full page stores the previous frame and restores it on the next click.
@@ -187,7 +189,9 @@ Manual browser checks after publish:
 
 - bubble opens compact home;
 - side tab opens Submit Module;
-- Manager, Reset, Full page and Close are present;
+- Manager, Copy, Download, Reset, Full page and Close are present;
+- Copy places the complete Markdown conversation on the clipboard;
+- Download emits the same trace with a stable `.md` filename;
 - Reset needs a second click and clears conversation;
 - first compact drag expands once;
 - ordinary drag repositions only;
