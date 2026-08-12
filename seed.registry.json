@@ -113,14 +113,26 @@
     {
       "id": "agent-context-chat",
       "status": "promoted",
-      "name": "Agent Context Chat Seed",
+      "name": "Agent Context Chat Interaction Layer",
       "exports": ["AgentContextChatSeed", "ThiaChatSeed"],
       "components": ["src/ThiaChatSeed.tsx", "src/agentOrientation.ts"],
-      "docs": ["docs/THIA_CHAT_SEED.md", "docs/EXTERNAL_GENERALIZATION_PLAN.md"],
-      "useWhen": "An assistant surface must read active UI context before discussing changes.",
-      "doNotUseWhen": "The chat cannot receive focus, surface or action-boundary context.",
+      "docs": ["docs/THIA_CHAT_SEED.md", "docs/THIA_CHAT_PORT_PARITY_CONTRACT.md"],
+      "useWhen": "An existing assistant runtime needs the portable THIA interaction, orientation, storage and Submit Module layer.",
+      "doNotUseWhen": "The target needs the complete cognitive assistant and does not already own context, knowledge, competence composition and transport; use agentic-chat-system instead.",
       "requiredAttributes": ["data-agent-active", "data-agent-marker", "data-agent-focus"],
-      "responsiveChecks": ["desktop-drag", "desktop-resize", "mobile-fullscreen", "agent-context-event", "compatibility-event"]
+      "responsiveChecks": ["desktop-drag", "desktop-resize", "mobile-fullscreen", "agent-context-event", "compatibility-event", "it-en-copy"]
+    },
+    {
+      "id": "agentic-chat-system",
+      "status": "promoted",
+      "name": "Portable Agentic Chat System",
+      "exports": ["AgenticChatSystem", "runAgenticChatTurn", "routeSituatedChatCompetences"],
+      "components": ["src/AgenticChatSystem.tsx", "src/chat-kernel/situatedChatKernel.ts", "src/ThiaChatSeed.tsx", "src/agentOrientation.ts"],
+      "docs": ["docs/AGENTIC_CHAT_SYSTEM.md", "docs/AGENTIC_CHAT_SYSTEM_MANIFEST.v0.2.json", "docs/THIA_CHAT_PORT_PARITY_CONTRACT.md"],
+      "useWhen": "A new site or application needs a complete situated assistant with host-owned context, knowledge, competences, transport, receipts and the portable THIA interaction layer.",
+      "doNotUseWhen": "The target needs only the interaction component or already owns an equivalent complete cognitive turn; select the lower-level export that avoids duplication.",
+      "requiredAttributes": ["host.context", "host.knowledge", "host.competences", "host.transport"],
+      "responsiveChecks": ["kernel-invariants", "conversation-handoff", "it-en-copy", "desktop-interaction-parity", "mobile-fullscreen", "effect-adapter-not-invoked-by-turn"]
     },
     {
       "id": "public-nav-shell",

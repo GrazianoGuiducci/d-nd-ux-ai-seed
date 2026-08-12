@@ -6,7 +6,8 @@ description: Reuse the D-ND UX-AI seed system for agentic workspaces, navigation
 # D-ND UX-AI Seed
 
 Use this skill as the operating guide for the `d-nd-ux-ai-seed` repository.
-The repo is both a component library and a source cabinet for reusable D-ND UI/UX patterns.
+The repo is a component library, public transfer source for the portable
+agentic chat system, and source cabinet for reusable D-ND UI/UX patterns.
 
 ## First Move
 
@@ -18,6 +19,8 @@ The repo is both a component library and a source cabinet for reusable D-ND UI/U
    - `docs/INTEGRATION_CHECKLIST.md` before copying components.
    - `docs/DESIGN_PRIMITIVES.md` before creating local buttons, cards, modals or tooltip styles.
    - `docs/THIA_DESIGN_SEED_LINKING.md` when the target is THIA or an assistant runtime.
+   - `docs/AGENTIC_CHAT_SYSTEM.md` when the target needs a complete chatbot or
+     must transfer THIA's generalized function to another host.
    - `docs/SHELL3COL_WORKSPACE_SEED.md` for the three-column workspace contract.
 3. Choose the smallest reusable unit:
    - Component: `src/Shell3Col.tsx`, `src/ui/SplitPanel.tsx`, `src/ui/HoverPopover.tsx`, `src/DesignPrimitives.tsx`.
@@ -39,8 +42,12 @@ Use page/domain templates only after removing private project content and keepin
 
 Use `MegaMenuSeed` for tab families, route groups and subdomain navigation.
 
-Use `ThiaChatSeed` when an assistant surface must know the active panel, focus
-and `data-thia-*` context before discussing changes.
+Use `AgenticChatSystem` when the target needs the complete portable assistant:
+context, knowledge, competence composition, transport, receipts and the THIA
+interaction layer. Use `runAgenticChatTurn` when the target already owns its UI.
+
+Use `ThiaChatSeed` / `AgentContextChatSeed` only as the interaction layer when
+an existing assistant runtime already owns the cognitive turn.
 
 When editing, copying or reviewing `ThiaChatSeed`, read
 `docs/THIA_CHAT_PORT_PARITY_CONTRACT.md` first. The chat is a complete
@@ -62,11 +69,17 @@ pills.
 5. Rename storage keys, props, route labels, and awareness attributes for the target domain.
 6. Verify overflow, drawer states, keyboard focus, resize bars, mobile stacking, modal close behavior and closed-book gutters.
    For `ThiaChatSeed`, also verify the parity contract in `docs/THIA_CHAT_PORT_PARITY_CONTRACT.md`.
+   For `AgenticChatSystem`, run `npm run test:kernel` and verify the target host
+   maps its existing conversation state rather than creating a parallel memory.
 7. Document any new reusable pattern in `docs/PATTERN_CANDIDATES.md` before promoting it.
 
 ## Boundaries
 
 Do not copy private domain data, project-specific claims, live endpoint secrets, or internal operational memory into reusable templates.
+
+Do not copy THIA or MAIOS knowledge into the neutral kernel. Connect host-owned
+context, sources, provider transport and optional effects through adapters. A
+normal chat turn must never invoke the effect adapter.
 
 Do not promote a pattern as stable until it has a documented contract, responsive behavior, and at least one rendered verification pass.
 

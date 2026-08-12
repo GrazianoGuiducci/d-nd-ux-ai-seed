@@ -8,6 +8,7 @@ import {
 
 export type ThiaChatRole = 'assistant' | 'user' | 'operator';
 export type ThiaChatBrand = 'agent' | 'thia';
+export type ThiaChatLanguage = 'it' | 'en';
 
 export type ThiaChatMessage = {
   role: ThiaChatRole;
@@ -24,6 +25,45 @@ export type ThiaChatFocus = {
   relation?: string;
   count?: string;
   boundary?: string;
+};
+
+export type ThiaChatTurnContext = {
+  messages: ThiaChatMessage[];
+  language: ThiaChatLanguage;
+};
+
+export type ThiaChatCopy = {
+  initialMessage: string;
+  greeting: string;
+  composerPlaceholder: string;
+  sendMessage: string;
+  openChat: string;
+  resetChat: string;
+  resetConfirm: string;
+  restoreChat: string;
+  fullPage: string;
+  closeChat: string;
+  chatPane: string;
+  formPane: string;
+  intakePanes: string;
+  intakePrompts: string[];
+  noFocusedSurface: string;
+  currentAwareness: string;
+  resizePanels: string;
+  resizeChat: string;
+  managerUnavailable: string;
+  handoffFailed: string;
+  focusReceived: string;
+  visibleUi: string;
+  noActiveMarker: string;
+  fallbackGuidance: string;
+  feedbackRequired: string;
+  feedbackReceived: string;
+  moduleSubmitted: string;
+  traceRecorded: string;
+  feedbackFailed: string;
+  fileReady: string;
+  filesReady: string;
 };
 
 export type ThiaChatAskDetail = AgentContextAskDetail;
@@ -76,9 +116,15 @@ export interface ThiaChatSeedProps {
   openByDefault?: boolean;
   className?: string;
   brand?: ThiaChatBrand;
+  language?: ThiaChatLanguage;
+  copy?: Partial<ThiaChatCopy>;
   feedback?: boolean | ThiaChatFeedbackConfig;
   managerLabel?: string;
-  onSend?: (prompt: string, focus: ThiaChatFocus) => Promise<string> | string;
+  onSend?: (
+    prompt: string,
+    focus: ThiaChatFocus,
+    turn: ThiaChatTurnContext,
+  ) => Promise<string> | string;
   onFeedbackSubmit?: (payload: ThiaChatFeedbackPayload) => Promise<string | void> | string | void;
   onManagerClick?: () => void;
 }
@@ -111,6 +157,75 @@ const INTAKE_REVEAL_DELAY_MS = 1000;
 const CHAT_AVATAR_FLIGHT_MS = 1120;
 const CHAT_GEOMETRY_TRANSITION = 'opacity 410ms ease, transform 1210ms cubic-bezier(.2,.78,.18,1), left 1210ms cubic-bezier(.2,.78,.18,1), top 1210ms cubic-bezier(.2,.78,.18,1), width 1210ms cubic-bezier(.2,.78,.18,1), height 1210ms cubic-bezier(.2,.78,.18,1)';
 const DEFAULT_FEEDBACK_CATEGORIES = ['Contribution', 'Question'];
+
+const CHAT_COPY: Record<ThiaChatLanguage, ThiaChatCopy> = {
+  en: {
+    initialMessage: 'I can orient on the open surface, visible panels and focused element.',
+    greeting: 'I can orient you on what is open here.',
+    composerPlaceholder: 'Ask about the active surface...',
+    sendMessage: 'Send message',
+    openChat: 'Open',
+    resetChat: 'Reset chat',
+    resetConfirm: 'Click reset again to clear the chat.',
+    restoreChat: 'Restore chat',
+    fullPage: 'Full page',
+    closeChat: 'Close chat',
+    chatPane: 'Chat',
+    formPane: 'Form',
+    intakePanes: 'Submit Module panes',
+    intakePrompts: ['What is useful?', 'Clarify my idea', 'Guide me'],
+    noFocusedSurface: 'No focused surface selected yet.',
+    currentAwareness: 'Current awareness',
+    resizePanels: 'Resize panels',
+    resizeChat: 'Resize chat',
+    managerUnavailable: 'The Manager hook is available to the host and remains inert until the host connects it.',
+    handoffFailed: 'Assistant handoff failed.',
+    focusReceived: 'Focus received from',
+    visibleUi: 'visible UI',
+    noActiveMarker: 'no active surface marker found',
+    fallbackGuidance: 'Preserve visible state, storage keys, panel boundaries and responsive behavior before porting.',
+    feedbackRequired: 'Write a short note before sending.',
+    feedbackReceived: 'Feedback received and ready for the host review flow.',
+    moduleSubmitted: 'Module submitted.',
+    traceRecorded: 'The trace was recorded for review.',
+    feedbackFailed: 'Feedback submit failed.',
+    fileReady: 'file ready in the module.',
+    filesReady: 'files ready in the module.',
+  },
+  it: {
+    initialMessage: 'Posso orientarmi sulla superficie aperta, i pannelli visibili e l’elemento attivo.',
+    greeting: 'Posso orientarti su ciò che è aperto qui.',
+    composerPlaceholder: 'Chiedi della superficie attiva...',
+    sendMessage: 'Invia messaggio',
+    openChat: 'Apri',
+    resetChat: 'Azzera chat',
+    resetConfirm: 'Premi di nuovo per azzerare la chat.',
+    restoreChat: 'Ripristina chat',
+    fullPage: 'Pagina intera',
+    closeChat: 'Chiudi chat',
+    chatPane: 'Chat',
+    formPane: 'Modulo',
+    intakePanes: 'Pannelli del modulo',
+    intakePrompts: ['Cosa è utile?', 'Chiarisci la mia idea', 'Guidami'],
+    noFocusedSurface: 'Nessuna superficie selezionata.',
+    currentAwareness: 'Consapevolezza corrente',
+    resizePanels: 'Ridimensiona pannelli',
+    resizeChat: 'Ridimensiona chat',
+    managerUnavailable: 'L’aggancio Manager è disponibile all’host e resta inattivo finché l’host non lo collega.',
+    handoffFailed: 'Passaggio all’assistente non riuscito.',
+    focusReceived: 'Contesto ricevuto da',
+    visibleUi: 'interfaccia visibile',
+    noActiveMarker: 'nessun marcatore di superficie attivo',
+    fallbackGuidance: 'Conserva stato visibile, chiavi di memoria, confini dei pannelli e comportamento responsive durante il trasferimento.',
+    feedbackRequired: 'Scrivi una breve nota prima di inviare.',
+    feedbackReceived: 'Contributo ricevuto e pronto per il flusso di revisione dell’host.',
+    moduleSubmitted: 'Modulo inviato.',
+    traceRecorded: 'La traccia è stata registrata per la revisione.',
+    feedbackFailed: 'Invio del contributo non riuscito.',
+    fileReady: 'file pronto nel modulo.',
+    filesReady: 'file pronti nel modulo.',
+  },
+};
 
 let chatCssInjected = false;
 const CHAT_CSS = `
@@ -1053,28 +1168,58 @@ function compactFocus(focus: ThiaChatFocus): string {
 function initialChatMessages(
   initialMessages: ThiaChatMessage[] | undefined,
   starterPrompts: string[],
+  copy: ThiaChatCopy,
 ): ThiaChatMessage[] {
   return initialMessages || [{
     role: 'assistant',
-    text: 'I can orient on the open surface, visible panels and focused design element.',
+    text: copy.initialMessage,
     quickPrompts: starterPrompts,
   }];
 }
 
-function plainMarkdownPreview(value: string): string {
-  return value.trim() || 'Write the trace, doubt, correction, source, or useful detail.';
+function plainMarkdownPreview(value: string, placeholder: string): string {
+  return value.trim() || placeholder;
 }
 
-function resolveFeedbackConfig(feedback: ThiaChatSeedProps['feedback']): Required<ThiaChatFeedbackConfig> {
-  const base = {
+function resolveChatCopy(language: ThiaChatLanguage, copy?: Partial<ThiaChatCopy>): ThiaChatCopy {
+  return { ...CHAT_COPY[language], ...copy };
+}
+
+function resolveFeedbackConfig(
+  feedback: ThiaChatSeedProps['feedback'],
+  language: ThiaChatLanguage,
+): Required<ThiaChatFeedbackConfig> {
+  const base = language === 'it' ? {
+    enabled: true,
+    label: 'Aiutaci a migliorare',
+    tabLabel: 'Migliora',
+    tabPosition: 'left' as const,
+    title: 'Modulo contributo',
+    description: 'La chat conserva il contesto e prepara una traccia utile.',
+    moduleTitle: 'Modulo contributo',
+    moduleSubtitle: 'La chat conserva la domanda e prepara una traccia chiara da inviare.',
+    categories: ['Contributo', 'Domanda'],
+    messagePlaceholder: 'Scrivi traccia, dubbio, correzione, sorgente o dettaglio utile.',
+    namePlaceholder: 'Nome, facoltativo',
+    emailPlaceholder: 'Email, facoltativa',
+    contactPlaceholder: 'Email, facoltativa',
+    newsletterLabel: 'Tienimi aggiornato via email',
+    clearLabel: 'Pulisci modulo',
+    previewLabel: 'Anteprima .md',
+    editLabel: 'Modifica .md',
+    downloadLabel: 'Scarica',
+    attachLabel: 'Allega file',
+    closeLabel: 'Chiudi',
+    submitLabel: 'Invia modulo',
+  } : {
     enabled: true,
     label: 'Help us improve',
     tabLabel: 'Help us improve',
     tabPosition: 'left' as const,
     title: 'Submit Module',
-    description: 'THIA keeps Lab context and classifies what is useful.',
+    description: 'The chat keeps context and prepares a useful trace.',
     moduleTitle: 'Submit Module',
-    moduleSubtitle: 'THIA collects the question and prepares a clear trace to send.',
+    moduleSubtitle: 'The chat keeps the question and prepares a clear trace to send.',
     categories: DEFAULT_FEEDBACK_CATEGORIES,
     messagePlaceholder: 'Write the trace, doubt, correction, source, or useful detail.',
     namePlaceholder: 'Name, optional',
@@ -1100,22 +1245,30 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
   surfaceTitle,
   surfaceId,
   focus,
-  starterPrompts = ['What is open now?', 'Which surface is in focus?', 'What should be preserved for porting?'],
+  starterPrompts,
   initialMessages,
   storageKey,
   openByDefault = false,
   className,
   brand = 'agent',
+  language = 'en',
+  copy,
   feedback,
   managerLabel = 'Manager',
   onSend,
   onFeedbackSubmit,
   onManagerClick,
 }) => {
-  const resolvedTitle = title || (brand === 'thia' ? 'THIA' : 'Assistant');
-  const resolvedSubtitle = subtitle || (brand === 'thia' ? 'Design assistant' : 'Context assistant');
+  const resolvedCopy = useMemo(() => resolveChatCopy(language, copy), [copy, language]);
+  const resolvedStarterPrompts = useMemo(() => starterPrompts || (language === 'it'
+    ? ['Cosa è aperto ora?', 'Quale superficie è attiva?', 'Cosa va preservato nel trasferimento?']
+    : ['What is open now?', 'Which surface is in focus?', 'What should be preserved for porting?']), [language, starterPrompts]);
+  const resolvedTitle = title || (brand === 'thia' ? 'THIA' : (language === 'it' ? 'Assistente' : 'Assistant'));
+  const resolvedSubtitle = subtitle || (brand === 'thia'
+    ? (language === 'it' ? 'Assistente di design' : 'Design assistant')
+    : (language === 'it' ? 'Assistente contestuale' : 'Context assistant'));
   const resolvedStorageKey = storageKey || (brand === 'thia' ? 'dnd-thia-chat-seed' : 'agent-context-chat-seed');
-  const feedbackConfig = useMemo(() => resolveFeedbackConfig(feedback), [feedback]);
+  const feedbackConfig = useMemo(() => resolveFeedbackConfig(feedback, language), [feedback, language]);
 
   useEffect(() => { injectChatCss(); }, []);
 
@@ -1135,7 +1288,7 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
         if (raw) return JSON.parse(raw) as ThiaChatMessage[];
       } catch { /* noop */ }
     }
-    return initialChatMessages(initialMessages, starterPrompts);
+    return initialChatMessages(initialMessages, resolvedStarterPrompts, resolvedCopy);
   });
   const [input, setInput] = useState('');
   const [feedbackOpen, setFeedbackOpen] = useState(false);
@@ -1283,20 +1436,23 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
     openFromAvatar();
     setMessages(prev => [...prev, { role: 'user', text: clean }]);
     const currentFocus = { ...readDomFocus(), ...activeFocus };
-    const fallback = `Current focus: ${compactFocus(currentFocus) || 'no active surface marker found'}. Preserve visible state, storage keys, panel boundaries and responsive behavior before porting.`;
+    const fallback = `${language === 'it' ? 'Contesto corrente' : 'Current focus'}: ${compactFocus(currentFocus) || resolvedCopy.noActiveMarker}. ${resolvedCopy.fallbackGuidance}`;
     try {
-      const response = onSend ? await onSend(clean, currentFocus) : fallback;
+      const response = onSend ? await onSend(clean, currentFocus, {
+        messages: [...messages, { role: 'user', text: clean }],
+        language,
+      }) : fallback;
       setMessages(prev => [...prev, { role: 'assistant', text: response }]);
     } catch (error) {
-      const message = error instanceof Error ? error.message : 'Assistant handoff failed.';
+      const message = error instanceof Error ? error.message : resolvedCopy.handoffFailed;
       setMessages(prev => [...prev, { role: 'assistant', text: message }]);
     }
-  }, [activeFocus, onSend, openFromAvatar]);
+  }, [activeFocus, language, messages, onSend, openFromAvatar, resolvedCopy]);
 
   const submitFeedback = useCallback(async () => {
     const clean = feedbackMessage.trim();
     if (!clean) {
-      setFeedbackStatus('Write a short note before sending.');
+      setFeedbackStatus(resolvedCopy.feedbackRequired);
       return;
     }
 
@@ -1316,7 +1472,7 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
       const response = await onFeedbackSubmit?.(payload);
       setMessages(prev => [...prev, {
         role: 'assistant',
-        text: response || `Feedback received: ${payload.category}. It is ready for the host app review flow.`,
+        text: response || `${resolvedCopy.feedbackReceived} (${payload.category})`,
         transientFocus: true,
       }]);
       setFeedbackMessage('');
@@ -1325,12 +1481,12 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
       setFeedbackNewsletter(false);
       setFeedbackAttachments([]);
       setFeedbackPreview(false);
-      setFeedbackStatus(response ? 'Module submitted.' : 'Module submitted. The trace was recorded for review.');
+      setFeedbackStatus(response ? resolvedCopy.moduleSubmitted : `${resolvedCopy.moduleSubmitted} ${resolvedCopy.traceRecorded}`);
     } catch (error) {
-      const message = error instanceof Error ? error.message : 'Feedback submit failed.';
+      const message = error instanceof Error ? error.message : resolvedCopy.feedbackFailed;
       setFeedbackStatus(message);
     }
-  }, [activeFocus, feedbackAttachments, feedbackCategory, feedbackContact, feedbackMessage, feedbackName, feedbackNewsletter, onFeedbackSubmit, surfaceId]);
+  }, [activeFocus, feedbackAttachments, feedbackCategory, feedbackContact, feedbackMessage, feedbackName, feedbackNewsletter, onFeedbackSubmit, resolvedCopy, surfaceId]);
 
   const clearResetConfirm = useCallback(() => {
     if (resetTimerRef.current != null) {
@@ -1338,17 +1494,17 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
       resetTimerRef.current = null;
     }
     setResetConfirming(false);
-    setFeedbackStatus(status => (status === 'Click reset again to clear the chat.' ? '' : status));
-  }, []);
+    setFeedbackStatus(status => (status === resolvedCopy.resetConfirm ? '' : status));
+  }, [resolvedCopy.resetConfirm]);
 
   const resetChat = useCallback(() => {
     clearResetConfirm();
     setInput('');
-    setMessages(initialChatMessages(initialMessages, starterPrompts));
+    setMessages(initialChatMessages(initialMessages, resolvedStarterPrompts, resolvedCopy));
     if (typeof window !== 'undefined') {
       window.sessionStorage.removeItem(`${resolvedStorageKey}:messages`);
     }
-  }, [clearResetConfirm, initialMessages, resolvedStorageKey, starterPrompts]);
+  }, [clearResetConfirm, initialMessages, resolvedCopy, resolvedStarterPrompts, resolvedStorageKey]);
 
   const requestResetChat = useCallback(() => {
     if (resetConfirming) {
@@ -1356,10 +1512,10 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
       return;
     }
     setResetConfirming(true);
-    setFeedbackStatus('Click reset again to clear the chat.');
+    setFeedbackStatus(resolvedCopy.resetConfirm);
     if (resetTimerRef.current != null) window.clearTimeout(resetTimerRef.current);
     resetTimerRef.current = window.setTimeout(clearResetConfirm, RESET_CONFIRM_TIMEOUT_MS);
-  }, [clearResetConfirm, resetChat, resetConfirming]);
+  }, [clearResetConfirm, resetChat, resetConfirming, resolvedCopy.resetConfirm]);
 
   useEffect(() => {
     const handler = (event: Event) => {
@@ -1367,9 +1523,9 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
       const nextFocus = { ...activeFocus, ...detail };
       setMessages(prev => [...prev, {
         role: 'assistant',
-        text: `Focus received from ${detail.source || 'surface'}: ${compactFocus(nextFocus) || 'visible UI'}.`,
+        text: `${resolvedCopy.focusReceived} ${detail.source || 'surface'}: ${compactFocus(nextFocus) || resolvedCopy.visibleUi}.`,
         transientFocus: true,
-        quickPrompts: starterPrompts,
+        quickPrompts: resolvedStarterPrompts,
       }]);
       clearIntakeRevealTimer();
       setFeedbackPending(false);
@@ -1393,7 +1549,7 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
       window.removeEventListener(AGENT_CONTEXT_ASK_EVENT, handler);
       window.removeEventListener(THIA_CONTEXT_ASK_EVENT, handler);
     };
-  }, [activeFocus, clearIntakeRevealTimer, isMobile, openFromAvatar, sendPrompt, starterPrompts]);
+  }, [activeFocus, clearIntakeRevealTimer, isMobile, openFromAvatar, resolvedCopy, resolvedStarterPrompts, sendPrompt]);
 
   const onHeaderPointerDown = useCallback((event: React.PointerEvent) => {
     if (isMobile || event.button !== 0) return;
@@ -1583,10 +1739,10 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
     }
     setMessages(prev => [...prev, {
       role: 'assistant',
-      text: 'Manager hook is available for the host app. This seed keeps it inert unless onManagerClick is provided.',
+      text: resolvedCopy.managerUnavailable,
       transientFocus: true,
     }]);
-  }, [onManagerClick]);
+  }, [onManagerClick, resolvedCopy.managerUnavailable]);
 
   const onIntakeSplitPointerDown = useCallback((event: React.PointerEvent) => {
     if (isMobile || event.button !== 0) return;
@@ -1681,7 +1837,7 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
         <textarea
           value={input}
           rows={1}
-          placeholder="Ask about the active surface..."
+          placeholder={resolvedCopy.composerPlaceholder}
           onChange={event => setInput(event.target.value)}
           onKeyDown={event => {
             if (event.key === 'Enter' && !event.shiftKey) {
@@ -1690,14 +1846,14 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
             }
           }}
         />
-        <button type="submit" className="dnd-thia-send" aria-label="Send message">&gt;</button>
+        <button type="submit" className="dnd-thia-send" aria-label={resolvedCopy.sendMessage}>&gt;</button>
       </div>
     </form>
   );
 
   const intakeTitle = `${feedbackConfig.moduleTitle} · ${activeFocus.focus || surfaceTitle || activeFocus.surface || resolvedTitle}`;
   const attachmentLabel = feedbackAttachments.length
-    ? `${feedbackAttachments.length} file${feedbackAttachments.length === 1 ? '' : 's'} ready in the module.`
+    ? `${feedbackAttachments.length} ${feedbackAttachments.length === 1 ? resolvedCopy.fileReady : resolvedCopy.filesReady}`
     : '';
 
   const feedbackForm = (
@@ -1725,7 +1881,7 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
       </div>
 
       {feedbackPreview ? (
-        <div className="dnd-thia-md-preview">{plainMarkdownPreview(feedbackMessage)}</div>
+        <div className="dnd-thia-md-preview">{plainMarkdownPreview(feedbackMessage, feedbackConfig.messagePlaceholder)}</div>
       ) : (
         <textarea
           value={feedbackMessage}
@@ -1814,8 +1970,8 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
       <>
         {feedbackTab}
         <div className={`dnd-thia dnd-thia-bubble-wrap${className ? ` ${className}` : ''}`} data-brand={brand}>
-          <div className="dnd-thia-greeting">I can orient you on what is open here.</div>
-          <button type="button" className="dnd-thia-avatar" aria-label={`Open ${resolvedTitle}`} onClick={openChatHome} />
+          <div className="dnd-thia-greeting">{resolvedCopy.greeting}</div>
+          <button type="button" className="dnd-thia-avatar" aria-label={`${resolvedCopy.openChat} ${resolvedTitle}`} onClick={openChatHome} />
         </div>
       </>
     );
@@ -1854,15 +2010,15 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
             data-action="reset"
             data-confirming={resetConfirming ? 'true' : 'false'}
             onClick={requestResetChat}
-            aria-label="Reset chat"
-            title="Reset chat"
+            aria-label={resolvedCopy.resetChat}
+            title={resolvedCopy.resetChat}
           >
             <span className="dnd-thia-icon-glyph" aria-hidden="true">↻</span>
           </button>
-          <button type="button" className="dnd-thia-icon" data-action="expand" onClick={toggleExpanded} aria-label={expanded ? 'Restore chat' : 'Full page'} title={expanded ? 'Restore chat' : 'Full page'}>
+          <button type="button" className="dnd-thia-icon" data-action="expand" onClick={toggleExpanded} aria-label={expanded ? resolvedCopy.restoreChat : resolvedCopy.fullPage} title={expanded ? resolvedCopy.restoreChat : resolvedCopy.fullPage}>
             <span className="dnd-thia-icon-glyph" aria-hidden="true">{expanded ? '↙' : '⛶'}</span>
           </button>
-          <button type="button" className="dnd-thia-icon" data-action="close" onClick={closeToAvatar} aria-label="Close chat" title="Close chat">
+          <button type="button" className="dnd-thia-icon" data-action="close" onClick={closeToAvatar} aria-label={resolvedCopy.closeChat} title={resolvedCopy.closeChat}>
             <span className="dnd-thia-icon-glyph" aria-hidden="true">×</span>
           </button>
         </span>
@@ -1870,10 +2026,10 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
 
         {feedbackOpen ? (
           <div className="dnd-thia-intake">
-            <div className="dnd-thia-mobile-tabs" role="tablist" aria-label="Submit Module panes">
+            <div className="dnd-thia-mobile-tabs" role="tablist" aria-label={resolvedCopy.intakePanes}>
               {([
-                ['chat', 'Chat'],
-                ['form', 'Form'],
+                ['chat', resolvedCopy.chatPane],
+                ['form', resolvedCopy.formPane],
               ] as const).map(([key, label]) => (
                 <button
                   key={key}
@@ -1890,7 +2046,7 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
             <div className="dnd-thia-intake-chat">
               {chatMessages}
               <div className="dnd-thia-intake-starters">
-                {['What is useful?', 'Clarify my idea', 'Guide me'].map(prompt => (
+                {resolvedCopy.intakePrompts.map(prompt => (
                   <button key={prompt} type="button" onClick={() => void sendPrompt(prompt)}>{prompt}</button>
                 ))}
               </div>
@@ -1899,7 +2055,7 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
             <button
               type="button"
               className="dnd-thia-intake-splitter"
-              aria-label="Resize panels"
+              aria-label={resolvedCopy.resizePanels}
               onPointerDown={onIntakeSplitPointerDown}
             >
               <span aria-hidden="true" />
@@ -1911,8 +2067,8 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
         ) : (
           <>
             <div className="dnd-thia-context">
-              <p>{activeFocus.focus || surfaceTitle || 'No focused surface selected yet.'}</p>
-              <div className="dnd-thia-context-chips" aria-label="Current awareness">
+              <p>{activeFocus.focus || surfaceTitle || resolvedCopy.noFocusedSurface}</p>
+              <div className="dnd-thia-context-chips" aria-label={resolvedCopy.currentAwareness}>
                 {Object.entries(activeFocus).filter(([, value]) => value).map(([key, value]) => (
                   <span key={key} className="dnd-thia-chip">{key}: {value}</span>
                 ))}
@@ -1923,7 +2079,7 @@ export const ThiaChatSeed: React.FC<ThiaChatSeedProps> = ({
           </>
         )}
 
-        {!isMobile && <button type="button" className="dnd-thia-resize" aria-label="Resize chat" onPointerDown={onResizePointerDown} />}
+        {!isMobile && <button type="button" className="dnd-thia-resize" aria-label={resolvedCopy.resizeChat} onPointerDown={onResizePointerDown} />}
       </section>
     </>
   );

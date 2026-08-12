@@ -1,9 +1,8 @@
 # Completion Status
 
-Status: ready seed baseline.
+Status: ready UX seed baseline with portable agentic chat system.
 
-Last verification: `npm run typecheck`, `npm run build`, `npm run pack:dry`,
-`git diff --check` and static `/ux-ai/` preview build on 2026-06-18.
+Last verification: `npm run verify` and `git diff --check` on 2026-08-12.
 
 ## Completed Surface
 
@@ -23,6 +22,15 @@ Last verification: `npm run typecheck`, `npm run build`, `npm run pack:dry`,
 - `AgentContextChatSeed` Lab-style Submit Module for "help us improve" flows,
   with fixed side tab, split chat/form layout, local fallback confirmation and
   optional host submit handler.
+- `AgenticChatSystem` composes the interaction layer with host-owned context,
+  knowledge, competence manifests and model transport.
+- `runAgenticChatTurn` exposes the same complete cognitive turn to targets that
+  already own another chat UI.
+- Neutral situated kernel preserves unknowns and unselected evidence, composes
+  competences across surfaces, records benefit as `UNOBSERVED` and never invokes
+  effects during a normal turn.
+- Default assistant copy and accessibility labels support IT and EN without
+  changing the host knowledge language.
 - Chat opens from and closes toward the desktop avatar, and the Submit Module
   appears as a delayed full-section reveal inside the chat frame.
 - Chat radius aligned to the design primitive contract: 8px surfaces and 4px
@@ -48,6 +56,7 @@ Last verification: `npm run typecheck`, `npm run build`, `npm run pack:dry`,
 ```bash
 npm run typecheck
 npm run build
+npm run test:kernel
 npm run pack:dry
 ```
 

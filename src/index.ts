@@ -10,6 +10,17 @@ export { default as TaxonomyMap } from './TaxonomyMap';
 export { default as MegaMenuSeed } from './MegaMenuSeed';
 export { default as ThiaChatSeed } from './ThiaChatSeed';
 export { default as AgentContextChatSeed } from './ThiaChatSeed';
+export { default as AgenticChatSystem } from './AgenticChatSystem';
+export {
+  createAgenticChatSituation,
+  runAgenticChatTurn,
+} from './AgenticChatSystem';
+export {
+  SITUATED_CHAT_KERNEL_VERSION,
+  compileSituatedChatCompetenceContext,
+  fingerprintSituatedChatSituation,
+  routeSituatedChatCompetences,
+} from './chat-kernel/situatedChatKernel';
 export {
   DND_RADII,
   DndButton,
@@ -39,14 +50,46 @@ export type {
   ThiaChatFeedbackConfig,
   ThiaChatFeedbackPayload,
   ThiaChatFocus,
+  ThiaChatLanguage,
   ThiaChatFocus as AgentContextFocus,
   ThiaChatMessage,
   ThiaChatMessage as AgentContextMessage,
   ThiaChatRole,
   ThiaChatRole as AgentContextRole,
+  ThiaChatCopy,
+  ThiaChatTurnContext,
   ThiaChatSeedProps,
   ThiaChatSeedProps as AgentContextChatSeedProps,
 } from './ThiaChatSeed';
+export type {
+  AgenticChatContextAdapter,
+  AgenticChatContextObservation,
+  AgenticChatEffectAdapter,
+  AgenticChatEffectReceipt,
+  AgenticChatEffectRequest,
+  AgenticChatHostAdapter,
+  AgenticChatKnowledgeAdapter,
+  AgenticChatKnowledgeSection,
+  AgenticChatKnowledgeSnapshot,
+  AgenticChatReceiptListener,
+  AgenticChatSystemProps,
+  AgenticChatTransportAdapter,
+  AgenticChatTransportRequest,
+  AgenticChatTransportResponse,
+  AgenticChatTurnInput,
+  AgenticChatTurnResult,
+} from './AgenticChatSystem';
+export type {
+  SituatedBenefitStatus,
+  SituatedChatCompileOptions,
+  SituatedChatCompetenceActivation,
+  SituatedChatCompetenceManifest,
+  SituatedChatCompetenceReceipt,
+  SituatedChatSituationEnvelope,
+  SituatedEffectAuthority,
+  SituatedLanguage,
+  SituatedLocalizedText,
+} from './chat-kernel/situatedChatKernel';
 export type {
   AgentButtonProps,
   AgentButtonSize,

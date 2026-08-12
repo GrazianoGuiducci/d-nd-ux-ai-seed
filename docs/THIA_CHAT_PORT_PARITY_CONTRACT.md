@@ -1,5 +1,12 @@
 # THIA Chat Port Parity Contract
 
+Scope: complete interaction-layer parity. The generalized cognitive system is
+specified in `docs/AGENTIC_CHAT_SYSTEM.md`.
+
+This contract remains valid: `AgenticChatSystem` composes this component rather
+than replacing or duplicating its established motion, storage and Submit Module
+behavior.
+
 Status: required contract for porting Lab-derived THIA chat behavior.
 
 This document exists because visual similarity is not enough. The chat is a
@@ -205,3 +212,9 @@ A chat port is incomplete if any of these are missing:
 - host submit boundary;
 - unique storage keys;
 - manual QA against the behaviors above.
+
+When the target is expected to behave as a complete assistant rather than an
+interaction port, UI parity is only one layer. It must also use
+`AgenticChatSystem`, `runAgenticChatTurn`, or a host implementation proven
+equivalent to the adapter and receipt contract in
+`docs/AGENTIC_CHAT_SYSTEM.md`.

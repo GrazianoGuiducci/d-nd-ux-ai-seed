@@ -1,0 +1,68 @@
+{
+  "schema": "dnd.agentic-chat-system-manifest.v0.2",
+  "product": "D-ND Portable Agentic Chat System",
+  "version": "0.2.0",
+  "status": "implemented_public_transfer_source",
+  "repository": "GrazianoGuiducci/d-nd-ux-ai-seed",
+  "canonical_exports": [
+    "AgenticChatSystem",
+    "runAgenticChatTurn",
+    "AgentContextChatSeed",
+    "routeSituatedChatCompetences",
+    "compileSituatedChatCompetenceContext"
+  ],
+  "layers": {
+    "complete_system": "src/AgenticChatSystem.tsx",
+    "neutral_kernel": "src/chat-kernel/situatedChatKernel.ts",
+    "interaction_surface": "src/ThiaChatSeed.tsx",
+    "orientation_bridge": "src/agentOrientation.ts"
+  },
+  "lineage": {
+    "neutral_kernel_source": {
+      "repository": "GrazianoGuiducci/d-nd_com",
+      "branch": "codex/thia-regenerative-lab-context-20260812",
+      "commit": "5da97da0985b27f0442e6d56729d6813b6b9c99f",
+      "source_path": "lib/situatedChatKernel.ts",
+      "sha256": "ce9e32cda19df0f32d2f49f845817853a956eab8a03e088c6c5d79fe5bfde6c6"
+    },
+    "interaction_source": {
+      "repository": "GrazianoGuiducci/d-nd-ux-ai-seed",
+      "baseline_commit": "9e0a7fcd5ff7c64acd2c7bb9586296126ee49506"
+    }
+  },
+  "host_adapters": [
+    "context",
+    "knowledge",
+    "competence_manifests",
+    "transport",
+    "effects_optional_and_separate"
+  ],
+  "invariants": [
+    "surface_is_signal_not_boundary",
+    "competence_activation_is_additive",
+    "no_applicable_faculty_yields_truthful_non_application",
+    "explicit_unknown_survives_routing",
+    "unselected_evidence_remains_available",
+    "capability_gap_is_never_inferred_from_missing_evidence_alone",
+    "host_effect_gates_do_not_remove_cognitive_competence",
+    "normal_turn_never_invokes_effect_adapter",
+    "effect_authority_remains_host_owned",
+    "benefit_starts_unobserved",
+    "host_context_is_adapted_not_replaced",
+    "it_en_interface_copy_is_host_selectable"
+  ],
+  "transfer_paths": {
+    "new_site_complete": "AgenticChatSystem",
+    "existing_runtime_ui_only": "AgentContextChatSeed",
+    "existing_ui_headless_cognition": "runAgenticChatTurn",
+    "maios": "adapt_host_context_knowledge_transport_and_existing_conversation_state"
+  },
+  "verification": [
+    "npm run typecheck",
+    "npm run build",
+    "node --test tests/agentic-chat-system.test.mjs",
+    "npm run pack:dry",
+    "git diff --check"
+  ],
+  "license": "PolyForm-Noncommercial-1.0.0"
+}

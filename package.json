@@ -1,7 +1,7 @@
 {
   "name": "d-nd-ux-ai-seed",
-  "version": "0.1.0",
-  "description": "Skill-first agentic UX behavior contracts for complete UI ports.",
+  "version": "0.2.0",
+  "description": "Skill-first agentic UX and situated chat behavior contracts for complete portable systems.",
   "license": "PolyForm-Noncommercial-1.0.0",
   "type": "module",
   "private": false,
@@ -20,7 +20,10 @@
     "workspace",
     "behavior-contracts",
     "ai-agents",
-    "interface-primitives"
+    "interface-primitives",
+    "agentic-chat",
+    "situated-reasoning",
+    "competence-routing"
   ],
   "main": "./dist/d-nd-ux-ai-seed.umd.cjs",
   "module": "./dist/d-nd-ux-ai-seed.js",
@@ -67,6 +70,8 @@
     "build:types": "tsc -p tsconfig.build.json",
     "build:lib": "vite build --mode lib",
     "build": "npm run typecheck && npm run build:lib && npm run build:types",
+    "test:kernel": "npm run build:lib && node --test tests/agentic-chat-system.test.mjs",
+    "verify": "npm run build && node --test tests/agentic-chat-system.test.mjs && npm run pack:dry",
     "preview": "vite preview",
     "prepack": "npm run build",
     "pack:dry": "npm pack --dry-run"

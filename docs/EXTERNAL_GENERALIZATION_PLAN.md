@@ -30,8 +30,9 @@ consequence panels, machine-readable state and safe action boundaries.
 | Internal / legacy term | External term | Rule |
 | --- | --- | --- |
 | D-ND UX-AI Seed | Agentic UX Seed | Use external term in public copy; keep package name until a versioned rename is planned. |
-| THIA chat | Agent context assistant | Use THIA only for internal D-ND surfaces. |
+| THIA chat | Portable agentic chat system | Use THIA only for internal D-ND branding; preserve the generalized function through `AgenticChatSystem`. |
 | `ThiaChatSeed` | `AgentContextChatSeed` | Add alias before renaming. Do not break existing imports. |
+| THIA situated reasoning | `AgenticChatSystem` / `runAgenticChatTurn` | Transfer host adapters and receipts, not D-ND knowledge or runtime. |
 | `data-thia-*` | `data-agent-*` | Support both during transition. Document `data-agent-*` as public schema. |
 | `dnd:thia:ask` | `agent:context:ask` | Support both events during transition. |
 | `dnd-*` CSS classes | `agent-*` or component-scoped classes | Rename only in a major cleanup or keep aliases. |
@@ -135,6 +136,18 @@ dnd:thia:ask
 ### Phase 4 — public examples
 
 Demo and templates should use public names by default. D-ND / THIA examples can remain in an internal section.
+
+### Phase 5 — complete portable system
+
+Implemented in package `0.2.0`:
+
+- `AgenticChatSystem` for a full assistant using this interaction surface;
+- `runAgenticChatTurn` for targets with another UI;
+- `AgentContextChatSeed` retained as the low-noise interaction-only layer;
+- host adapters for context, knowledge, transport and optional separate effects;
+- machine-readable competence and attention receipts.
+
+See `docs/AGENTIC_CHAT_SYSTEM.md` for the integration contract.
 
 ## What Not To Remove
 

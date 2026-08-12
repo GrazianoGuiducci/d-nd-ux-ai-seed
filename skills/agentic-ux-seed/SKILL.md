@@ -87,17 +87,38 @@ Keep candidate, alias, ambiguous, scaffold and rejected states visible. Do not p
 
 ### Need a context-aware assistant?
 
-Use `AgentContextChatSeed` for public/generic surfaces.
+Use `AgenticChatSystem` when the target needs the complete portable assistant:
+
+- situated context adapter;
+- host knowledge adapter;
+- composable competence manifests;
+- model transport;
+- observable movement and attention receipt;
+- `AgentContextChatSeed` as the interaction layer.
+
+Read `docs/AGENTIC_CHAT_SYSTEM.md` before integrating it. Prefer
+`runAgenticChatTurn` if the target already owns a different chat UI.
+
+Use `AgentContextChatSeed` for public/generic surfaces only when the host already
+owns the complete cognitive turn and needs the interaction layer.
 
 Use `ThiaChatSeed` with `brand="thia"` for internal THIA surfaces.
 
 The assistant should read orientation before discussing changes.
+
+Do not duplicate `ThiaChatSeed` to add reasoning. Compose `AgenticChatSystem`
+around it, or connect an existing equivalent runtime through `onSend`.
 
 When editing, copying or reviewing `ThiaChatSeed`, read
 `docs/THIA_CHAT_PORT_PARITY_CONTRACT.md` first. Preserve the complete
 Lab-derived behavior unit: side tab, Submit Module, header buttons, reset
 confirmation, full-page restore, first-drag expansion, full-page drag-down
 undock, manual resize, split divider and compact/mobile Chat/Form tabs.
+
+When transferring the complete system, keep host content, secrets and effect
+authority out of the neutral kernel. Put them in the context, knowledge,
+transport and optional effect adapters. The normal chat turn must not invoke the
+effect adapter.
 
 ## Orientation Contract
 
@@ -183,6 +204,9 @@ Verify:
 - orientation attributes are present on the active surface;
 - if using `ThiaChatSeed`, reset, full page, drag, resize, Submit Module and
   compact/mobile tab behavior match `docs/THIA_CHAT_PORT_PARITY_CONTRACT.md`.
+- if using `AgenticChatSystem`, explicit unknowns survive, unselected evidence
+  remains available, host-gated effects do not remove cognitive competence,
+  benefit starts `UNOBSERVED`, and no normal turn invokes an effect adapter.
 
 ## Do Not Do
 
@@ -191,3 +215,5 @@ Verify:
 - Do not remove orientation attributes.
 - Do not create local tooltip systems before checking `Tooltip` and `HoverPopover`.
 - Do not promote domain-heavy pages as reusable seeds.
+- Do not copy THIA or MAIOS content into the neutral chat kernel; adapt the
+  target host through its public contracts.

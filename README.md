@@ -2,13 +2,14 @@
 
 Public name: **Agentic UX Seed**.
 
-Short definition: **a portable agent skill for complete UX ports**.
+Short definition: **a portable agent skill for complete UX ports and situated agentic chat systems**.
 
 This is skill-first infrastructure. It is not a portable design pack, template
 marketplace or component gallery.
 
-Portable agent skill, UX behavior contracts and reference components for
-agentic workspaces, public navigation surfaces, labs, dashboards and tools.
+Portable agent skill, UX behavior contracts, situated cognitive chat kernel and
+reference components for agentic workspaces, public navigation surfaces, labs,
+dashboards and tools.
 
 This repository exists for D-ND internal consistency across projects, and for
 external teams that need a clear model for dense human+AI interfaces. It is not
@@ -40,6 +41,8 @@ model.
 | `src/TaxonomyMap.tsx` | Simple taxonomy inspector and data contract for concept systems. |
 | `src/MegaMenuSeed.tsx` | Megamenu seed for tabs, template families and subdomain navigation. |
 | `src/ThiaChatSeed.tsx` | Context-aware assistant seed. Public alias: `AgentContextChatSeed`. Internal THIA mode: `brand="thia"`. |
+| `src/AgenticChatSystem.tsx` | Complete portable chat composition: host context, knowledge, competences, transport, receipt and UI. |
+| `src/chat-kernel/situatedChatKernel.ts` | Neutral situated competence router, context compiler and observable receipt. |
 | `templates/Shell3ColWorkspaceSeed.tsx` | Copyable starter workspace. |
 | `demo/` | Vite demo showing the seeds as one working UX surface. |
 | `docs/` | Adoption rules, workspace behavior, response outline, diagrams, taxonomy and pattern candidates. |
@@ -84,6 +87,7 @@ import {
   AgentCard,
   AgentModal,
   AgentContextChatSeed,
+  AgenticChatSystem,
   ResponseOutlineRail,
   TaxonomyMap,
 } from 'd-nd-ux-ai-seed';
@@ -104,6 +108,15 @@ react-dom >= 18
 
 The primitives inject their own minimal CSS where needed. The demo and template
 CSS are intentionally plain CSS so consumers are not required to use Tailwind.
+
+For a complete chatbot, prefer `AgenticChatSystem`. It composes the existing
+interaction layer with host-owned context, knowledge, competence manifests and
+model transport. `AgentContextChatSeed` remains the quieter UI-only layer for
+applications that already own those functions. Hosts with their own UI can use
+`runAgenticChatTurn` directly.
+
+See `docs/AGENTIC_CHAT_SYSTEM.md` for the exact adapter contract, an end-to-end
+example and the MAIOS/other-site transfer path.
 
 ## Use As An Agent Skill
 
@@ -205,6 +218,7 @@ See `docs/ADOPTION_GUIDE.md`, `docs/INTEGRATION_CHECKLIST.md`,
 `docs/EXTERNAL_GENERALIZATION_PLAN.md`, `docs/CODEX_REFINEMENT_TASKS.md`,
 `docs/QA_MANUAL_CHECKLIST.md`, `docs/MEGAMENU_SEED.md`,
 `docs/THIA_CHAT_SEED.md`,
+`docs/AGENTIC_CHAT_SYSTEM.md`,
 `docs/GUIDED_SETUP_OPERATION_CENTER_SEED.md` and
 `docs/PROMOTION_WORKFLOW.md`.
 

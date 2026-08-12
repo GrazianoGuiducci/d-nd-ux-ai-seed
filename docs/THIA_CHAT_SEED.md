@@ -8,13 +8,23 @@ Compatibility export: `ThiaChatSeed`.
 
 Parity contract: `docs/THIA_CHAT_PORT_PARITY_CONTRACT.md`.
 
-The seed extracts portable assistant UI behavior from the D-ND public THIA chat
-without coupling this repo to a live backend.
+Complete portable system: `docs/AGENTIC_CHAT_SYSTEM.md`.
 
-The goal is not to ship a fake assistant. The goal is to preserve the behavior
-contract that makes an assistant useful across domains: it can see the active
-surface, the focused item and the open UI context before discussing changes with
-the user.
+The seed extracts portable assistant UI behavior from the D-ND public THIA chat
+without coupling the interaction component to a live backend. It is the view
+layer used by `AgenticChatSystem`; it is not, by itself, the full cognitive
+assistant.
+
+The goal is not to ship a fake assistant. This component preserves interaction,
+orientation, storage and handoff behavior. For context composition, knowledge,
+competences, receipts and transport, use `AgenticChatSystem`. If the host already
+owns those functions, connect them through `onSend` and keep this lower layer.
+
+```text
+AgentContextChatSeed   UI and orientation boundary
+AgenticChatSystem      complete portable assistant
+runAgenticChatTurn     complete cognitive turn for another UI
+```
 
 ## Public / Internal Branding
 
@@ -58,6 +68,24 @@ orientation contract.
   form section immediately.
 - Uses a true full-screen mobile panel.
 - Keeps internal scrollbars visually hidden.
+- Accepts `language="it" | "en"` for default interface copy and accessibility
+  labels, with selective overrides through `copy` and `feedback`.
+- Supplies conversation history and language as the third `onSend` argument so
+  a host runtime does not need to reconstruct the turn from the DOM.
+
+## Choosing The Right Export
+
+Use `AgentContextChatSeed` when an existing backend already owns situated
+context, sources, competences and provider transport.
+
+Use `AgenticChatSystem` for a new site or application that needs the generalized
+THIA properties as a complete portable unit. The host still supplies its own
+knowledge, identity, provider credentials and effect authority.
+
+Use `runAgenticChatTurn` when the target already has a different chat UI.
+
+Do not duplicate the component to add reasoning. Compose the higher-level
+system around this stable interaction layer.
 
 ## Feedback Form
 
@@ -68,6 +96,7 @@ Submit Module directly inside THIA.
 
 ```tsx
 <AgentContextChatSeed
+  language="it"
   feedback={{
     label: 'Aiutaci a migliorare',
     tabLabel: 'Aiutaci a migliorare',
