@@ -5,7 +5,7 @@ style preset.
 
 Use this reference when a web surface must be conceived, redesigned, or
 critiqued before the implementation-quality pass. Pair it with
-`docs/WEB_DESIGN_QUALITY_GATE.md`: this document owns direction, specificity,
+`web-quality-gate.md` in this directory: this document owns direction, specificity,
 perceptual craft, and critique; the quality gate owns evidence, accessibility,
 responsive integrity, error behavior, motion performance, and public-metadata
 handoff.
