@@ -19,8 +19,8 @@ adapter file remains receiver-specific and is not implied by source promotion.
 
 `DESIGN_KERNEL_MANIFEST.json` is the navigable owner map.
 `design/EXCHANGE.md` is an optional compact exchange relation.
-`design/OWNER_RECONCILIATION.md` records source selection and remaining consumer
-work. `design/exercises/2026-09-23/READBACK.md` records the controlled exercise.
+`design/OWNER_RECONCILIATION.md` records source selection and current reconciliation
+status. `design/exercises/2026-09-23/READBACK.md` records the controlled exercise.
 
 ## Current launch-design movement — 2026-09-23
 
@@ -106,18 +106,21 @@ to local discovery/adaptation; MAIOS-specific owners remain distinct.
 This records method changes, not stable behavioural assimilation. Later
 non-identical use may confirm or alter them.
 
-Promotion/readback identities:
+Receiver-reconciliation event identities:
 
 ```text
-D-ND Design Kernel main:
+D-ND Design Kernel reconciliation resultant:
   2fefe2f83233254ee8f186726af4ddc0bec20e9c
 
-Codex receiver main:
+Codex receiver reconciliation resultant:
   12f7af8ec93f7430743acc41034078774924bc0d
 
-tm7 promotion/readback:
+tm7 promotion/readback event:
   a446a4bc1b7bd672c4ddc05e9e3f77bcc28e8840
 ```
+
+These are event/resultant identities, not a self-referential claim that future
+repository heads must remain on those commits.
 
 ## Next situated movement
 
