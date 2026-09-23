@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>MAIOS — continua dal lavoro già fatto</title>
+<style>
+@property --thread{syntax:"<percentage>";inherits:false;initial-value:0%}
+:root{--air:#c7ecec;--substrate:#b9d8c5;--ground:#e6e5a9;--path:#f7d993;--choice:#fff8e4;--ink:#14313a;--ink-soft:#35545c;--green:#285d49;--focus:#8b4bb1;--danger:#9d3e33;--line:rgba(20,49,58,.22);--shell:1320px;--gutter:clamp(1rem,4vw,4rem);font-family:"Segoe UI Variable Text",Aptos,"Segoe UI",Helvetica,Arial,sans-serif;color:var(--ink);background:var(--air);color-scheme:light}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-width:320px;background:var(--air)}a,button{font:inherit}.skip{position:absolute;top:-6rem;left:1rem;z-index:10;background:var(--choice);padding:.75rem 1rem}.skip:focus{top:1rem}a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--focus);outline-offset:4px}
+.top{height:72px;display:flex;align-items:center;justify-content:space-between;gap:1rem;border-bottom:1px solid var(--line);padding:0 var(--gutter);max-width:var(--shell);margin:auto}.logo{font-size:1.45rem;font-weight:800;letter-spacing:-.05em}.top small{color:var(--ink-soft)}
+.hero{min-height:calc(100svh - 72px);max-width:var(--shell);margin:auto;padding:clamp(2rem,5vw,5rem) var(--gutter);display:grid;grid-template-columns:minmax(0,1.08fr) minmax(320px,.92fr);align-items:center;gap:clamp(2rem,6vw,6rem)}
+.eyebrow{font-size:.9rem;letter-spacing:.04em;text-transform:uppercase;font-weight:650;margin:0 0 1.2rem}.hero h1{font-size:clamp(3rem,6vw,6.4rem);letter-spacing:-.06em;line-height:.94;margin:0 0 1.5rem;max-width:9.4ch;font-weight:650}.hero h1 span{font-weight:350}.lead{font-size:clamp(1.1rem,1.8vw,1.35rem);line-height:1.5;max-width:41ch;margin:0 0 2rem}.chooser{border:0;margin:0;padding:0}.chooser legend{font-size:.92rem;font-weight:650;margin-bottom:.65rem}.choices{display:flex;gap:.65rem;flex-wrap:wrap}.choices button{min-height:48px;padding:.72rem 1rem;border:1px solid var(--ink);border-radius:4px;background:transparent;color:var(--ink);cursor:pointer}.choices button[aria-pressed="true"]{background:var(--ink);color:var(--choice)}.entry{margin-top:1.4rem;padding-top:1.25rem;border-top:1px solid var(--line);max-width:46rem}.entry-tag{font-size:.82rem;color:var(--ink-soft);letter-spacing:.04em}.entry h2{font-size:clamp(1.55rem,2.4vw,2.3rem);margin:.35rem 0 .6rem;letter-spacing:-.03em}.entry p{max-width:44ch;line-height:1.55;margin:.5rem 0 1.15rem}.cta{display:inline-flex;gap:1rem;align-items:center;background:var(--green);color:var(--choice);text-decoration:none;border-radius:4px;padding:.9rem 1.1rem;font-weight:650}.condition{font-size:.84rem!important;color:var(--ink-soft);margin-top:.7rem!important}
+.visual{min-height:560px;position:relative;background:var(--substrate);border:1px solid var(--line);border-radius:6px;padding:clamp(1.4rem,3vw,2.4rem);overflow:hidden;isolation:isolate}.visual::before{content:"";position:absolute;width:25rem;height:25rem;border-radius:50%;background:var(--ground);right:-8rem;top:-8rem;z-index:-2}.visual::after{content:"";position:absolute;width:13rem;height:13rem;border:2px solid var(--focus);border-radius:50%;left:-5rem;bottom:-4rem;opacity:.5;z-index:-1}.visual-label{font-size:.78rem;letter-spacing:.07em;text-transform:uppercase;font-weight:700}.thread{margin-top:2.2rem;position:relative;padding-left:2.8rem;display:grid;gap:2rem}.thread::before{content:"";position:absolute;left:1rem;top:1.1rem;bottom:1.1rem;width:2px;background:linear-gradient(to bottom,var(--ink) 0 var(--thread),rgba(20,49,58,.2) var(--thread) 100%);animation:thread 5s ease-in-out infinite}.node{position:relative;background:var(--choice);padding:1rem 1.15rem;border-left:3px solid var(--ink);max-width:29rem}.node::before{content:"";position:absolute;width:.8rem;height:.8rem;border-radius:50%;background:var(--ink);left:-2.26rem;top:1rem}.node small{display:block;color:var(--ink-soft);margin-bottom:.3rem}.node strong{display:block;font-size:1.08rem}.node:nth-child(2){background:var(--ground)}.node:nth-child(3){background:var(--path)}.visual-note{position:absolute;bottom:1.3rem;right:1.5rem;left:1.5rem;border-top:1px solid var(--line);padding-top:.75rem;font-size:.82rem;color:var(--ink-soft)}
+.section{max-width:var(--shell);margin:auto;padding:clamp(4.5rem,8vw,8rem) var(--gutter);border-top:1px solid var(--line)}.section-kicker{font-size:.82rem;text-transform:uppercase;letter-spacing:.06em;font-weight:700}.section h2{font-size:clamp(2.2rem,4.5vw,4.7rem);letter-spacing:-.05em;line-height:1;margin:.65rem 0 2.5rem;max-width:12ch}.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}.step{background:var(--choice);padding:clamp(1.4rem,2.7vw,2.5rem);min-height:230px}.step b{display:block;font-size:.78rem;margin-bottom:2rem}.step h3{font-size:1.25rem;margin:0 0 .8rem}.step p{line-height:1.5;margin:0;color:var(--ink-soft)}
+.products{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}.card{position:relative;padding:clamp(1.5rem,3vw,2.5rem);min-height:360px;border:1px solid var(--line);background:var(--choice);display:flex;flex-direction:column}.card.project{background:var(--ground)}.card .label{font-size:.82rem;color:var(--ink-soft)}.card h3{font-size:clamp(1.8rem,3vw,2.8rem);letter-spacing:-.04em;margin:1rem 0 .8rem}.card p{line-height:1.55;max-width:44ch}.card .bottom{margin-top:auto;padding-top:1.5rem}.card a{font-weight:650;text-underline-offset:.25em}.combined{grid-column:1/-1;min-height:260px;background:var(--substrate);display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:end}.combined h3{max-width:12ch}.combined .relation{font-size:1.05rem;line-height:1.55;max-width:44ch}.deep{max-width:800px}.deep details{border-top:1px solid var(--line)}.deep summary{cursor:pointer;padding:1.2rem 0;font-weight:650}.deep details p{line-height:1.65;color:var(--ink-soft)}footer{max-width:var(--shell);margin:auto;padding:1.5rem var(--gutter);border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;font-size:.82rem;color:var(--ink-soft)}
+@keyframes thread{0%,15%{--thread:0%}55%,85%{--thread:100%}100%{--thread:0%}}
+@media(max-width:850px){.hero{grid-template-columns:1fr;min-height:auto}.visual{min-height:500px}.steps{grid-template-columns:1fr}.step{min-height:auto}.products{grid-template-columns:1fr}.combined{grid-column:auto;grid-template-columns:1fr}.hero h1{max-width:12ch}.top small{max-width:17ch;text-align:right}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}.thread::before{background:var(--ink)}}
+@media(forced-colors:active){:root{--air:Canvas;--substrate:Canvas;--ground:Canvas;--path:Canvas;--choice:Canvas;--ink:CanvasText;--ink-soft:CanvasText;--green:CanvasText;--focus:Highlight;--line:CanvasText}.choices button[aria-pressed="true"]{background:Canvas;color:CanvasText;border:3px solid Highlight}.cta{background:Canvas;color:LinkText;border:2px solid LinkText}.visual::before,.visual::after{display:none}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Vai al contenuto</a>
+<header class="top"><div class="logo">MAIOS</div><small>Candidato visuale di lancio · non pubblicato</small></header>
+<main id="main">
+<section class="hero" aria-labelledby="title">
+<div>
+<p class="eyebrow">Il lavoro continua</p>
+<h1 id="title">Continua da ciò che il lavoro ha già <span>imparato.</span></h1>
+<p class="lead">Contesto, fonti, ragioni e modi di lavorare utili possono diventare una parte raggiungibile del lavoro successivo.</p>
+<fieldset class="chooser"><legend>Dove lavori soprattutto?</legend><div class="choices">
+<button id="chat" type="button" aria-pressed="true" aria-controls="entry">In una chat AI</button>
+<button id="project" type="button" aria-pressed="false" aria-controls="entry">Dentro un progetto</button>
+</div></fieldset>
+<div class="entry" id="entry" aria-live="polite" aria-atomic="true">
+<div class="entry-tag" id="entry-tag">kernel_chat</div>
+<h2 id="entry-title">Una sorgente tua per il modo di lavorare.</h2>
+<p id="entry-copy">Un kernel operativo semantico posseduto dall’utente: contesto, relazioni di sorgente, competenze e apprendimento entrano in una superficie persistente che l’AI può raggiungere.</p>
+<a class="cta" id="entry-link" href="https://github.com/GrazianoGuiducci/kernel_chat" target="_blank" rel="noopener noreferrer">Esplora kernel_chat <span aria-hidden="true">↗</span></a>
+<p class="condition" id="entry-condition">Per ambienti che offrono un ingresso persistente/custom e una sorgente durevole raggiungibile.</p>
+</div>
+</div>
+<figure class="visual" aria-labelledby="visual-title" aria-describedby="visual-desc">
+<figcaption class="visual-label" id="visual-title">Un lavoro, una sorgente, un nuovo punto di partenza</figcaption>
+<div class="thread">
+<div class="node"><small>Durante il lavoro</small><strong>Una decisione, una correzione, un metodo utile.</strong></div>
+<div class="node"><small>Nella tua sorgente</small><strong>Ragioni e competenze restano raggiungibili.</strong></div>
+<div class="node"><small>Nel lavoro successivo</small><strong>Riparti dal punto che conta.</strong></div>
+</div>
+<p class="visual-note" id="visual-desc">Schema concettuale. Non rappresenta sincronizzazione automatica fra applicazioni o provider.</p>
+</figure>
+</section>
+<section class="section" aria-labelledby="learn-title">
+<div class="section-kicker">Che cosa cambia</div><h2 id="learn-title">L’esperienza utile può tornare come capacità.</h2>
+<div class="steps">
+<article class="step"><b>01</b><h3>Accade qualcosa di utile</h3><p>Una fonte chiarisce il problema, una correzione cambia il metodo, una scelta produce una ragione da conservare.</p></article>
+<article class="step"><b>02</b><h3>La differenza trova il proprio owner</h3><p>Il risultato resta stato; ciò che deve cambiare lavori futuri può diventare conoscenza della competenza pertinente.</p></article>
+<article class="step"><b>03</b><h3>Un caso diverso può iniziare meglio</h3><p>La capacità modificata può partecipare senza chiederti di ricostruire ogni volta la precedente conversazione.</p></article>
+</div>
+</section>
+<section class="section" id="products" aria-labelledby="products-title">
+<div class="section-kicker">Due ingressi naturali</div><h2 id="products-title">Chat e progetto non sono la stessa superficie.</h2>
+<div class="products">
+<article class="card"><div class="label">Per ambienti AI con ingresso persistente</div><h3>kernel_chat</h3><p>Un kernel operativo semantico posseduto dall’utente. La sorgente persistente rende raggiungibili contesto, relazioni, competenze e apprendimento attraverso sessioni e ambienti compatibili.</p><div class="bottom"><a href="https://github.com/GrazianoGuiducci/kernel_chat" target="_blank" rel="noopener noreferrer">Apri il repository ↗</a></div></article>
+<article class="card project"><div class="label">Per agenti/coder che lavorano nel repository</div><h3>MAIOS Project Kernel</h3><p>Un kernel operativo che vive nel progetto e porta con sé fonti, ragioni, competenze e continuità. Una sessione o un agente successivo può rientrare dal progetto invece di ricostruire tutto.</p><div class="bottom"><a href="https://github.com/GrazianoGuiducci/maios-project-kernel" target="_blank" rel="noopener noreferrer">Apri il repository ↗</a></div></article>
+<article class="card combined"><div><div class="label">Uso combinato</div><h3>Due ingressi. Uno stesso lavoro, quando il tuo setup lo permette.</h3></div><p class="relation">Puoi usare i due kernel separatamente. In un setup che espone entrambe le relazioni, chat e progetto possono partecipare allo stesso lavoro. Questo non implica un sync automatico fra provider: ogni ambiente usa le sorgenti e le capacità che può realmente raggiungere.</p></article>
+</div>
+</section>
+<section class="section deep" aria-labelledby="deep-title"><div class="section-kicker">Più profondità, quando serve</div><h2 id="deep-title">Cos’è un kernel semantico?</h2><details><summary>Una definizione breve</summary><p>È un livello operativo che organizza fonti, relazioni, competenze e apprendimento affinché possano partecipare al lavoro in modo continuativo. La rappresentazione persistente non è la competenza stessa: il risultato osservabile è che un lavoro successivo pertinente può essere compreso o svolto diversamente.</p></details><details><summary>È memoria?</summary><p>Può usare superfici persistenti, ma non si riduce al ricordo di fatti o conversazioni. Conserva anche ragioni, distinzione delle fonti, metodi e competenze che possono cambiare il modo di affrontare un caso successivo.</p></details><details><summary>È un altro agente?</summary><p>No. Il kernel può essere esercitato da un’AI o da un coder compatibile. L’ambiente ricevente continua a possedere i propri strumenti, limiti e autorità sugli effetti.</p></details></section>
+</main>
+<footer><span>MAIOS · candidate launch visual system 0.1</span><span>HTML/CSS editabile · nessun asset o servizio remoto caricato</span></footer>
+<script>
+'use strict';
+const state={chat:{tag:'kernel_chat',title:'Una sorgente tua per il modo di lavorare.',copy:'Un kernel operativo semantico posseduto dall’utente: contesto, relazioni di sorgente, competenze e apprendimento entrano in una superficie persistente che l’AI può raggiungere.',href:'https://github.com/GrazianoGuiducci/kernel_chat',label:'Esplora kernel_chat',condition:'Per ambienti che offrono un ingresso persistente/custom e una sorgente durevole raggiungibile.'},project:{tag:'MAIOS Project Kernel',title:'Il metodo continua dentro il progetto.',copy:'Un kernel operativo che vive nel repository: fonti, ragioni, competenze e continuità diventano parte del progetto da cui un agente successivo può rientrare.',href:'https://github.com/GrazianoGuiducci/maios-project-kernel',label:'Esplora Project Kernel',condition:'Per AI coder/agent che lavorano con un progetto e il suo filesystem/repository.'}};
+function choose(k){const v=state[k];['chat','project'].forEach(x=>document.getElementById(x).setAttribute('aria-pressed',String(x===k)));document.getElementById('entry-tag').textContent=v.tag;document.getElementById('entry-title').textContent=v.title;document.getElementById('entry-copy').textContent=v.copy;const a=document.getElementById('entry-link');a.href=v.href;a.childNodes[0].nodeValue=v.label+' ';document.getElementById('entry-condition').textContent=v.condition}
+['chat','project'].forEach(k=>document.getElementById(k).addEventListener('click',()=>choose(k)));
+</script>
+</body>
+</html>
