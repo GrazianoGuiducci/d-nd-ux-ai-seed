@@ -1,0 +1,70 @@
+{
+  "schema": "dnd.design-source-verification.v1",
+  "core_version": "0.1.0",
+  "target_base_commit": "9b91eb9171d9ecb5278f296dba78fd9418b4f024",
+  "target_base_tree": "5b7f954757ef60d80d0e1af0dbbff75d69b89b63",
+  "source_snapshot_sha256": "752d6ef29b200dd6fab74be9402fb3736e5291909028c6daa7e9c1e7a8c7ea46",
+  "source_git_blobs": {
+    "AGENTS.md": "cefb54391d48cafb2a07022cebfbcb7745318309",
+    "DESIGN_KERNEL.md": "3bb0fcad3b4b63a4a89039591c7a665881b7f2e1",
+    "DESIGN_KERNEL_MANIFEST.json": "89eff5e6946bf795a5bc0166821e6150a340a507",
+    "README.md": "70f08a659c2b5b729c99443ff7a1283e5c2623ae",
+    "design/EXCHANGE.md": "66407451271faaf1aa7929f9fc7d9bfd4f802f95",
+    "design/OWNER_RECONCILIATION.md": "82dba085d991a2e1e5e7a7c01d0c9eb1d4d836ec",
+    "design/adapters/CHATGPT.md": "71dd5ff4a6f319aa2678b8a36b8bfb7c8b4ef640",
+    "design/adapters/codex/SKILL.md": "7117749087c067d1983a7c7ac66836cc011b0be6",
+    "design/exercises/2026-09-23/READBACK.md": "cbbe8bdc713b003b1625b93c191ca2a9345a8243",
+    "design/exercises/2026-09-23/index.html": "f242c2b93aa8981fce20434557fd87d7b2f83c70",
+    "design/profiles/maios/BRAND_FIELD.md": "327ac7978af1be15b9525e26196d5b660db298eb",
+    "design/skills/interaction-quality/SKILL.md": "65b4650a1814f5094c6d71dafaccd77d2f528c5f",
+    "design/skills/perceptual-composition/SKILL.md": "9ff21865c0dbdc7e3a44b86f91662def2903ba4d",
+    "design/skills/source-grounded-infographic/SKILL.md": "dd33510693c169edc42bed7984cc6068e894926a",
+    "design/skills/source-grounded-storyboard/SKILL.md": "c8baef5271b000b69517c774f485f8bf1b588e5a",
+    "design/state/CURRENT.md": "a15d9fefe2fb836f69929a04f0ea9a9b9d8b9046",
+    "design/tests/test_source_contract.py": "efbe3764ba2d9302ce20e8043719bc8840455bad",
+    "design/tests/verify_preview.py": "f913007b96fbd027af9f99959927a71616bf9644"
+  },
+  "source_contract_tests": {
+    "passed": 12,
+    "failed": 0,
+    "scope": "new_source_structure_and_verified_original_package_include_list"
+  },
+  "browser_checks": {
+    "passed": 64,
+    "total": 64,
+    "browser": "144.0.7559.96",
+    "render_mode": "exact_HTML_set_content_no_relative_resources",
+    "preview_sha256": "ca105aff5a799a4e92a92dd62185b911aa035a5b2d1c3dcb4f0171832bb71e83",
+    "captured_at_utc": "2026-09-23T15:55:10.092615+00:00",
+    "opaque_contrast_pairs": {
+      "main_text": 10.873,
+      "secondary_text": 6.464,
+      "card_text": 12.939,
+      "retained_text": 10.551,
+      "next_text": 10.0,
+      "diagram_note": 5.319,
+      "action_text": 7.194
+    }
+  },
+  "image_evidence_sha256": {
+    "desktop-chat.png": "1d62682f83c294579e7c8fa2d4e3d6e1d092dcf24a4bb315c09cad34f0fa46a8",
+    "mobile-project.png": "47f949599a72fc92d46808888ec66f46b89a842a167745d998ea6ed7f7ec67bf"
+  },
+  "browser_report_sha256": "6cf26238adf3fb24074b7782bf041edc43aa13bbccad3453fb4b606f839fd5cf",
+  "external_effects": {
+    "repo_source_change": "selected_separately_from_publication",
+    "site_deploy": false,
+    "messages": false,
+    "T0": false,
+    "adapter_installation": false
+  },
+  "not_claimed": [
+    "complete_library_build",
+    "library_payload_byte_identity_README_is_updated",
+    "product_runtime_behaviour",
+    "new_user_comprehension",
+    "independent_semantic_assimilation",
+    "merged_old_candidate",
+    "installed_downstream_wiring"
+  ]
+}
