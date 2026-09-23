@@ -80,6 +80,10 @@ threshold, zoom, long text or orientation that can change this implementation.
 
 ## Motion and access
 
+For detailed motion classes, direction contract, complex surface patterns and
+interaction economy, read
+[the Cognitive Motion reference](../../references/cognitive-motion.md).
+
 Motion explains a transition; it is not a loading claim or artificial urgency.
 Pause or reduce optional continuous movement. Respect reduced-motion while
 preserving state and meaning; forced colours must still expose controls and

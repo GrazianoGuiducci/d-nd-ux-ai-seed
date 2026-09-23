@@ -63,6 +63,18 @@ image cannot establish a mechanism that has not been supplied by its source.
 | A person navigates, decides, acts, interrupts or recovers | [Interaction Quality](design/skills/interaction-quality/SKILL.md) |
 | A complete existing UX unit must be ported or adapted | Existing [portable adoption](skills/agentic-ux-seed/SKILL.md) and [repository selection](skills/d-nd-ux-ai-seed/SKILL.md) skills |
 
+Cross-cutting references, returned from the receiver-side design field:
+
+| Material relation | Reference |
+| --- | --- |
+| Product-specific direction, style grammar, perceptual craft, critique | [Design Reasoning And Craft](design/references/design-reasoning-and-craft.md) |
+| Web implementation quality: evidence, accessibility, responsive, errors, motion budget, metadata | [Web Quality Gate](design/references/web-quality-gate.md) |
+| Motion classes, focus continuity, surface transitions, interaction economy | [Cognitive Motion](design/references/cognitive-motion.md) |
+| Relational chromatic field, chromatic vectors, view-state behaviour | [Relational Chromatic Design](design/references/relational-chromatic-design.md) |
+| Time-based editor: exact time, reversible gestures, track topology | [Timeline Media Editor](design/references/timeline-media-editor-competence.md) |
+| Causal onboarding, dependent form state, focus montage, action boundaries | [Context-Aware Guided Form](design/references/context-aware-guided-form-composition.md) |
+| Candidate evaluation and scoped receipt | [Candidate Evaluation Contract](design/references/candidate-evaluation-contract.md) |
+
 This is an initial reachable field, not an exhaustive design ontology. One method
 can act alone. Another can become pertinent because the first discovers a
 missing relation. A new function may deepen an existing method, form a temporary

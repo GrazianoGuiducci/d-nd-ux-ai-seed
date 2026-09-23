@@ -74,6 +74,29 @@ The controlled formation exposed three corrections incorporated in the methods:
    package. Keep the domain source in `design/` and preserve the public library
    contract until its distribution is explicitly selected.
 
+## Receiver reconciliation return — 2026-09-23
+
+OpenCode exercised the receiver reconciliation and returned generic design
+knowledge accumulated in the Codex/OpenCode design field. The following
+cross-cutting references are now in `design/references/`:
+
+- `design-reasoning-and-craft.md` — direction, style grammar, perceptual craft,
+  critique method and anti-generic test.
+- `web-quality-gate.md` — evidence, accessibility, responsive, errors, motion
+  budget, side effects and metadata handoff.
+- `cognitive-motion.md` — motion classes, direction contract, complex surface
+  patterns and interaction economy.
+- `relational-chromatic-design.md` — relational chromatic field, chromatic
+  vectors, view-state behaviour and project-profile boundary.
+- `timeline-media-editor-competence.md` — time-based editor contract.
+- `context-aware-guided-form-composition.md` — causal onboarding and dependent
+  form state.
+- `candidate-evaluation-contract.md` — candidate evaluation and scoped receipt.
+
+Interaction Quality now references Cognitive Motion; Perceptual Composition now
+references Relational Chromatic Design. The receiver skills have been reduced
+to local discovery/adaptation; MAIOS-specific owners remain distinct.
+
 This records method changes, not stable behavioural assimilation. Later
 non-identical use may confirm or alter them.
 

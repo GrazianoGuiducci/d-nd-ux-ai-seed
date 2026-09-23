@@ -106,6 +106,43 @@
       "required_always": false
     }
   ],
+  "references": [
+    {
+      "id": "design-reasoning-and-craft",
+      "path": "design/references/design-reasoning-and-craft.md",
+      "role": "direction_style_grammar_critique"
+    },
+    {
+      "id": "web-quality-gate",
+      "path": "design/references/web-quality-gate.md",
+      "role": "implementation_quality_evidence_access_responsive_motion"
+    },
+    {
+      "id": "cognitive-motion",
+      "path": "design/references/cognitive-motion.md",
+      "role": "motion_focus_continuity_surface_transitions"
+    },
+    {
+      "id": "relational-chromatic-design",
+      "path": "design/references/relational-chromatic-design.md",
+      "role": "relational_chromatic_field_vectors_view_state"
+    },
+    {
+      "id": "timeline-media-editor-competence",
+      "path": "design/references/timeline-media-editor-competence.md",
+      "role": "time_based_editor_exact_time_track_topology"
+    },
+    {
+      "id": "context-aware-guided-form-composition",
+      "path": "design/references/context-aware-guided-form-composition.md",
+      "role": "causal_onboarding_dependent_form_focus_action_boundaries"
+    },
+    {
+      "id": "candidate-evaluation-contract",
+      "path": "design/references/candidate-evaluation-contract.md",
+      "role": "candidate_evaluation_scoped_receipt"
+    }
+  ],
   "exercise": "design/exercises/2026-09-23/READBACK.md",
   "candidate_lineage": {
     "pr": 1,

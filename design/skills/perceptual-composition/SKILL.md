@@ -75,6 +75,10 @@ and defined by its owner.
 
 ## Brand is a profile, not universal method
 
+For a relational chromatic field, chromatic-vector discipline and view-state
+behaviour, read
+[the Relational Chromatic Design reference](../../references/relational-chromatic-design.md).
+
 Read the selected project's present profile and inspect the relevant existing
 surface. Preserve what has actually been approved, distinguish exploratory
 studies and later observed implementation, and choose the smallest coherent
