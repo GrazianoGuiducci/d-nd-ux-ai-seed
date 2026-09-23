@@ -52,43 +52,55 @@ study, not as a new production commitment.
 | Complete UX component adoption | Existing two seed skills | Preserved, not replaced |
 | MAIOS palette and public identity | `design/profiles/maios/BRAND_FIELD.md` | Project profile, not universal method |
 
-This is not a claim that copying pointers has migrated all owners. The selected
-source home is ready; existing external entry points remain to be reconciled in
-the separately selected integration cycle.
+The selected source home is now reconciled with its active receivers and
+domain collaborators. This establishes owner/reachability/discovery convergence,
+not behavioral assimilation.
 
-## Exact downstream work by function
+## Downstream reconciliation status
 
-**Business Manager:** add one optional design-owner relation for artifact needs
-that materially depend on perceptual/interaction form. Keep audience,
-relationship, economics and action available there. Do not copy a visual method
-or make Business the sole caller.
+**Business Manager:** design-owner relation is present. Business retains
+relationship, audience, value, economics, CTA and business consequence; Design
+retains perceptual/interaction form.
 
-**Editoriali:** connect the Design Kernel for co-formation of visual artifacts,
-copy slots, narration and labels. Keep the writing method and its learning there.
-No compulsory Business -> Editoriali -> Design sequence.
+**Editoriali:** co-composition relation is present. Editoriali retains authored
+meaning, argument, voice, labels and narration; Design retains medium,
+hierarchy, art direction, spatial/temporal grammar and interaction quality.
 
-**Launch / Public Distribution:** pass platform, wave and encounter purpose only
-where useful. Its publication-package relation reaches the new spatial/temporal
-methods instead of maintaining duplicate general method bodies. Preserve source
-history and launch-specific return points before replacing old entries.
+**Launch / Public Distribution:** current launch routing reaches this owner and
+keeps carrier, wave, timing and publication/effect authority outside Design.
+Launch-local Storyboard/Infographic bodies remain genealogy rather than
+competing generic owners.
 
-**Codex:** the installed design-element and UX entries should point to this owner
-for their shared method while preserving local mechanics and any still-unreturned
-learning. Compare relation-by-relation; never overwrite a receiver knowledge base
-with a source snapshot. The supplied adapter is not installed by this work.
+**Codex / OpenCode:** receiver reconciliation was completed and promoted to
+Codex main `12f7af8ec93f7430743acc41034078774924bc0d`. Generic knowledge was
+returned here and receiver-local design skills were reduced to adapters. Local
+receiver mechanics remain local.
 
-**ChatGPT / tm7:** a selected router update can point visual/art/interaction work
-to this source. The existing UX-AI Kernel Design route remains separate for
-in-process explanation and agency. This task does not edit tm7's kernel/router.
+**ChatGPT / tm7:** current routing and Launch reentry point to this canonical
+owner; UX-AI Kernel Design remains separate for in-process comprehension and
+agency.
 
-**MAIOS site:** keep the public-truth, current page job and production gate at the
-site owner. Use this kernel for the selected design. No automatic deployment,
-style replacement or adoption of the exploratory preview follows.
+**MAIOS site:** public truth, current page job and production gate remain with
+the site owner. No automatic deployment, style replacement or preview adoption
+follows from Design reconciliation.
 
-**Generic formation owner:** the reusable entry correction is to distinguish a
-domain kernel from the package housed in its repository before adding new
-competence files to paths included in that package. This is returned here as a
-precise integration delta, not written into an external generative kernel.
+**Generic formation owner:** no further mutation is selected. The reusable
+entry correction remains the distinction between a domain kernel and the package
+housed in its repository.
+
+Current promotion identity:
+
+```text
+D-ND Design Kernel main:
+  2fefe2f83233254ee8f186726af4ddc0bec20e9c
+
+Codex receiver main:
+  12f7af8ec93f7430743acc41034078774924bc0d
+```
+
+Next semantic exercise is not more wiring: it is real co-composition of the
+existing Launch Visual System with Editoriali and Business/Launch, followed by
+owner-specific learning from the resulting artifact.
 
 ## Verification scope
 
