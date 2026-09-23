@@ -20,6 +20,35 @@ installation and downstream routing changes have not been performed.
 `design/OWNER_RECONCILIATION.md` records source selection and remaining consumer
 work. `design/exercises/2026-09-23/READBACK.md` records the controlled exercise.
 
+## Current launch-design movement — 2026-09-23
+
+Semantic owner wiring is now present in tm7/MAIOS Launch, Business Manager and
+Editoriali. The actual Codex/OpenCode receiver projection remains a separate
+filesystem-bound reconciliation; it does not change this canonical owner.
+
+The first MAIOS Launch Visual System candidate is at:
+
+`design/launch/2026-09-23/`
+
+It contains a deterministic landing, product-card surface and three 1200×630
+social SVGs. Final controlled rendering checks are 48/48; this is source/render
+evidence only, not publication or receiver-comprehension proof.
+
+The design readback removed a false visual bridge between kernel_chat and
+Project Kernel. Their possible participation in one work setting is conditional
+on a setup exposing both relations; the visual no longer implies automatic
+provider synchronisation.
+
+Current medium decision:
+
+```text
+HTML / CSS / SVG selected for first launch family;
+Three.js/WebGL remains reachable when viewpoint/depth materially changes
+understanding;
+image generation remains reachable when an expressive image carries a relation
+the deterministic layer does not.
+```
+
 ## Separate identities and evidence
 
 - Core 0.1.0: source-formed and exercised in the current design work.
