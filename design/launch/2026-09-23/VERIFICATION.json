@@ -1,0 +1,55 @@
+{
+  "schema": "maios.launch-visual-system.verification.v1",
+  "candidate": "0.1",
+  "date": "2026-09-23",
+  "scope": "deterministic launch visual candidate; not production deployment or user comprehension proof",
+  "browser": "Chromium 144.0.7559.96",
+  "checks": {
+    "passed": 48,
+    "total": 48,
+    "failed": []
+  },
+  "artifacts": {
+    "MAIOS_LAUNCH_VISUAL_SYSTEM.md": {
+      "sha256": "b8538d87a65bfa100189cd8d650970e1b029760a5ddc5a921c372f90e4aeac3e",
+      "bytes": 2593
+    },
+    "landing/index.html": {
+      "sha256": "09a1deb5dae849419d065b65557da83ddaf4661fda893675c2c00d44cfa4adbf",
+      "bytes": 14851
+    },
+    "product-cards/index.html": {
+      "sha256": "99039f0d675bddee9b333c43d3498211ae3542a4b091b34281ee4b0b19914374",
+      "bytes": 3887
+    },
+    "social/01-continuity.svg": {
+      "sha256": "f48ae0ca52549a3f9e4cc3c8ef3099c78db2d3019816a8ca985d0f8d0ff40e7d",
+      "bytes": 1996
+    },
+    "social/02-two-entry-surfaces.svg": {
+      "sha256": "3344b5cbe650eeab303242ae46d912e477066695208032a779a4d70d4c7a1fc3",
+      "bytes": 3128
+    },
+    "social/03-experience-to-capability.svg": {
+      "sha256": "29e82b91a4ac36ec2f3a9512786a6574556a71805ccdd3963f8408c581965862",
+      "bytes": 2268
+    }
+  },
+  "not_claimed": [
+    "production_deploy",
+    "maios_it_runtime_parity",
+    "independent_first_encounter_comprehension",
+    "product_runtime_behaviour",
+    "social_publication",
+    "email_delivery",
+    "Three.js_necessity_or_rejection",
+    "image_generation_necessity_or_rejection"
+  ],
+  "external_effects": {
+    "deploy": false,
+    "post": false,
+    "email": false,
+    "T0": false,
+    "product_mutation": false
+  }
+}
