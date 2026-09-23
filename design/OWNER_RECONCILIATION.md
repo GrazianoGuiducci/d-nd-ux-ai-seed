@@ -88,15 +88,18 @@ follows from Design reconciliation.
 entry correction remains the distinction between a domain kernel and the package
 housed in its repository.
 
-Current promotion identity:
+Receiver-reconciliation event identities:
 
 ```text
-D-ND Design Kernel main:
+D-ND Design Kernel reconciliation resultant:
   2fefe2f83233254ee8f186726af4ddc0bec20e9c
 
-Codex receiver main:
+Codex receiver reconciliation resultant:
   12f7af8ec93f7430743acc41034078774924bc0d
 ```
+
+These identify the promoted reconciliation event; current repository heads are
+resolved fresh when their exact identity can change a later effect.
 
 Next semantic exercise is not more wiring: it is real co-composition of the
 existing Launch Visual System with Editoriali and Business/Launch, followed by
