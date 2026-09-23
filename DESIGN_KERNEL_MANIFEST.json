@@ -1,0 +1,116 @@
+{
+  "schema": "dnd.design-kernel.manifest.v1",
+  "kernel_id": "dnd-design-kernel",
+  "version": "0.1.0",
+  "form": "domain_compositional_kernel",
+  "owner": "GrazianoGuiducci/d-nd-ux-ai-seed",
+  "entry": "DESIGN_KERNEL.md",
+  "current": "design/state/CURRENT.md",
+  "exchange": "design/EXCHANGE.md",
+  "reconciliation": "design/OWNER_RECONCILIATION.md",
+  "background_autonomy": false,
+  "routing": "situated_function_not_keyword_scheduler",
+  "library": {
+    "identity": "Agentic UX Seed",
+    "version": "0.2.1",
+    "registry": "seed.registry.json",
+    "package": "package.json",
+    "new_kernel_in_npm_payload": false
+  },
+  "faculties": [
+    {
+      "id": "perceptual-composition",
+      "path": "design/skills/perceptual-composition/SKILL.md",
+      "version": "0.1.0",
+      "role": "art_direction_medium_hierarchy_brand_relation"
+    },
+    {
+      "id": "source-grounded-infographic",
+      "path": "design/skills/source-grounded-infographic/SKILL.md",
+      "version": "0.1.0",
+      "role": "spatial_explanation"
+    },
+    {
+      "id": "source-grounded-storyboard",
+      "path": "design/skills/source-grounded-storyboard/SKILL.md",
+      "version": "0.1.0",
+      "role": "temporal_explanation"
+    },
+    {
+      "id": "interaction-quality",
+      "path": "design/skills/interaction-quality/SKILL.md",
+      "version": "0.1.0",
+      "role": "interaction_responsive_access_recovery"
+    },
+    {
+      "id": "agentic-ux-seed",
+      "path": "skills/agentic-ux-seed/SKILL.md",
+      "role": "existing_portable_adoption",
+      "disposition": "unchanged"
+    },
+    {
+      "id": "d-nd-ux-ai-seed",
+      "path": "skills/d-nd-ux-ai-seed/SKILL.md",
+      "role": "existing_repository_seed_selection",
+      "disposition": "unchanged"
+    }
+  ],
+  "profiles": [
+    {
+      "id": "maios",
+      "path": "design/profiles/maios/BRAND_FIELD.md",
+      "state": "current_source_profile_new_artifacts_candidate"
+    }
+  ],
+  "adapters": [
+    {
+      "id": "chatgpt",
+      "path": "design/adapters/CHATGPT.md",
+      "state": "source_present_not_installed"
+    },
+    {
+      "id": "coder",
+      "path": "design/adapters/codex/SKILL.md",
+      "state": "source_present_not_installed"
+    }
+  ],
+  "external_roles": [
+    {
+      "id": "writing",
+      "ownership": "words_argument_voice",
+      "required_always": false
+    },
+    {
+      "id": "business",
+      "ownership": "relationship_value_resources",
+      "required_always": false
+    },
+    {
+      "id": "launch",
+      "ownership": "carrier_wave_timing",
+      "required_always": false
+    },
+    {
+      "id": "ux-ai-explanation",
+      "ownership": "in_process_comprehension_agency",
+      "required_always": false
+    },
+    {
+      "id": "product-research",
+      "ownership": "object_truth_evidence",
+      "required_always": false
+    },
+    {
+      "id": "publication",
+      "ownership": "exact_external_effect",
+      "required_always": false
+    }
+  ],
+  "exercise": "design/exercises/2026-09-23/READBACK.md",
+  "candidate_lineage": {
+    "pr": 1,
+    "head": "2acff293f11cfbb05b306951659d9e92c3e31640",
+    "disposition": "selected_relations_reexpressed_original_pr_unchanged"
+  },
+  "source_state": "formed_controlled_exercise_not_general_assimilation"
+}

@@ -25,6 +25,24 @@ Use it as a seed library only after the skill has selected the smallest complete
 unit. Copy, adapt, verify, then promote useful patterns back into the shared
 model.
 
+## Repository-native Design Kernel
+
+This repository also owns **D-ND Design Kernel 0.1.0**, a compositional design
+source for art direction, spatial/temporal explanation and usable interaction.
+Start at [DESIGN_KERNEL.md](DESIGN_KERNEL.md); its [current state](design/state/CURRENT.md)
+and [manifest](DESIGN_KERNEL_MANIFEST.json) locate the native methods.
+
+The Design Kernel and the Agentic UX Seed library are distinct roles of this
+repository. The new `design/` source is not an npm export or an implicit addition
+to the existing package. Components, build configuration and the existing
+portable-adoption skills retain their contracts. The README is documentation
+for both source roles; obtaining the npm library does not install the Design Kernel.
+
+A [controlled MAIOS first-encounter exercise](design/exercises/2026-09-23/READBACK.md)
+includes an illustrative, locally renderable HTML preview. It is not a production
+site, product-behaviour proof or approved launch artifact. Receiver adapter
+sources are available, but downstream installation and routing remain separate.
+
 ## Included
 
 | Path | Purpose |
