@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#c7ecec">
+<title>MAIOS — Morphing Field Prototype C</title>
+<style>
+:root{
+  --air:#c7ecec;--air-hi:#e6f7f4;--substrate:#b9d8c5;--ground:#e6e5a9;--path:#f7d993;
+  --choice:#fff8e4;--ink:#14313a;--ink-soft:#35545c;--green:#285d49;--focus:#8b4bb1;
+  --line:rgba(20,49,58,.2);--shell:1480px;--gutter:clamp(1rem,4vw,4.5rem);
+  --p:0;--mx:0;--my:0;--ease:cubic-bezier(.2,.78,.18,1);
+  font-family:"Segoe UI Variable Text",Aptos,"Segoe UI",Helvetica,Arial,sans-serif;color:var(--ink);color-scheme:light
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-width:320px;background:var(--choice);color:var(--ink)}
+body{line-height:1.45;overflow-x:hidden}
+button,a{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--focus);outline-offset:4px}
+.skip{position:fixed;z-index:100;left:1rem;top:-5rem;padding:.7rem 1rem;background:var(--choice);border:1px solid var(--ink)}
+.skip:focus{top:1rem}
+
+.stage{
+  position:relative;min-height:100svh;overflow:hidden;isolation:isolate;
+  background:radial-gradient(circle at 56% 13%,rgba(255,255,255,.63),transparent 26%),linear-gradient(180deg,var(--air-hi),var(--air) 62%,#badede);
+}
+.stage::before{
+  content:"";position:absolute;inset:0;z-index:-5;pointer-events:none;
+  background:repeating-linear-gradient(90deg,transparent 0 94px,rgba(20,49,58,.018) 95px 96px),
+             repeating-linear-gradient(0deg,transparent 0 94px,rgba(20,49,58,.014) 95px 96px);
+  mask-image:linear-gradient(to bottom,transparent 3%,black 20%,black 86%,transparent);
+}
+.top{
+  position:absolute;z-index:30;left:50%;top:0;transform:translateX(-50%);width:min(100%,var(--shell));height:72px;padding:0 var(--gutter);
+  display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(20,49,58,.13)
+}
+.brand{display:flex;align-items:center;gap:.72rem;text-decoration:none;font-size:.86rem;font-weight:800;letter-spacing:.23em}
+.brand img{width:27px;height:27px;display:block}
+.brand small{display:block;margin-top:.15rem;font-size:.55rem;letter-spacing:.35em;color:var(--ink-soft);font-weight:500}
+.top-meta{font-size:.64rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft)}
+
+.hero-copy{
+  position:absolute;z-index:14;
+  left:max(var(--gutter),calc((100vw - var(--shell))/2 + var(--gutter)));
+  top:clamp(7.9rem,14vh,9.5rem);
+  width:min(43rem,43vw);
+  transform-origin:left top;
+  transform:translate3d(calc(var(--mx)*-3px),calc(var(--my)*-2px + var(--p)*-40px),0) scale(calc(1 - var(--p)*.16));
+  opacity:calc(1 - var(--p)*.24);
+}
+.eyebrow{margin:0 0 .9rem;color:var(--green);font-size:.7rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase}
+h1{margin:0;font-family:"Segoe UI Variable Display","Aptos Display","Segoe UI",sans-serif;font-size:clamp(3.35rem,5.35vw,6rem);
+  font-weight:720;letter-spacing:-.062em;line-height:.89}
+h1 span{display:block}
+h1 .soft{font-weight:390}
+.lead{margin:1.25rem 0 0;max-width:36rem;color:var(--ink-soft);font-size:clamp(.98rem,1.2vw,1.12rem);line-height:1.55;
+  opacity:calc(1 - var(--p)*1.5)}
+.action-row{display:flex;align-items:center;gap:.85rem;flex-wrap:wrap;margin-top:1.55rem;opacity:calc(1 - var(--p)*1.4)}
+.explore{
+  min-height:46px;padding:.72rem 1rem;border:1px solid var(--ink);background:var(--choice);font-weight:780;cursor:pointer;
+  box-shadow:7px 8px 0 rgba(20,49,58,.13);transition:transform .25s var(--ease),box-shadow .25s var(--ease)
+}
+.explore:hover{transform:translate(-2px,-2px);box-shadow:9px 10px 0 rgba(20,49,58,.14)}
+.hint{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft)}
+.corner{position:absolute;z-index:15;right:max(var(--gutter),calc((100vw - var(--shell))/2 + var(--gutter)));top:clamp(8.2rem,15vh,10rem);
+  width:9rem;text-align:right;color:var(--ink-soft);font-size:.62rem;line-height:1.7;letter-spacing:.21em;text-transform:uppercase;
+  opacity:calc(1 - var(--p)*1.2)}
+.corner::before{content:"";display:block;width:4.5rem;height:1px;background:currentColor;margin:0 0 .8rem auto}
+
+.world{position:absolute;z-index:3;left:0;right:0;bottom:0;width:100%;height:69%;overflow:visible}
+.world polygon{vector-effect:non-scaling-stroke}
+.core{
+  position:absolute;z-index:10;left:70%;top:25%;width:clamp(128px,14vw,220px);aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle at 38% 34%,#fff4c8 0 13%,#ffe19a 42%,#ffd277 100%);
+  box-shadow:0 0 82px rgba(255,217,137,.42);
+  transform:translate3d(calc(var(--mx)*8px + var(--p)*-20vw),calc(var(--my)*5px + var(--p)*20vh),0) scale(calc(1 - var(--p)*.23));
+}
+.core::before{
+  content:"";position:absolute;inset:calc(var(--p)*-32px);border:calc(var(--p)*2px) solid rgba(20,49,58,.33);border-radius:50%;
+  opacity:var(--p);transform:scale(calc(.82 + var(--p)*.18))
+}
+.core-label{position:absolute;inset:0;display:grid;place-content:center;text-align:center;font-size:.72rem;font-weight:850;letter-spacing:.16em;
+  opacity:var(--p);transform:translateY(calc((1 - var(--p))*18px))}
+.core-label small{display:block;margin-top:.25rem;font-size:.48rem;letter-spacing:.14em;font-weight:650}
+
+.semantic{
+  position:absolute;z-index:11;opacity:calc(max(0,(var(--p) - .25)*1.6));transform:translateY(calc((1 - var(--p))*18px));
+  font-size:clamp(.62rem,.8vw,.76rem);font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:#fff8e4;text-shadow:0 1px 5px rgba(20,49,58,.3)
+}
+.semantic::before{content:"";display:block;width:2.7rem;height:1px;background:currentColor;margin-bottom:.5rem}
+.sem-context{left:8%;bottom:40%}.sem-skills{left:31%;bottom:31%}.sem-tools{left:58%;bottom:38%}.sem-models{right:7%;bottom:28%}
+
+.mode-label{
+  position:absolute;z-index:16;left:max(var(--gutter),calc((100vw - var(--shell))/2 + var(--gutter)));bottom:2.2rem;
+  font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,248,228,.86);
+  opacity:calc(.45 + var(--p)*.55)
+}
+
+.ports{
+  position:absolute;z-index:18;left:50%;bottom:clamp(1rem,2.4vh,1.7rem);width:min(calc(100% - 2*var(--gutter)),var(--shell));
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,248,228,.42);
+  transform:translate3d(-50%,calc((1 - var(--p))*48px),0);opacity:calc(max(0,(var(--p) - .58)*2.4));pointer-events:none
+}
+.stage[data-open="true"] .ports{pointer-events:auto}
+.port{min-height:122px;padding:1rem 1.15rem;background:color-mix(in srgb,var(--choice) 93%,transparent);text-decoration:none;display:flex;flex-direction:column;justify-content:space-between}
+.port:hover{background:white}
+.port small{font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-soft)}
+.port strong{font-size:clamp(1.1rem,1.65vw,1.55rem);letter-spacing:-.025em}
+.port span{font-size:.74rem;color:var(--ink-soft)}
+.port i{font-style:normal;align-self:flex-end}
+
+.reset{
+  position:absolute;z-index:22;right:max(var(--gutter),calc((100vw - var(--shell))/2 + var(--gutter)));bottom:calc(clamp(1rem,2.4vh,1.7rem) + 140px);
+  min-height:40px;padding:.55rem .8rem;border:1px solid rgba(255,248,228,.65);background:rgba(20,49,58,.34);color:var(--choice);
+  font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;
+  opacity:calc(max(0,(var(--p) - .74)*3.8));pointer-events:none
+}
+.stage[data-open="true"] .reset{pointer-events:auto}
+
+.progress{position:absolute;z-index:25;left:0;bottom:0;height:4px;width:calc(var(--p)*100%);background:#3ce456}
+
+.after{
+  background:var(--choice);padding:clamp(4.5rem,9vw,8rem) var(--gutter)
+}
+.after-inner{max-width:var(--shell);margin:auto;display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(2rem,8vw,8rem);align-items:start}
+.after h2{font-family:"Segoe UI Variable Display","Aptos Display","Segoe UI",sans-serif;font-size:clamp(2.5rem,4.7vw,5.4rem);line-height:.94;letter-spacing:-.055em;margin:0;max-width:9ch}
+.after p{margin:.4rem 0 0;max-width:42rem;color:var(--ink-soft);font-size:clamp(1rem,1.35vw,1.2rem)}
+.after .receipt{margin-top:2rem;border-top:1px solid var(--line);padding-top:1rem;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft)}
+
+@media(max-width:900px){
+  .stage{min-height:92svh}
+  .hero-copy{width:min(76vw,40rem);top:7.4rem}
+  h1{font-size:clamp(3.05rem,10vw,5.3rem)}
+  .corner{display:none}
+  .core{left:auto;right:-4%;top:22%;width:clamp(110px,25vw,168px)}
+  .ports{grid-template-columns:1fr;bottom:.7rem}
+  .port{min-height:72px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:.5rem;padding:.65rem .8rem}
+  .port span{display:none}.port i{grid-column:2;grid-row:1/3}
+  .mode-label,.reset{display:none}
+  .semantic{font-size:.55rem}
+  .after-inner{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .top{height:64px}.brand small,.top-meta{display:none}
+  .hero-copy{left:var(--gutter);width:calc(100% - 2*var(--gutter));top:6.7rem}
+  h1{font-size:clamp(2.9rem,13vw,4.5rem);max-width:9ch}
+  .lead{max-width:27rem}
+  .core{top:30%;right:-6%}
+  .semantic{display:none}
+  .world{height:61%}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .hero-copy,.core{transform:none!important}
+}
+@media(forced-colors:active){
+  :root{--air:Canvas;--air-hi:Canvas;--substrate:Canvas;--ground:Canvas;--path:Canvas;--choice:Canvas;--ink:CanvasText;--ink-soft:CanvasText;--green:LinkText;--line:CanvasText}
+  .stage::before,.core{box-shadow:none}.world{opacity:.2}.ports{background:CanvasText}.port{background:Canvas;color:CanvasText}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#after">Salta oltre l'esplorazione</a>
+
+<section class="stage" id="field" data-open="false" aria-labelledby="hero-title">
+<header class="top">
+  <a class="brand" href="#field" aria-label="MAIOS">
+    <img alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAMAAAC7IEhfAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAbxQTFRFAAAAJ9MjJ9MiJ9QiKNMjKNQjJ9QjJ9MjJ9MiJ9IjKNMiJtMhKNIiJtMjJ9IgJtAgJ9IiJtMhJ9MiJdAgJ9IiJtEgJM8eJtEhJtAgJs8fIssaJ9MhI9IfMMklJdAeJtAfJdIfJNEfJdAfJc8eJM4dIc0cJc8fIMsZJdAfKNIhJ9IhI84bI80bJ9EhJc8fI8wbJs8fJtAgJdEfJ9MiJtEfJdEfIs0aJtEhJc8eJtEgIssZJ9MhJs8fJM4dJ9IhIMkYHMgTJc4fLMcjJMYaJ9MiJ9IiIMcXJtIgIs0aJcocJtIhJtEgJM8eJc8eJc8eJtAfJtIhJdEgJtAgH80aIssbJdEfIs8eIs4dJNAdJtAfJtMiJM4eIcQYJ9EgJM4cJtIhJc8eIMQSJ9IhJc0cH8MWJ9IiJ8siIcsZJNAeQsk1JM4eJMkbHswYJcgaKcseOdMuI8saJMgbI8oZLs0lJM8cJtAgJM4dIs0bJ8wfLM0eJs0gHcYWIsoYJs8gJskdJ8seI8wcI80bJtIhJsobJtAgJdIfIscXJsweJcocItAbL8cjJtIhJtEhIcwYJ9IhIcscIs4cIskaHc0ZIckWI40KUQAAAJR0Uk5TAP////////7+/vzZ+v+/k/TN5KrxrVWzr2wR8p8BZXS6ooZKJhpiBWi4/Qoe2jINXY98906NG6dfeibHfzjnCQw6AQPq1wHBDRKcpXcrcVH2llQZGDgbGCU72y8DthHJPgPfMgHQAT62AkYKFQEGAywXBwkbNDsVDQEuBgNBBxwPFe4FoHgEEws5AdTEHeQJLQYYAX9tXm0AAAJtSURBVHiczdPlVxtBEADwnVm7u+RixIBCKC7BpXhxKA6FAkXr7u5GvaX2D3fvLryXJnlHP/V1viQz+7u5tSPk/4gnFffmEs2Tzevu7Ojl0li/CSbAght7HAszAERKEeNuME8HKzSBaEbcYL4BwEBDgRRc4fsaZAxVTwXz3CBZH1dItUSK7nBox8sYUxDhiCskZNpetnr1QXAoZlgQcWq/kpyb+ZRLnulhGqXUPJzKH5T0B6s/5JJ9e/aOH3KyxpiarzHVmAOendVMSsGBjaVSbYMu/blaTuQBpcKGVe3WjBU0mn6kRgcjX7q6zzv/35UISi043GKgvTQpA5XO2HMfaLI2vrZlZ19DtLWYkGudAUCno9RTB1AeAmTAwsGumTorbVtTP9FCBqaOqOvzo7uDDnzmRQWBUzHiq14dc4o+VTEDnnF/5fJSUWqKTepBqycVAmToo1Msrp2/OL3ccTt9pQldokSQVFj3MTVxcud61pZ0SasjalQUBheip5zi98773zLholfTZNhT0n7hhpUODPwiZKmVw+v44upEOnyY7+9ta+h4YyePoj3Bt1UkGQB1jY3Qtr+poSDXyWyVBij1rBAyazBAKdTUw+fyX2a5qpZWIfjJE+rb3ZQACqpdYnsNma6g2eCUCwuSAh8T6tw5BxlZyXDJUY1pgnNPhZWVn1ZfJTIp61/9ycbubnKeBp8mwoyrL3OkLKNfWZBzjpq6PJ7jdqGu2qDUu72T4S7VcCvUBeeen05pY5fN9x7LWnGZj9uvFnQfkqLubGZF32S9pl4Nn6/mHE6P4ZvF/pp4tOhAqOLKi1sbf+P+YfwGSk1IeT4cXlQAAAAASUVORK5CYII=">
+    <span>MAIOS<small>idee in lavoro continuo</small></span>
+  </a>
+  <div class="top-meta">studio di entrata · morphing field C</div>
+</header>
+
+<div class="hero-copy">
+  <p class="eyebrow">Meta AI Operative System</p>
+  <h1 id="hero-title"><span>La complessità</span><span>può diventare</span><span class="soft">un campo di</span><span>possibilità.</span></h1>
+  <p class="lead">Contesto, competenze, strumenti e modelli possono diventare leggibili nello stesso lavoro. Non aggiungiamo un diagramma al paesaggio: lasciamo che il paesaggio cambi natura.</p>
+  <div class="action-row">
+    <button class="explore" type="button" id="explore" aria-pressed="false">Esplora il campo →</button>
+    <span class="hint">un movimento · due stati leggibili</span>
+  </div>
+</div>
+
+<div class="corner">persone<br>idee<br>strumenti<br>risultati</div>
+
+<svg class="world" viewBox="0 0 1600 900" preserveAspectRatio="none" aria-hidden="true">
+  <polygon id="far" fill="#95bec0"></polygon>
+  <polygon id="mid" fill="#6e9aac"></polygon>
+  <polygon id="near" fill="#35677f"></polygon>
+  <polygon id="front" fill="#163f55"></polygon>
+</svg>
+
+<div class="core" aria-hidden="true"><div class="core-label">MAIOS<small>campo operativo</small></div></div>
+<div class="semantic sem-context" aria-hidden="true">contesto</div>
+<div class="semantic sem-skills" aria-hidden="true">competenze</div>
+<div class="semantic sem-tools" aria-hidden="true">strumenti</div>
+<div class="semantic sem-models" aria-hidden="true">modelli</div>
+
+<div class="mode-label" aria-hidden="true">orizzonte → campo leggibile → ingresso</div>
+
+<nav class="ports" aria-label="Ingressi MAIOS">
+  <a class="port" href="https://maios.it/setup-ai.html"><span><small>01 · sistema da definire</small><strong>Setup AI</strong></span><span>parti dal contesto</span><i>↗</i></a>
+  <a class="port" href="https://github.com/GrazianoGuiducci/kernel_chat"><span><small>02 · chat AI</small><strong>kernel_chat</strong></span><span>continuità conversazionale</span><i>↗</i></a>
+  <a class="port" href="https://github.com/GrazianoGuiducci/maios-project-kernel"><span><small>03 · progetto / workspace</small><strong>Project Kernel</strong></span><span>continuità nel progetto</span><i>↗</i></a>
+</nav>
+<button class="reset" type="button" id="reset">← torna all'orizzonte</button>
+<div class="progress" aria-hidden="true"></div>
+</section>
+
+<section class="after" id="after" aria-labelledby="after-title">
+  <div class="after-inner">
+    <h2 id="after-title">Il test ora è nella trasformazione.</h2>
+    <div>
+      <p>All'inizio vedi un orizzonte. Dopo l'esplorazione gli stessi piani diventano un campo strutturato: emergono le relazioni che possono formare il lavoro e gli ingressi che puoi realmente scegliere. Se questa trasformazione resta generica, va scartata; se diventa riconoscibilmente MAIOS, allora vale la pena curare forma, copy e componenti.</p>
+      <div class="receipt">prototipo privato · nessuna modifica a maios.it · nessuna pubblicazione</div>
+    </div>
+  </div>
+</section>
+
+<script>
+(() => {
+  const root=document.documentElement;
+  const stage=document.getElementById('field');
+  const explore=document.getElementById('explore');
+  const reset=document.getElementById('reset');
+  const reduced=matchMedia('(prefers-reduced-motion: reduce)');
+  const polygons=['far','mid','near','front'].map(id=>document.getElementById(id));
+  let p=0,target=0,startP=0,startTime=0,raf=0,mx=0,my=0;
+
+  const xs=[0,230,460,690,920,1150,1380,1600];
+  const shapes=[
+    {start:[610,520,590,470,580,490,575,520], end:[350,365,380,395,410,425,440,455]},
+    {start:[675,580,650,545,670,565,655,595], end:[445,462,479,496,513,530,547,564]},
+    {start:[735,640,710,620,725,640,720,655], end:[555,572,589,606,623,640,657,674]},
+    {start:[810,745,800,730,810,748,804,760], end:[665,682,699,716,733,750,767,784]}
+  ];
+
+  const clamp=(n,a=0,b=1)=>Math.min(b,Math.max(a,n));
+  const ease=t=>1-Math.pow(1-clamp(t),3);
+  const mix=(a,b,t)=>a+(b-a)*t;
+
+  function points(shape,t){
+    const top=xs.map((x,i)=>[x,mix(shape.start[i],shape.end[i],t)]);
+    return [...top,[1600,900],[0,900]].map(q=>q.join(',')).join(' ');
+  }
+  function paint(){
+    root.style.setProperty('--p',p.toFixed(4));
+    root.style.setProperty('--mx',mx.toFixed(3));
+    root.style.setProperty('--my',my.toFixed(3));
+    polygons.forEach((poly,i)=>poly.setAttribute('points',points(shapes[i],p)));
+  }
+  function tick(now){
+    const duration=reduced.matches?1:1250;
+    const t=clamp((now-startTime)/duration);
+    p=mix(startP,target,ease(t));
+    paint();
+    if(t<1){raf=requestAnimationFrame(tick)}
+    else{raf=0;p=target;paint()}
+  }
+  function go(next){
+    target=next;startP=p;startTime=performance.now();
+    stage.dataset.open=String(next===1);
+    explore.setAttribute('aria-pressed',String(next===1));
+    explore.textContent=next===1?'Campo aperto ✓':'Esplora il campo →';
+    if(raf)cancelAnimationFrame(raf);
+    raf=requestAnimationFrame(tick);
+  }
+
+  explore.addEventListener('click',()=>go(target===1?0:1));
+  reset.addEventListener('click',()=>go(0));
+
+  addEventListener('pointermove',e=>{
+    if(reduced.matches)return;
+    mx=clamp((e.clientX/innerWidth-.5)*2,-1,1)*(1-p);
+    my=clamp((e.clientY/innerHeight-.5)*2,-1,1)*(1-p);
+    paint();
+  },{passive:true});
+
+  paint();
+})();
+</script>
+</body>
+</html>
