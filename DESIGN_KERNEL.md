@@ -42,6 +42,45 @@ question while form is emerging; a rendered result may disclose a relation the
 initial brief could not express. Preserve the resulting determination rather
 than reopening it to demonstrate optionality.
 
+## Reciprocal competence recall on activation
+
+Design Kernel activation does **not** make perceptual form the boundary of the
+work. Before a medium, hierarchy, diagram, motion or interaction hardens, check
+whether another owner-native competence can materially change the source
+relation or public consequence being made perceptible.
+
+Primary reciprocal owners:
+
+- [Editorial Semantic Kernel](https://github.com/GrazianoGuiducci/Editoriali/blob/main/skills/editorial-semantic-kernel/SKILL.md)
+  — when authored meaning, copy, labels, narrative, product explanation or
+  first-encounter wording participates in the artifact.
+- [D-ND Business Manager](https://github.com/GrazianoGuiducci/dnd-business-manager/blob/main/skill/dnd-business-manager/SKILL.md)
+  — when positioning, receiver relationship, distribution, sequencing, CTA or
+  another business/public consequence changes the design problem.
+
+Product, site and research owners remain authoritative for the truth being
+represented.
+
+Use this relation on activation:
+
+```text
+Design becomes pertinent
+-> preserve source / object / intended perceptual event
+-> inspect whether Editoriali / Business can materially change that event
+-> enter only the owner(s) made pertinent by the artifact
+-> if another function emerges beyond these owners, perform bounded
+   owner-native competence discovery before reproducing it inside Design
+-> stop when another lookup adds no material relation
+```
+
+On ChatGPT, [tm7 COMPETENCE_FIELD](https://github.com/GrazianoGuiducci/tm7/blob/main/chatgpt/COMPETENCE_FIELD.md)
+is one reachable discovery surface; it does not replace the canonical owners.
+Other receivers may use a different native competence registry.
+
+`activation != fixed multi-owner pipeline`. One design method may be sufficient;
+the recall rule exists so the perceptual solution does not silently erase a
+still-material editorial, business or other competence relation.
+
 ## What this domain owns
 
 The continuing object is **how meaning, possibility and action become
