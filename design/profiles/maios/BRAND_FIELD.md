@@ -117,6 +117,41 @@ typography as source truth.
 Negative space is not unused area. It may carry separation, focus, openness and
 the MAIOS sense that a field contains more than what is currently active.
 
+## Visual motif variation — 2026-09-29
+
+The stylised layered landscape is one successful MAIOS motif, not the permanent
+background of every social or editorial artifact.
+
+Keep recognisability through the underlying brand relations instead of repeating
+one illustration:
+
+```text
+MAIOS mark
++ air / substrate / ground / path chromatic field
++ dark readable ink
++ selective active green
++ deliberate interval / negative space
++ relational geometry
++ clear subject and hierarchy
+-> recognisable MAIOS expression
+```
+
+Available background families may therefore include:
+
+- simplified layered landscape / field bands;
+- large cropped circles, arcs and directional paths already present in the site;
+- sparse geometric fields derived from the Form;
+- radial / orbital relation fields when the represented object actually has that
+  topology;
+- quiet grid or modular technical fields for project/kernel explanations;
+- mostly empty air with one active path or focal relation;
+- mixed abstract landscape + diagram when the diagram remains primary.
+
+Do not create a social identity that depends on one scenic motif. Vary the
+background when it improves the represented relation while preserving MAIOS
+chromatic, typographic and spatial continuity. Decorative variation must not
+invent system topology.
+
 ## Surface differences
 
 A social artifact carries an intelligible relation before a click; it need not
