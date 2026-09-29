@@ -1,6 +1,6 @@
 # MAIOS brand field — design use
 
-Profile version: 0.1.0 · observed source: 23 September 2026.
+Profile version: 0.2.0 · observed site source: 23 September 2026 · operator social correction: 29 September 2026.
 State: current-source interpretation for controlled design work; new layouts and
 copy remain candidates, not a replacement for the production site.
 
@@ -65,6 +65,57 @@ The old adaptive-surface PR proposed ivory/indigo roles and Paper/Ink/Hybrid
 modes. Later source knowledge distinguished a relational chromatic field from
 fixed theme identities. Neither the old palette nor a calibration laboratory
 becomes the new launch page. Preserve their useful method, not their entire form.
+
+## Social / editorial visual projection — 2026-09-29
+
+The current operator direction is to make social and editorial visuals more
+recognisably related to maios.it while increasing feed impact without reducing
+legibility.
+
+Preserve the current chromatic field and use stronger saturation selectively:
+
+- air/cyan remains the primary open field;
+- warm ground/path can form directional bands, transitions or active routes;
+- green can become more vivid where action, emergence or the MAIOS relation is
+  the semantic focus;
+- primary ink remains dark and highly readable;
+- focus purple remains a role-bearing accent, not a generic decoration;
+- danger red is reserved for actual risk/error relations rather than generic
+  emphasis.
+
+Do not make the whole artifact louder. Let colour identify the relation that
+changes.
+
+Social and editorial graphics should normally use:
+
+    explicit or recoverable subject anchor
+    + one dominant semantic relation
+    + large feed-legible display type
+    + few materially participating visual objects
+    + deliberate negative space
+    + a small number of strong accents
+    + clear MAIOS provenance without oversized branding
+
+The subject anchor is co-formed with Editoriali. Design reserves perceptual
+space for it and must not shrink or omit it merely to preserve a preferred
+composition.
+
+At first encounter, a receiver should not need prior MAIOS vocabulary to know
+what the artifact is about. Later carousel frames or editorial visuals may
+become more abstract after the subject has been established.
+
+For social-feed use, inspect the real crop and approximate mobile reading size.
+Do not keep explanatory microtext merely because it fits the source artboard.
+A visual that needs zooming has lost the intended encounter.
+
+Generated images are useful for art-direction exploration, spatial hypotheses
+and motif discovery. When exact wording, URLs, product names or claims matter,
+the final production artifact should keep text editable through SVG, HTML/CSS,
+layout software or another controllable surface rather than treating generated
+typography as source truth.
+
+Negative space is not unused area. It may carry separation, focus, openness and
+the MAIOS sense that a field contains more than what is currently active.
 
 ## Surface differences
 
