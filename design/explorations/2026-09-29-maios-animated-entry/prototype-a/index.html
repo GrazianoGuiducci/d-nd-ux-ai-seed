@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#c7ecec">
+<title>MAIOS — Animated Entry Prototype A</title>
+<style>
+:root{
+  --air:#c7ecec;
+  --air-2:#dff4f1;
+  --substrate:#b9d8c5;
+  --ground:#e6e5a9;
+  --path:#f7d993;
+  --sun:#ffd982;
+  --choice:#fff8e4;
+  --ink:#14313a;
+  --ink-soft:#35545c;
+  --green:#2f8c58;
+  --green-dark:#285d49;
+  --focus:#8b4bb1;
+  --line:rgba(20,49,58,.22);
+  --mx:0;
+  --my:0;
+  --scroll:0;
+  --shell:1480px;
+  --gutter:clamp(1rem,4vw,4.5rem);
+  --ease:cubic-bezier(.2,.78,.18,1);
+  --font-display:"Segoe UI Variable Display","Aptos Display","Segoe UI",Helvetica,Arial,sans-serif;
+  --font-reading:"Segoe UI Variable Text",Aptos,"Segoe UI",Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;background:var(--air)}
+body{margin:0;min-width:320px;color:var(--ink);background:var(--air);font-family:var(--font-reading);line-height:1.45;overflow-x:hidden}
+a,button{font:inherit}
+a{color:inherit}
+button{color:inherit}
+::selection{background:var(--sun);color:var(--ink)}
+:focus-visible{outline:3px solid var(--focus);outline-offset:4px}
+.skip{
+  position:fixed;left:1rem;top:-6rem;z-index:1000;padding:.75rem 1rem;
+  background:var(--choice);border:1px solid var(--ink);text-decoration:none
+}
+.skip:focus{top:1rem}
+
+.top{
+  position:fixed;inset:0 0 auto;z-index:40;height:74px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 max(var(--gutter),calc((100vw - var(--shell))/2 + var(--gutter)));
+  border-bottom:1px solid rgba(20,49,58,.12);
+  background:color-mix(in srgb,var(--air) 82%,transparent);
+  backdrop-filter:blur(10px)
+}
+.brand{display:flex;align-items:center;gap:.75rem;text-decoration:none;font-weight:800;letter-spacing:.18em}
+.brand-mark{width:30px;height:30px;display:block}
+.brand small{display:block;font-size:.62rem;letter-spacing:.36em;font-weight:500;color:var(--ink-soft);margin-top:.15rem}
+.top-note{font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);text-align:right}
+
+.hero{
+  position:relative;min-height:100svh;overflow:hidden;isolation:isolate;
+  background:
+    radial-gradient(circle at 58% 18%,rgba(255,255,255,.52),transparent 28%),
+    linear-gradient(180deg,var(--air-2),var(--air) 58%,#bcdedc 100%);
+}
+.hero::before{
+  content:"";position:absolute;inset:74px 0 0;pointer-events:none;z-index:-6;
+  background:
+    linear-gradient(90deg,transparent calc(50% - .5px),rgba(20,49,58,.04) 50%,transparent calc(50% + .5px)),
+    repeating-linear-gradient(90deg,transparent 0 92px,rgba(20,49,58,.018) 93px 94px),
+    repeating-linear-gradient(0deg,transparent 0 92px,rgba(20,49,58,.014) 93px 94px);
+  mask-image:linear-gradient(to bottom,transparent,black 28%,black 80%,transparent)
+}
+.hero-shell{
+  position:relative;z-index:6;min-height:100svh;max-width:var(--shell);margin:auto;
+  padding:clamp(8.5rem,15vh,11.5rem) var(--gutter) clamp(8rem,13vh,10rem);
+  display:grid;grid-template-columns:minmax(0,1.15fr) minmax(18rem,.85fr);gap:clamp(2rem,6vw,7rem);align-items:center
+}
+.hero-copy{max-width:800px;transform:translate3d(calc(var(--mx)*-5px),calc(var(--my)*-3px),0);transition:transform .18s linear}
+.eyebrow{margin:0 0 1.2rem;font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;font-weight:800;color:var(--green-dark)}
+h1{font-family:var(--font-display);font-size:clamp(3.4rem,7.7vw,8.5rem);letter-spacing:-.065em;line-height:.87;margin:0;max-width:9.2ch;font-weight:730}
+h1 .quiet{font-weight:360}
+.horizon-word{position:relative;display:inline-block}
+.horizon-word::after{
+  content:"";position:absolute;left:.03em;bottom:-.08em;width:1.1em;height:.08em;background:var(--sun);transform-origin:left;
+  transform:scaleX(calc(.42 + var(--scroll)*.58))
+}
+.lead{font-size:clamp(1.02rem,1.6vw,1.28rem);max-width:43rem;margin:1.7rem 0 0;color:var(--ink-soft)}
+.hero-action{margin-top:2rem;display:flex;gap:.9rem;align-items:center;flex-wrap:wrap}
+.cta{
+  display:inline-flex;align-items:center;gap:.8rem;min-height:48px;padding:.8rem 1rem;
+  border:1px solid var(--ink);background:var(--choice);text-decoration:none;font-weight:750;
+  box-shadow:7px 8px 0 rgba(20,49,58,.13);transition:transform .28s var(--ease),box-shadow .28s var(--ease),background .28s var(--ease)
+}
+.cta:hover{transform:translate(-2px,-2px);box-shadow:10px 11px 0 rgba(20,49,58,.14);background:#fffdf3}
+.micro{font-size:.76rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+
+.hero-aside{
+  align-self:stretch;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-end;
+  padding:1rem 0 1rem;min-height:420px
+}
+.side-note{max-width:10rem;font-size:.69rem;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-soft);text-align:right;line-height:1.55}
+.side-note::before{content:"";display:block;width:5.3rem;height:1px;margin:0 0 1rem auto;background:var(--ink-soft)}
+.signal{
+  display:grid;grid-template-columns:auto 1fr;gap:.85rem;align-items:center;
+  font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)
+}
+.signal::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 7px color-mix(in srgb,var(--green) 18%,transparent)}
+.signal span{display:block;max-width:10rem}
+
+.scene{position:absolute;inset:0;z-index:1;pointer-events:none}
+.sun{
+  position:absolute;left:67%;top:25%;width:clamp(120px,15vw,240px);aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle at 38% 35%,#fff0bc 0 18%,var(--sun) 55%,#f4c96d 100%);
+  box-shadow:0 0 90px rgba(255,218,130,.46);
+  transform:translate3d(calc(var(--mx)*7px),calc(var(--my)*5px + var(--scroll)*-26px),0);
+  transition:transform .18s linear
+}
+.sun::after{
+  content:"";position:absolute;inset:-70%;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,238,184,.24),transparent 66%)
+}
+.ridge{
+  position:absolute;left:-6%;width:112%;transform-origin:center bottom;
+  will-change:transform;filter:drop-shadow(0 -1px 0 rgba(20,49,58,.05))
+}
+.ridge svg{width:100%;height:100%;display:block}
+.ridge-1{height:37%;bottom:20%;opacity:.67;transform:translate3d(calc(var(--mx)*3px),calc(var(--my)*2px + var(--scroll)*-12px),0) scale(1.015)}
+.ridge-2{height:34%;bottom:14%;opacity:.82;transform:translate3d(calc(var(--mx)*6px),calc(var(--my)*4px + var(--scroll)*-7px),0) scale(1.025)}
+.ridge-3{height:32%;bottom:7%;transform:translate3d(calc(var(--mx)*10px),calc(var(--my)*6px + var(--scroll)*-2px),0) scale(1.035)}
+.ridge-4{height:26%;bottom:-2%;transform:translate3d(calc(var(--mx)*14px),calc(var(--my)*8px + var(--scroll)*4px),0) scale(1.05)}
+.field-line{
+  position:absolute;left:7%;right:7%;bottom:8%;height:1px;background:rgba(255,255,255,.28);z-index:5;
+  transform:scaleX(calc(.15 + var(--scroll)*.85));transform-origin:left
+}
+.field-line::after{content:"";position:absolute;left:0;top:-2px;width:42px;height:5px;background:#39e55b}
+.scroll-cue{
+  position:absolute;z-index:8;left:50%;bottom:2rem;transform:translateX(-50%);
+  display:grid;justify-items:center;gap:.55rem;color:white;text-shadow:0 1px 8px rgba(20,49,58,.45);
+  text-decoration:none;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase
+}
+.scroll-cue::after{content:"";width:1px;height:38px;background:currentColor;animation:pulse 2.4s ease-in-out infinite}
+
+.field{
+  position:relative;background:var(--choice);border-top:1px solid var(--line);
+}
+.field-shell{max-width:var(--shell);margin:auto;padding:clamp(5.5rem,10vw,9rem) var(--gutter)}
+.field-intro{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(2rem,8vw,8rem);align-items:start}
+.kicker{font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;font-weight:800;color:var(--green-dark);margin:0 0 1rem}
+.field h2{font-family:var(--font-display);font-size:clamp(2.5rem,5vw,5.8rem);line-height:.94;letter-spacing:-.055em;margin:0;max-width:10ch}
+.field-copy{font-size:clamp(1.04rem,1.5vw,1.28rem);max-width:40rem;margin:.35rem 0 0;color:var(--ink-soft)}
+.entries{margin-top:clamp(3rem,7vw,6rem);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.entry{
+  position:relative;min-height:360px;padding:clamp(1.4rem,2.8vw,2.6rem);background:var(--air);
+  display:flex;flex-direction:column;overflow:hidden;transition:background .42s var(--ease),transform .42s var(--ease)
+}
+.entry:nth-child(2){background:var(--ground)}
+.entry:nth-child(3){background:var(--substrate)}
+.entry::before{
+  content:"";position:absolute;width:12rem;height:12rem;border-radius:50%;right:-6rem;bottom:-6rem;
+  border:1px solid rgba(20,49,58,.22);transform:scale(.8);opacity:.45;transition:transform .55s var(--ease),opacity .55s var(--ease)
+}
+.entry:hover::before,.entry:focus-within::before{transform:scale(1.25);opacity:.85}
+.entry-label{font-size:.7rem;text-transform:uppercase;letter-spacing:.17em;color:var(--ink-soft)}
+.entry h3{font-family:var(--font-display);font-size:clamp(1.75rem,2.7vw,3rem);line-height:1;letter-spacing:-.04em;margin:1.1rem 0 .9rem;max-width:9ch}
+.entry p{max-width:34ch;color:var(--ink-soft);margin:0 0 2rem}
+.entry a{margin-top:auto;align-self:flex-start;font-weight:800;text-decoration-thickness:1px;text-underline-offset:.25em}
+.entry small{display:block;margin-top:.75rem;color:var(--ink-soft);max-width:30ch}
+
+.brand-field{
+  position:relative;overflow:hidden;background:var(--ink);color:var(--choice);min-height:72svh;
+}
+.brand-field::before{
+  content:"";position:absolute;inset:-30%;
+  background:
+    radial-gradient(circle at 72% 34%,rgba(247,217,147,.22),transparent 19%),
+    radial-gradient(circle at 22% 68%,rgba(185,216,197,.16),transparent 22%),
+    conic-gradient(from 218deg at 54% 44%,transparent 0 25%,rgba(199,236,236,.12) 25% 32%,transparent 32% 62%,rgba(230,229,169,.1) 62% 70%,transparent 70%);
+  transform:rotate(calc(var(--mx)*1deg)) scale(1.06)
+}
+.brand-field-shell{position:relative;z-index:2;max-width:var(--shell);margin:auto;padding:clamp(6rem,11vw,10rem) var(--gutter);display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,9vw,9rem);align-items:end}
+.brand-field h2{font-family:var(--font-display);font-size:clamp(3rem,6vw,7rem);line-height:.9;letter-spacing:-.06em;margin:0;max-width:8ch}
+.brand-field p{font-size:clamp(1.05rem,1.6vw,1.3rem);max-width:38rem;color:#d7e9e5}
+.brand-field .rule{height:1px;background:rgba(255,248,228,.36);margin:2rem 0}
+.signature{display:flex;justify-content:space-between;gap:2rem;align-items:end;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:#c9dcd8}
+
+.prototype-note{
+  background:#fffdf3;color:var(--ink);border-top:1px solid var(--line);
+  padding:1rem var(--gutter);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;text-align:center
+}
+
+@keyframes pulse{0%,100%{transform:scaleY(.35);transform-origin:top;opacity:.35}50%{transform:scaleY(1);transform-origin:top;opacity:1}}
+
+@media(max-width:900px){
+  .top-note{display:none}
+  .hero-shell{grid-template-columns:1fr;align-content:center;padding-top:8rem;padding-bottom:9rem}
+  .hero-aside{display:none}
+  h1{max-width:10.2ch;font-size:clamp(3.35rem,13vw,6.2rem)}
+  .sun{left:auto;right:-7%;top:21%;width:clamp(120px,32vw,190px)}
+  .ridge-1{bottom:23%}.ridge-2{bottom:17%}.ridge-3{bottom:10%}.ridge-4{bottom:0}
+  .field-intro,.brand-field-shell{grid-template-columns:1fr}
+  .entries{grid-template-columns:1fr}
+  .entry{min-height:290px}
+  .brand-field{min-height:auto}
+}
+@media(max-width:560px){
+  .top{height:64px}
+  .brand small{display:none}
+  .hero-shell{min-height:100svh;padding-top:7rem}
+  .lead{max-width:28rem}
+  .micro{font-size:.66rem}
+  .scene{opacity:.92}
+  .sun{top:26%}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .hero-copy,.sun,.ridge,.brand-field::before{transform:none!important}
+  .scroll-cue::after{height:22px}
+}
+@media(forced-colors:active){
+  :root{--air:Canvas;--air-2:Canvas;--substrate:Canvas;--ground:Canvas;--path:Canvas;--sun:Canvas;--choice:Canvas;--ink:CanvasText;--ink-soft:CanvasText;--green:LinkText;--green-dark:LinkText;--line:CanvasText}
+  .scene{opacity:.16}
+  .cta{box-shadow:none}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Vai al contenuto</a>
+
+<header class="top">
+  <a class="brand" href="#main" aria-label="MAIOS, torna all'inizio">
+    <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+      <g fill="#2fc34c" transform="translate(16 16)">
+        <path d="M0-14C4-14 6-10 5-6L0-1-5-6C-6-10-4-14 0-14Z"/>
+        <path d="M0-14C4-14 6-10 5-6L0-1-5-6C-6-10-4-14 0-14Z" transform="rotate(45)"/>
+        <path d="M0-14C4-14 6-10 5-6L0-1-5-6C-6-10-4-14 0-14Z" transform="rotate(90)"/>
+        <path d="M0-14C4-14 6-10 5-6L0-1-5-6C-6-10-4-14 0-14Z" transform="rotate(135)"/>
+        <path d="M0-14C4-14 6-10 5-6L0-1-5-6C-6-10-4-14 0-14Z" transform="rotate(180)"/>
+        <path d="M0-14C4-14 6-10 5-6L0-1-5-6C-6-10-4-14 0-14Z" transform="rotate(225)"/>
+        <path d="M0-14C4-14 6-10 5-6L0-1-5-6C-6-10-4-14 0-14Z" transform="rotate(270)"/>
+        <path d="M0-14C4-14 6-10 5-6L0-1-5-6C-6-10-4-14 0-14Z" transform="rotate(315)"/>
+      </g>
+    </svg>
+    <span>MAIOS<small>idee in lavoro continuo</small></span>
+  </a>
+  <div class="top-note">studio di entrata · prototipo A</div>
+</header>
+
+<main id="main">
+<section class="hero" aria-labelledby="hero-title">
+  <div class="scene" aria-hidden="true">
+    <div class="sun"></div>
+
+    <div class="ridge ridge-1">
+      <svg viewBox="0 0 1600 420" preserveAspectRatio="none">
+        <path d="M0 320L140 205 270 295 420 165 560 300 735 120 900 270 1075 150 1220 286 1390 190 1600 310V420H0Z" fill="#8eb8bb"/>
+      </svg>
+    </div>
+
+    <div class="ridge ridge-2">
+      <svg viewBox="0 0 1600 420" preserveAspectRatio="none">
+        <path d="M0 330L185 215 330 310 510 178 690 324 865 175 1030 302 1195 206 1360 298 1495 235 1600 310V420H0Z" fill="#5f8ca0"/>
+      </svg>
+    </div>
+
+    <div class="ridge ridge-3">
+      <svg viewBox="0 0 1600 420" preserveAspectRatio="none">
+        <path d="M0 352L175 245 315 322 490 210 645 334 820 205 990 326 1160 232 1320 336 1460 252 1600 326V420H0Z" fill="#2f5e78"/>
+      </svg>
+    </div>
+
+    <div class="ridge ridge-4">
+      <svg viewBox="0 0 1600 420" preserveAspectRatio="none">
+        <path d="M0 360L145 278 310 348 470 265 615 352 785 260 940 350 1105 275 1260 352 1430 285 1600 348V420H0Z" fill="#17435b"/>
+      </svg>
+    </div>
+    <div class="field-line"></div>
+  </div>
+
+  <div class="hero-shell">
+    <div class="hero-copy">
+      <p class="eyebrow">Meta AI Operative System</p>
+      <h1 id="hero-title">La complessità può diventare un <span class="quiet horizon-word">campo</span> di possibilità.</h1>
+      <p class="lead">Contesto, competenze, strumenti e modelli possono diventare leggibili nello stesso lavoro — e aprire ciò che ancora non vedi.</p>
+      <div class="hero-action">
+        <a class="cta" href="#field">Entra nel campo <span aria-hidden="true">↓</span></a>
+        <span class="micro">prototipo visuale · nessun effetto pubblico</span>
+      </div>
+    </div>
+
+    <aside class="hero-aside" aria-label="Note di orientamento">
+      <div class="side-note">persone<br>idee<br>strumenti<br>risultati</div>
+      <div class="signal"><span>stesso contesto<br>nuove possibilità</span></div>
+    </aside>
+  </div>
+
+  <a class="scroll-cue" href="#field">esplora</a>
+</section>
+
+<section class="field" id="field" aria-labelledby="field-title">
+  <div class="field-shell">
+    <div class="field-intro">
+      <div>
+        <p class="kicker">Da dove iniziamo</p>
+        <h2 id="field-title">Un solo campo. Più modi di entrarci.</h2>
+      </div>
+      <p class="field-copy">Il primo incontro non deve spiegare tutto MAIOS. Deve rendere riconoscibile una possibilità e portarti al punto da cui il lavoro può davvero cominciare.</p>
+    </div>
+
+    <div class="entries" aria-label="Ingressi MAIOS">
+      <article class="entry">
+        <span class="entry-label">01 · Sistema da definire</span>
+        <h3>Parti dal contesto.</h3>
+        <p>Quando il sistema non è ancora determinato, MAIOS può partire dal lavoro, dalle fonti e dal risultato da raggiungere.</p>
+        <a href="https://maios.it/setup-ai.html">Setup AI ↗</a>
+        <small>Il percorso concreto resta proprietà della superficie pubblica canonica.</small>
+      </article>
+
+      <article class="entry">
+        <span class="entry-label">02 · Chat AI</span>
+        <h3>Dai continuità al modo di lavorare.</h3>
+        <p>kernel_chat porta una sorgente persistente e ispezionabile dentro una relazione conversazionale compatibile.</p>
+        <a href="https://github.com/GrazianoGuiducci/kernel_chat">kernel_chat ↗</a>
+        <small>La disponibilità effettiva dipende dall'ambiente ricevente e dalle sue capacità.</small>
+      </article>
+
+      <article class="entry">
+        <span class="entry-label">03 · Progetto / workspace</span>
+        <h3>Fai vivere il kernel nel progetto.</h3>
+        <p>MAIOS Project Kernel mantiene fonti, stato, competenze e continuità vicino al lavoro che deve proseguire.</p>
+        <a href="https://github.com/GrazianoGuiducci/maios-project-kernel">Project Kernel ↗</a>
+        <small>Chat e progetto possono restare ingressi distinti senza implicare sincronizzazione automatica.</small>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="brand-field" aria-labelledby="brand-title">
+  <div class="brand-field-shell">
+    <div>
+      <p class="kicker" style="color:#b9d8c5">Identità in movimento</p>
+      <h2 id="brand-title">Non un tema. Un campo riconoscibile.</h2>
+    </div>
+    <div>
+      <p>La palette MAIOS resta una sola, ma profondità, luce, intervallo e tensione possono cambiare localmente con il significato. Il movimento serve a orientare, non a intrattenere.</p>
+      <div class="rule"></div>
+      <div class="signature"><span>MAIOS</span><span>stesso intento · più orizzonte</span></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<div class="prototype-note">Esplorazione privata del D-ND Design Kernel · nessuna pubblicazione o modifica a maios.it</div>
+
+<script>
+(() => {
+  const root = document.documentElement;
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const hero = document.querySelector('.hero');
+  let px = 0, py = 0, sx = 0;
+  let raf = 0;
+  let visible = true;
+
+  const clamp = (n,min,max) => Math.min(max,Math.max(min,n));
+
+  function render(){
+    raf = 0;
+    root.style.setProperty('--mx', px.toFixed(3));
+    root.style.setProperty('--my', py.toFixed(3));
+    root.style.setProperty('--scroll', sx.toFixed(3));
+  }
+  function queue(){
+    if (!raf) raf = requestAnimationFrame(render);
+  }
+  function updateScroll(){
+    if (!hero) return;
+    const rect = hero.getBoundingClientRect();
+    sx = clamp((-rect.top) / Math.max(1, rect.height * .72), 0, 1);
+    queue();
+  }
+
+  if (!reduced.matches){
+    window.addEventListener('pointermove', e => {
+      if (!visible) return;
+      px = clamp((e.clientX / window.innerWidth - .5) * 2, -1, 1);
+      py = clamp((e.clientY / window.innerHeight - .5) * 2, -1, 1);
+      queue();
+    }, {passive:true});
+    window.addEventListener('scroll', updateScroll, {passive:true});
+    updateScroll();
+
+    if ('IntersectionObserver' in window && hero){
+      new IntersectionObserver(entries => {
+        visible = entries[0] ? entries[0].isIntersecting : true;
+        if (!visible){ px = 0; py = 0; queue(); }
+      }, {threshold:0}).observe(hero);
+    }
+  } else {
+    root.style.setProperty('--scroll','1');
+  }
+
+  reduced.addEventListener?.('change', () => location.reload());
+})();
+</script>
+</body>
+</html>
