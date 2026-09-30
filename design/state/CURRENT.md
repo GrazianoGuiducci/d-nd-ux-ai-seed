@@ -1,6 +1,6 @@
 # Current Design Kernel
 
-Version: 0.1.2
+Version: 0.1.3
 Owner: D-ND Design Kernel in `d-nd-ux-ai-seed`.
 Source base: `9b91eb9171d9ecb5278f296dba78fd9418b4f024`.
 
@@ -76,6 +76,32 @@ better expressed through time.
 The forms are not fixed templates or a required campaign sequence. They compose
 with Editoriali's current MAIOS social grammar and with target/domain knowledge
 only when the receiving situation changes the artifact.
+
+
+## Data-driven infographic and horizon positioning — 2026-09-30
+
+The current MAIOS social field now permits source-rich infographics that combine
+external research and MAIOS product relations while preserving distinct visual
+planes:
+
+```text
+external evidence
+-> MAIOS interpretation
+-> current verified product response
+-> development horizon
+```
+
+Perceptual Composition 0.4.0 now preserves present / direction / horizon without
+flattening an ambitious future merely because it is unfamiliar or rendering a
+future possibility as present capability.
+
+Source-Grounded Infographic 0.4.0 owns the corresponding evidence grammar:
+source/date/scope remain recoverable; visual adjacency does not imply causal or
+scientific validation; volatile statistics stay localised.
+
+The operator's horizon of progressively broader automation remains a strategic
+direction, not a current product feature or settled forecast. Design may make
+that horizon perceptually strong while preserving its status.
 
 
 ## Current launch-design movement — 2026-09-23
