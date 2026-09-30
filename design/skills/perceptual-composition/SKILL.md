@@ -5,7 +5,7 @@ description: Form or critique art direction, medium choice, brand expression and
 
 # Perceptual Composition
 
-Version: 0.3.0 · Semantic owner: D-ND Design Kernel / this method.
+Version: 0.4.0 · Semantic owner: D-ND Design Kernel / this method.
 
 ## Begin with what must become visible
 
@@ -100,6 +100,26 @@ same source relation
 ```
 
 Do not preassign colours, symbols or a MAIOS feature to each target.
+
+
+## Present, direction and horizon in one visual field
+
+When a public artifact carries both current product truth and a wider MAIOS
+direction, do not flatten the horizon merely because it is unfamiliar and do
+not render it as if it were already present.
+
+Use perceptual hierarchy to distinguish:
+
+```text
+present capability
+-> selected development direction
+-> open longer-term horizon
+```
+
+The horizon may be visually strong when positioning depends on it. Its strength
+does not change its epistemic status. Distance, layering, rhythm, labels,
+progression or another visual relation can communicate possibility without
+turning it into a product feature or forecast.
 
 
 ## Select a form, not a fashionable tool
