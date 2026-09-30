@@ -1,6 +1,6 @@
 # Current Design Kernel
 
-Version: 0.1.0
+Version: 0.1.1
 Owner: D-ND Design Kernel in `d-nd-ux-ai-seed`.
 Source base: `9b91eb9171d9ecb5278f296dba78fd9418b4f024`.
 
@@ -21,6 +21,37 @@ adapter file remains receiver-specific and is not implied by source promotion.
 `design/EXCHANGE.md` is an optional compact exchange relation.
 `design/OWNER_RECONCILIATION.md` records source selection and current reconciliation
 status. `design/exercises/2026-09-23/READBACK.md` records the controlled exercise.
+
+
+## Awareness-to-expression evolution — 2026-09-30
+
+An operator correction in the MAIOS launch field exposed that familiar social
+advertising heuristics can flatten the design object when they become the
+generator rather than a surface condition. The reusable relation is now carried
+by Perceptual Composition 0.2.0 and Source-Grounded Infographic 0.2.0:
+
+```text
+source-grounded semantic depth
+-> progressive awareness of meaning / relation / possibility
+-> determine what must become perceptible
+-> preserve subject + dominant dynamic + material boundary
+-> contract into simple visual syntax
+-> keep unused depth reachable
+```
+
+The design competence may therefore know substantially more than one artifact
+shows. Simplicity is a consequence of understanding, not a demand to flatten
+the source. Vivid colour, CTA, short copy and mobile-first treatment remain
+possible surface constraints; they do not define the visual ontology.
+
+For first-encounter social artifacts, the subject must be recoverable without
+requiring the caption to repair the image. Companion text can deepen or open
+the next relation. Mobile rendering preserves semantic parity rather than
+shrinking a desktop composition until it fits.
+
+The source wording itself remains with Editoriali at
+`sources/deposits/EDITORIALI_OPERATOR_SOURCE_SETUP_FIELD_OBLIVION_VISUAL_SYNTAX_2026-09-30.md`;
+Design carries only the relation that changes visual formation.
 
 ## Current launch-design movement — 2026-09-23
 
