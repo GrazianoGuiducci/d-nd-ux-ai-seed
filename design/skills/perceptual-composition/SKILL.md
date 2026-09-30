@@ -24,6 +24,43 @@ A useful internal sentence is: "This expression lets this receiver perceive X
 through Y." It is not mandatory copy. If X is only a product label or Y is only
 "a beautiful animation", deepen the source or revise the visual question.
 
+## Awareness-bearing visual contraction
+
+Visual syntax is downstream of understanding. Let the source, product truth,
+operator meaning and relevant consequences deepen the design object before
+reducing it to a social card, hero, diagram or campaign convention.
+
+```text
+deeper source-grounded understanding
+-> determine what relation must become perceptible
+-> preserve subject + dominant dynamic + consequence
+-> contract into the simplest visual syntax that keeps those relations true
+-> keep unused depth reachable rather than forcing it into the frame
+```
+
+The design may therefore become simpler as awareness grows. Simplicity does not
+mean generic minimalism, fewer words by default or removal of conceptual depth.
+It means that the composition knows which relation carries the event and can
+remove what no longer helps the receiver perceive it.
+
+Advertising heuristics such as vivid colour, high-quality imagery, explicit
+CTA, short copy and mobile optimisation are **surface-relative possibilities**.
+Use them when the selected encounter benefits from them; never treat them as the
+ontology of a social artifact. Attention can be created through tension,
+silence, scale, interval, sequence, image, typography, colour, movement or
+another relation consistent with the object and brand field.
+
+Mobile legibility remains a real receiving condition. Preserve semantic parity
+at feed scale, but do not let the mobile constraint flatten the underlying
+relation. A visual can be compact while the competence that formed it retains
+much greater source depth.
+
+For a first encounter, the receiver should be able to recover what the artifact
+is about before the caption repairs it. The caption can deepen, contextualise or
+open the next relation; it should not supply the missing subject of an otherwise
+ambiguous visual.
+
+
 ## Select a form, not a fashionable tool
 
 Distinguish the artifact's job from its carrier. A short message can lead to a
