@@ -5,7 +5,7 @@ description: Form or critique art direction, medium choice, brand expression and
 
 # Perceptual Composition
 
-Version: 0.1.0 · Semantic owner: D-ND Design Kernel / this method.
+Version: 0.2.0 · Semantic owner: D-ND Design Kernel / this method.
 
 ## Begin with what must become visible
 
