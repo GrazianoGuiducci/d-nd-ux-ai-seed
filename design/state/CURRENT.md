@@ -1,6 +1,6 @@
 # Current Design Kernel
 
-Version: 0.1.1
+Version: 0.1.2
 Owner: D-ND Design Kernel in `d-nd-ux-ai-seed`.
 Source base: `9b91eb9171d9ecb5278f296dba78fd9418b4f024`.
 
@@ -52,6 +52,31 @@ shrinking a desktop composition until it fits.
 The source wording itself remains with Editoriali at
 `sources/deposits/EDITORIALI_OPERATOR_SOURCE_SETUP_FIELD_OBLIVION_VISUAL_SYNTAX_2026-09-30.md`;
 Design carries only the relation that changes visual formation.
+
+## MAIOS social-depth image grammar — 2026-09-30
+
+The launch field now distinguishes three perceptual functions:
+
+```text
+announcement / signal image
+  -> immediate recognition of subject + one transformation;
+
+pill image
+  -> one memorable semantic relation;
+
+consequential synthesis / infographic
+  -> several typed relations whose combined consequence is the object.
+```
+
+Perceptual Composition 0.3.0 owns announcement/pill medium and hierarchy.
+Source-Grounded Infographic 0.3.0 owns consequential synthesis when the meaning
+is spatial/systemic. Storyboard remains reachable when consequentiality is
+better expressed through time.
+
+The forms are not fixed templates or a required campaign sequence. They compose
+with Editoriali's current MAIOS social grammar and with target/domain knowledge
+only when the receiving situation changes the artifact.
+
 
 ## Current launch-design movement — 2026-09-23
 
