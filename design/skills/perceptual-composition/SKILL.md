@@ -5,7 +5,7 @@ description: Form or critique art direction, medium choice, brand expression and
 
 # Perceptual Composition
 
-Version: 0.2.0 · Semantic owner: D-ND Design Kernel / this method.
+Version: 0.3.0 · Semantic owner: D-ND Design Kernel / this method.
 
 ## Begin with what must become visible
 
@@ -59,6 +59,47 @@ For a first encounter, the receiver should be able to recover what the artifact
 is about before the caption repairs it. The caption can deepen, contextualise or
 open the next relation; it should not supply the missing subject of an otherwise
 ambiguous visual.
+
+
+## Social depth image families
+
+For the MAIOS social field, preserve three image functions without turning them
+into fixed templates:
+
+```text
+announcement / signal image
+  -> subject + one need / tension / transformation
+  -> immediate recognition;
+
+pill image
+  -> one semantic relation only
+  -> retention of a capability / distinction;
+
+consequential synthesis
+  -> several relations whose combined consequence is the object
+  -> route to Source-Grounded Infographic or temporal faculty when needed.
+```
+
+The first two are not merely simpler versions of an infographic. Their
+perceptual job is different. An announcement can use image, typography, spatial
+tension or another carrier to establish one recognizable event. A pill should
+make one relation memorable without collapsing it into a generic slogan.
+
+A synthesis may be denser because its job is reasoning. Density is permitted
+when every visible object participates in the consequential relation and the
+receiver can recover the reading path.
+
+Target adaptation changes the receiving situation, not the MAIOS brand or
+product truth:
+
+```text
+same source relation
++ selected domain / target competence
+-> different recognizable entry / evidence / emphasis
+-> selected image family
+```
+
+Do not preassign colours, symbols or a MAIOS feature to each target.
 
 
 ## Select a form, not a fashionable tool
