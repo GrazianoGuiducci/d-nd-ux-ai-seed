@@ -5,7 +5,7 @@ description: Make a source-owned relationship understandable through spatial com
 
 # Source-Grounded Infographic
 
-Version: 0.2.0 · Semantic owner: D-ND Design Kernel / this method.
+Version: 0.3.0 · Semantic owner: D-ND Design Kernel / this method.
 
 ## Spatial explanation
 
@@ -67,6 +67,34 @@ When a later source, consequence or operator correction deepens the meaning,
 re-form the visual question before polishing the old geometry. A successful
 previous composition is evidence for that earlier field, not authority to keep
 the same syntax after the semantic object has changed.
+
+
+## Consequential synthesis
+
+For the MAIOS campaign, the large infographic owns the **consequential
+synthesis** function: it recomposes relations that may have appeared separately
+as pills and makes their combined process or system consequence visible.
+
+```text
+condition / source
+-> transformation
+-> intermediate relation(s)
+-> changed capability / state / possibility
+-> next consequence
+```
+
+Do not make a summary by placing several pill cards side by side. The synthesis
+must expose what becomes understandable only when the relations are seen
+together: dependency, feedback, progression, tension, ownership, branching or
+another typed relation.
+
+The infographic can be the first encounter for a reader whose domain already
+supports greater complexity. Complexity is not failure when the structure
+reduces reconstruction and the reading path remains legible.
+
+When target/domain knowledge changes the useful system question, form a
+different consequential view from the same source nucleus rather than merely
+changing labels.
 
 
 ## Density and progressive depth
