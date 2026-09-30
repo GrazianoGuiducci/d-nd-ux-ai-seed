@@ -37,6 +37,38 @@ Do not use a decorative biology or orbital metaphor as evidence of scientific
 identity. Label a metaphor when its status changes interpretation; remove it
 when the label costs more than the form contributes.
 
+## Deep meaning, simple projection
+
+A visual explanation can become simpler only after the source relation is
+understood deeply enough to know what can be left latent.
+
+```text
+source depth
++ receiver situation
++ materially participating relations
+-> semantic awareness of the object
+-> select the relation that must be simultaneously perceivable
+-> spatial contraction
+-> simple map / diagram / image without semantic flattening
+```
+
+Do not start from a desired node count, a social-template geometry or the rule
+that every graphic needs one CTA. Those can be useful implementation
+constraints, but they do not decide which objects or predicates belong in the
+visual field.
+
+The visible artifact may carry one relation while the competence retains a
+larger source-bound map. That retained depth is not an excuse for ambiguity:
+subject, relation type and materially important boundary must remain recoverable
+from the artifact itself. Companion text can add context or depth; it should not
+repair a missing subject or an invented visual mechanism.
+
+When a later source, consequence or operator correction deepens the meaning,
+re-form the visual question before polishing the old geometry. A successful
+previous composition is evidence for that earlier field, not authority to keep
+the same syntax after the semantic object has changed.
+
+
 ## Density and progressive depth
 
 Expose enough to answer the visual question without recreating a whole article
