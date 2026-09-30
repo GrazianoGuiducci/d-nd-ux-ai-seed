@@ -5,7 +5,7 @@ description: Make a source-owned relationship understandable through spatial com
 
 # Source-Grounded Infographic
 
-Version: 0.1.0 · Semantic owner: D-ND Design Kernel / this method.
+Version: 0.2.0 · Semantic owner: D-ND Design Kernel / this method.
 
 ## Spatial explanation
 
