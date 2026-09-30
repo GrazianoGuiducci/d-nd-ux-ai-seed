@@ -5,7 +5,7 @@ description: Make a source-owned relationship understandable through spatial com
 
 # Source-Grounded Infographic
 
-Version: 0.3.0 · Semantic owner: D-ND Design Kernel / this method.
+Version: 0.4.0 · Semantic owner: D-ND Design Kernel / this method.
 
 ## Spatial explanation
 
@@ -96,6 +96,48 @@ When target/domain knowledge changes the useful system question, form a
 different consequential view from the same source nucleus rather than merely
 changing labels.
 
+
+## Data, interpretation, product and horizon
+
+When an infographic uses external research together with a MAIOS product,
+compose the evidence planes explicitly rather than blending them into one
+persuasive diagram.
+
+```text
+external data plane
+  source / date / population / measured relation
+
+interpretation plane
+  what MAIOS infers or proposes from that observation
+
+product plane
+  current verified capability / specification / boundary
+
+horizon plane
+  wider future possibility or direction
+```
+
+Visual adjacency may show relation; it must not silently imply scientific
+validation or causation. Use labels, grouping, axes, connectors and captioning
+so the receiver can tell which elements are measured, interpreted, implemented
+or projected.
+
+A useful data-driven composition is:
+
+```text
+observable external gap
+-> systemic reading
+-> one current MAIOS capability that addresses a bounded part of the gap
+-> wider open horizon
+```
+
+Every statistic must retain enough provenance to recover source, date and
+scope. If the number changes quickly, localise it as volatile content rather
+than embedding it into a reusable master.
+
+An ambitious horizon can occupy a meaningful visual plane without being
+rendered as present state. Separate distance, temporal direction, layer,
+annotation or another perceptual cue when that distinction changes meaning.
 
 ## Density and progressive depth
 
