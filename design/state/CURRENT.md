@@ -1,6 +1,6 @@
 # Current Design Kernel
 
-Version: 0.1.3
+Version: 0.1.4
 Owner: D-ND Design Kernel in `d-nd-ux-ai-seed`.
 Source base: `9b91eb9171d9ecb5278f296dba78fd9418b4f024`.
 
@@ -21,6 +21,29 @@ adapter file remains receiver-specific and is not implied by source promotion.
 `design/EXCHANGE.md` is an optional compact exchange relation.
 `design/OWNER_RECONCILIATION.md` records source selection and current reconciliation
 status. `design/exercises/2026-09-23/READBACK.md` records the controlled exercise.
+
+
+## ChatGPT image-generation entry correction — 2026-10-01
+
+A MAIOS social-image movement exposed a receiver-entry failure rather than a
+missing design method. The first generated artifact drifted into an unrelated
+red/black visual language even though Perceptual Composition already required
+the selected project profile and the MAIOS profile already carried the current
+chromatic field. After current MAIOS visual references were made active, the
+next generation moved back toward the intended field.
+
+The reusable correction is therefore receiver-local: the ChatGPT adapter now
+requires the current project profile and strongest available visual evidence to
+participate before image generation or image editing. It treats a supplied image
+as source when editing, keeps exact content separate from expressive raster
+freedom where the host permits, and rereads the actual rendered artifact before
+closure.
+
+Perceptual Composition 0.4.0 and the MAIOS brand profile 0.2.0 remain the semantic
+owners and are unchanged; no duplicate "image competence" was added. Current
+evidence is one drifted generation and one improved generation after source
+activation. That is sufficient for this entry correction, not proof of general
+assimilation across other projects or renderers.
 
 
 ## Awareness-to-expression evolution — 2026-09-30
