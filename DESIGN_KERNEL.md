@@ -113,6 +113,7 @@ Cross-cutting references, returned from the receiver-side design field:
 | Time-based editor: exact time, reversible gestures, track topology | [Timeline Media Editor](design/references/timeline-media-editor-competence.md) |
 | Causal onboarding, dependent form state, focus montage, action boundaries | [Context-Aware Guided Form](design/references/context-aware-guided-form-composition.md) |
 | Candidate evaluation and scoped receipt | [Candidate Evaluation Contract](design/references/candidate-evaluation-contract.md) |
+| Public-kernel 3D presentation: use, process, evolution, possibility and value made perceptible across media/investor/client surfaces | [Public Kernel 3D Visual Presentation](design/references/public-kernel-3d-visual-presentation.md) |
 
 This is an initial reachable field, not an exhaustive design ontology. One method
 can act alone. Another can become pertinent because the first discovers a
