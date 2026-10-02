@@ -137,3 +137,27 @@ slide animations.
 - Verify the animation duration and unmount/`display:none` delay describe the
   same transition; a long CSS transition paired with an early hide is a broken
   contract.
+
+### Exercise both endpoints across rendering alternatives
+
+When a visible relation crosses a 3D scene, SVG, HTML annotation or static
+alternative, activate the direction contract for each rendered carrier, not
+only for the primary renderer. Derive both endpoints from the actual visible
+source and destination. A viewport percentage is not an equivalent semantic
+anchor merely because it places the line near the object.
+
+After resize, direct state selection, reduced motion and fallback, compare the
+rendered line endpoints against the visible owning elements. Checking a line
+against coordinates reported by the same line generator can confirm internal
+consistency while missing detachment from its source. Pair the check with a
+silent rendered reading; an in-bounds line can still connect the wrong things.
+
+A fallback may preserve a relationship with different geometry. Label that
+substitution honestly rather than transferring the primary model's identity or
+proof to the alternative. Reduced-motion 3D and no-WebGL schematic are distinct
+cases, even when both have stopped animation.
+
+This is an activation/validation refinement of the existing direction contract,
+not a separate 3D competence or a requirement to use any particular renderer.
+The source event and scoped evidence are in
+[the Kernel Nautico learning return](../exercises/2026-10-02/KN_FIRST_ENCOUNTER_LEARNING.md).
