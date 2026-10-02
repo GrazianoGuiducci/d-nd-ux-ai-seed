@@ -1,6 +1,6 @@
 # Current Design Kernel
 
-Version: 0.1.4
+Version: 0.1.5
 Owner: D-ND Design Kernel in `d-nd-ux-ai-seed`.
 Source base: `9b91eb9171d9ecb5278f296dba78fd9418b4f024`.
 
@@ -22,6 +22,50 @@ adapter file remains receiver-specific and is not implied by source promotion.
 `design/OWNER_RECONCILIATION.md` records source selection and current reconciliation
 status. `design/exercises/2026-09-23/READBACK.md` records the controlled exercise.
 
+
+## Public-kernel 3D visual presentation relation — 2026-10-02
+
+The operator selected a cross-kernel presentation relation: every new public
+kernel will have its own 3D Visual Animation used as both **media presentation**
+and **cognitive guide** for investors, prospective clients, partners and other
+public receivers.
+
+The first pilot is Kernel Nautico; Ferretti/Pershing is its first strategic
+company case.
+
+The reusable relation is now reachable at:
+
+`design/references/public-kernel-3d-visual-presentation.md`
+
+It preserves this distinction:
+
+~~~text
+shared across public kernels:
+  presentation function
+  cognitive-guide role
+  value plurality
+  artifact family
+  source/reality boundaries
+  learning return
+
+kernel-native:
+  visual object
+  metaphor
+  lifecycle / process grammar
+  spatial/temporal morphology
+  art direction
+~~~
+
+The operator decision that a public kernel receives a 3D visual animation is
+stable at product/presentation level. A distinct industrial-3D competence is
+**not** claimed yet. Existing Perceptual Composition, Source-Grounded Storyboard,
+Source-Grounded Infographic, Cognitive Motion and Interaction Quality form the
+first pilot; execution must expose any residual production method before a new
+skill is created.
+
+Kernel Nautico currently carries nine semantic keyframes from first line through
+RETURN. A later non-identical public kernel will be the first strong test of
+what actually generalizes beyond the nautical morphology.
 
 ## ChatGPT image-generation entry correction — 2026-10-01
 
