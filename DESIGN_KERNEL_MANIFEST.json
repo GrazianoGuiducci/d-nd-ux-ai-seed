@@ -1,7 +1,7 @@
 {
   "schema": "dnd.design-kernel.manifest.v1",
   "kernel_id": "dnd-design-kernel",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "form": "domain_compositional_kernel",
   "owner": "GrazianoGuiducci/d-nd-ux-ai-seed",
   "entry": "DESIGN_KERNEL.md",
@@ -141,6 +141,11 @@
       "id": "candidate-evaluation-contract",
       "path": "design/references/candidate-evaluation-contract.md",
       "role": "candidate_evaluation_scoped_receipt"
+    },
+    {
+      "id": "public-kernel-3d-visual-presentation",
+      "path": "design/references/public-kernel-3d-visual-presentation.md",
+      "role": "cross_kernel_3d_media_presentation_cognitive_guide"
     }
   ],
   "exercise": "design/exercises/2026-09-23/READBACK.md",
