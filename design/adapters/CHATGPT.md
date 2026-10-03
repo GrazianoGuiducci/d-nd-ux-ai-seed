@@ -13,6 +13,12 @@ Image generation, document/vector construction, a temporary local browser or
 repository tools can execute selected parts if available. Observe the actual
 artifact. Do not claim rendering or host installation from a source read.
 
+## Imported visuals intended for public reuse
+
+When a request brings a visual or deck generated elsewhere into public reuse, reach [Perceptual Composition](../skills/perceptual-composition/SKILL.md) and [Source-Grounded Infographic](../skills/source-grounded-infographic/SKILL.md) before transforming or exporting it. Apply their existing source, profile and evidence-plane methods; the imported artifact records a previous transformation, not authority for every displayed relation.
+
+Read the actual rendering, including attribution-bearing elements beyond the main copy: footers, named components, axes, labels, QR codes, links, dates and event metadata. Preserve the received artifact while rebinding the relations selected for reuse. When a comparison, connector or label changes whose result appears, what a source supports or which capability exists, return that difference to the source or artifact-family owner. Design corrects expression without promoting an imported claim into product truth. Keep exact action destinations controllable and apply the existing readback before closure.
+
 ## Image-generation execution path
 
 For an image-generation or image-edit movement, do not move directly from the
