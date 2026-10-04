@@ -207,10 +207,16 @@ Practical production may require:
 - Blender / Unreal / Three.js / another renderer;
 - render, realtime and export pipelines.
 
-Let the first real execution expose what is reusable and what is tool-specific.
+Intent, a newly reached source, a useful composition or actual execution can
+expose what is reusable and what is tool-specific. Let the work form a needed
+capability when that difference becomes material; a failure or prior production
+run is not required before competence formation can begin.
 
-Do not create a new competence before the experience produces a residual method
-that existing Design owners cannot coherently carry.
+First reach and compose the existing Design owners. If the knowledge was
+already present but did not participate, repair its entry or discovery. Form a
+distinct competence only when a continuing necessary function remains that the
+existing owners cannot coherently carry. A source-formed method, an implemented
+production path and its observed exercise keep their own identities and proof.
 
 ## Learning test
 
