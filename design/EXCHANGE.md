@@ -38,6 +38,42 @@ A file identity can be a path plus content digest when a test or transfer needs
 it. No new global registry, event bus or service envelope is installed by this
 contract.
 
+## Concept-to-media handoff
+
+When Editoriali has formed a concept/media field, a compact request may carry:
+
+```text
+source / truth owner
+concept / public relation
+domain + concrete use case
+cognitive or operational dynamic
+practical consequence
+present / direction / horizon state
+candidate representation, if one emerged
+exact wording that must remain controllable
+receiving surface / audience condition
+```
+
+The candidate representation is a hypothesis, not a design instruction.
+Perceptual Composition can select a different medium; Infographic can reform
+the spatial grammar; Storyboard can expose temporal truth; Interaction Quality
+can make exploration the explanatory act.
+
+Design returns:
+
+```text
+chosen perceptual thesis + medium
+what the artifact makes visible
+what source relation was preserved / clarified
+what proposed relation was rejected or corrected
+executor brief / artifact
+accessible/static equivalent where material
+reusable learning + owner
+```
+
+If the representation changes the concept itself, return that delta before
+letting several downstream media inherit a contaminated nucleus.
+
 ## Typical composition
 
 Business/Launch can identify a need such as an understandable public entry for

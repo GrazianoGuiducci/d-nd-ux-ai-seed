@@ -124,6 +124,49 @@ Do not implement the table as keyword routing. For example, "video" in a request
 can identify a distribution constraint while the actual needed work is a readable
 thumbnail; "landing" does not by itself select a workspace component or WebGL.
 
+## Concept-to-media editorial handoff — 2026-10-05
+
+Editoriali now exposes a general source competence,
+`GrazianoGuiducci/Editoriali/skills/concept-to-media-formation/SKILL.md`,
+for work in which a concept must become an image/media family rather than one
+already-determined artifact.
+
+Its useful incoming relation is:
+
+```text
+source-grounded concept
++ domain / concrete use case
++ cognitive or operational dynamic
++ practical consequence
++ receiving situation
+-> representation field
+```
+
+Design does **not** inherit the proposed representation as a layout command.
+It uses the relation to decide which native method, medium and visual grammar
+preserve the object best.
+
+Possible resultants include:
+
+```text
+no visual needed
+announcement / pill
+source-grounded infographic
+temporal storyboard / audiovisual brief
+interactive explanation
+3D / spatial presentation
+another representation exposed by the object
+```
+
+A current repertoire — phases, causal spiral, non-identical before/after,
+operating field, supervision gradient, possibility/resultant/next-field,
+depth, multi-receiver, present/horizon and real-case demonstration — is
+available as learned possibility, not as template routing.
+
+If Design discovers a semantic correction, new source relation or useful
+representation grammar, return the meaning/argument delta to Editoriali and the
+reusable perceptual/spatial/temporal method to the closest Design owner.
+
 ## Form before allocating machinery
 
 First preserve the source relation and recognise what the receiver can already
