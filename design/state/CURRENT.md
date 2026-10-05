@@ -36,6 +36,34 @@ image generation: recursively branching translucent surfaces integrate into a
 clear open form. New artwork remains a candidate; the direction does not create
 a rigid image template or a measured performance claim.
 
+## Concept-to-media formation integration — 2026-10-05
+
+Editoriali has formed `concept-to-media-formation` as the semantic/editorial
+owner for turning a source-bound concept into a coherent media field. Design
+keeps medium and perceptual ownership.
+
+Current cross-owner relation:
+
+```text
+Editoriali:
+  concept + domain/use case + dynamic + practical consequence
+  -> representation field / public relation
+
+Design:
+  representation field + actual receiving conditions
+  -> medium / hierarchy / spatial-temporal grammar / artifact
+```
+
+No new Design faculty is formed. Perceptual Composition, Source-Grounded
+Infographic 0.5.0, Source-Grounded Storyboard and Interaction Quality are
+sufficient for the current function. If a later non-identical concept exposes a
+recurrent visual/media function that cannot be carried coherently by them, that
+residual can justify competence formation then.
+
+The first MAIOS exercise makes the eleven public qualities an editorial index,
+not an architecture diagram or mandatory feature list, and keeps the
+representation repertoire open to new concepts.
+
 ## MAIOS contextual process infographic — 2026-10-05
 
 A second 5 October operator return evolves Source-Grounded Infographic from
