@@ -23,6 +23,19 @@ adapter file remains receiver-specific and is not implied by source promotion.
 status. `design/exercises/2026-09-23/READBACK.md` records the controlled exercise.
 
 
+## MAIOS visual direction — 2026-10-05
+
+The operator's return on the context poster selects possibility amplification,
+multidimensional combination and projective integration as a continuing visual
+leitmotif. Graphic craft was welcomed; paper-sheet subjects were too weak to
+carry that dynamic. The
+[MAIOS profile](../profiles/maios/BRAND_FIELD.md#possibility-amplification-and-projective-integration--2026-10-05)
+now carries the reason, expressive relation and continuing variation.
+Perceptual Composition and Source-Grounded Infographic were exercised through
+image generation: recursively branching translucent surfaces integrate into a
+clear open form. New artwork remains a candidate; the direction does not create
+a rigid image template or a measured performance claim.
+
 ## Public-kernel 3D visual presentation relation — 2026-10-02
 
 The operator selected a cross-kernel presentation relation: every new public

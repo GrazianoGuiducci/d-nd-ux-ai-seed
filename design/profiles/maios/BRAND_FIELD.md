@@ -1,6 +1,6 @@
 # MAIOS brand field — design use
 
-Profile version: 0.2.0 · observed site source: 23 September 2026 · operator social correction: 29 September 2026.
+Profile version: 0.3.0 · observed site source: 23 September 2026 · operator visual direction: 5 October 2026.
 State: current-source interpretation for controlled design work; new layouts and
 copy remain candidates, not a replacement for the production site.
 
@@ -151,6 +151,45 @@ Do not create a social identity that depends on one scenic motif. Vary the
 background when it improves the represented relation while preserving MAIOS
 chromatic, typographic and spatial continuity. Decorative variation must not
 invent system topology.
+
+## Possibility amplification and projective integration — 2026-10-05
+
+The operator welcomes the graphic craft of the first context poster while
+finding its paper-sheet subjects too weak to express the underlying potential.
+The new MAIOS direction is a visual leitmotif of expanding possibilities,
+multidimensional combination and fusion of contexts, leading to a simpler
+useful resultant with less latency and noise. Preserve that dynamic as later
+pills form their own subjects and expressions.
+
+```text
+possibilities expand through combinations and depth
+-> distinct relations meet and integrate
+-> a clear projective resultant becomes perceptible
+-> the resultant opens the next field of useful work
+```
+
+Make amplification visible through changes of scale, generative branching,
+overlap and several spatial depths. Combination changes the emerging form;
+integration is more than putting an inventory of inputs beside each other.
+Let the resultant have a legible silhouette and room to continue. Simplicity
+comes from integrated relations, while further possibility remains available.
+
+The selected controlled study uses translucent curved surfaces with recursive
+branching that join into an open green form. Its metaphor carries the relation;
+it is neither an execution topology nor a measured exponential performance
+claim. The branch count, material and exact silhouette remain expressive choices.
+Reduction of latency/noise is the intended useful direction, with actual product
+effects still supplied by their source owners.
+
+Retain the welcomed chromatic field, dark readable type, interval and MAIOS mark.
+The leitmotif can recur through its dynamic while the subject, geometry, rhythm
+and emphasis vary with each pill. A whole family is not made by pasting the same
+sculpture behind every message. The stronger visual must still let a first
+receiver recover the actual AI-at-work subject.
+
+The new direction is selected by the operator; each resulting artwork remains
+a candidate until its own reception or selection. Graphic appreciation of the
+earlier study does not endorse the superseded paper metaphor or all future forms.
 
 ## Surface differences
 
