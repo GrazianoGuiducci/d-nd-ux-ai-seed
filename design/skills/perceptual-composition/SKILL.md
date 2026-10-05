@@ -5,7 +5,7 @@ description: Form or critique art direction, medium choice, brand expression and
 
 # Perceptual Composition
 
-Version: 0.4.0 · Semantic owner: D-ND Design Kernel / this method.
+Version: 0.5.0 · Semantic owner: D-ND Design Kernel / this method.
 
 ## Begin with what must become visible
 
@@ -60,6 +60,59 @@ is about before the caption repairs it. The caption can deepen, contextualise or
 open the next relation; it should not supply the missing subject of an otherwise
 ambiguous visual.
 
+
+## Transmute internal depth into a lived public possibility
+
+A public artifact should not normally expose the internal taxonomy that made
+its understanding possible. Architecture, kernel labels, competence classes and
+research vocabulary can remain active in formation while the receiver encounters
+a **recognizable situation and a possible way of working**.
+
+Use:
+
+```text
+deep source / internal architecture
+-> understand the dynamic and consequence
+-> identify a humanly recognizable scene or relation
+-> compose a perceptual field in which the receiver can locate themselves
+-> keep further possibility perceptibly open
+```
+
+Do not merely replace technical words with simpler words. The transformation is
+perceptual and situational: the receiver should be able to imagine what it would
+be like to inhabit the changed relation.
+
+A strong public visual can create a useful expectation:
+
+```text
+real capability / reachable possibility
++ perceptible desirable relation
+-> receiver sees what could be attempted
+-> their use can become richer
+-> more of the system's real potential may become operative
+```
+
+This does not authorize aspirational fiction. Keep **present capability,
+selected direction and open horizon** distinguishable. An image may make the
+horizon desirable without depicting it as an already observed product state.
+
+### Preserve possibility beyond the frame
+
+A concrete scene should not become a cage around the system.
+
+Prefer a composition that:
+
+- gives the receiver a recognizable role or point of identification;
+- shows a real transformation in work, attention, capability or coordination;
+- suggests continuation beyond the current frame;
+- avoids making one UI, tool, workflow or current implementation look like the
+  ontology of the system;
+- leaves enough visual openness that another use, domain or later capability
+  remains imaginable.
+
+Avoid public diagrams whose main cognitive demand is learning internal labels.
+Use internal taxonomy only when the audience actually needs the technical
+mechanism as its chosen object.
 
 ## Social depth image families
 

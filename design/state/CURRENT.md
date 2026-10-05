@@ -36,6 +36,30 @@ image generation: recursively branching translucent surfaces integrate into a
 clear open form. New artwork remains a candidate; the direction does not create
 a rigid image template or a measured performance claim.
 
+## Public possibility projection — 2026-10-05
+
+The operator adds a reusable design correction: internal taxonomy is a formation
+source, not the default public dialectic. Public media should transmute system
+depth into situations where a person can recognize and project themselves into
+a possible better working relation.
+
+The visual must balance:
+
+```text
+recognizable present
++ source-grounded transformation
++ desirable practical consequence
++ open possibility beyond the frame
+```
+
+Expectation is treated as part of the receiving field: a better perception of
+what the system can realistically support can change how the person teaches,
+delegates, explores and uses it, making more real potential reachable. This does
+not convert horizon into current capability.
+
+Perceptual Composition advances to 0.5.0 with this relation. It is general; the
+MAIOS brand/profile supplies its specific visual language.
+
 ## Concept-to-media formation integration — 2026-10-05
 
 Editoriali has formed `concept-to-media-formation` as the semantic/editorial
