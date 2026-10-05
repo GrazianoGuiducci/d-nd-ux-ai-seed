@@ -5,7 +5,7 @@ description: Make a source-owned relationship understandable through spatial com
 
 # Source-Grounded Infographic
 
-Version: 0.4.0 · Semantic owner: D-ND Design Kernel / this method.
+Version: 0.5.0 · Semantic owner: D-ND Design Kernel / this method.
 
 ## Spatial explanation
 
@@ -96,6 +96,102 @@ When target/domain knowledge changes the useful system question, form a
 different consequential view from the same source nucleus rather than merely
 changing labels.
 
+
+## Real-context temporal process — 2026-10-05
+
+A consequential infographic can explain a cognitive or operational relation
+through a recognizable work scene rather than through abstract boxes alone.
+Use this when **who is doing the work, who is supervising and how that relation
+changes over time** carries part of the meaning.
+
+The MAIOS three-phase study exposes the reusable method:
+
+```text
+real work situation
++ materially different actor roles
++ temporal change
++ source-grounded consequence
+-> contextual process infographic
+```
+
+A phase is not a card with a different caption. The scene must encode the
+changed relation. Posture, gaze, distance, tool ownership, visible action and
+degree of human intervention can all carry meaning.
+
+For example:
+
+```text
+phase 1:
+  human and AI work closely
+  -> instruction / correction / criteria are visibly active
+
+phase 2:
+  AI performs the operation
+  -> human remains visibly supervisory and able to intervene
+
+phase 3:
+  the result of prior work is represented as a continuing system relation
+  -> routine micro-supervision recedes
+  -> human direction / judgement / exceptions remain reachable
+```
+
+Do not depict phase 3 as “the robot is alone, therefore autonomous” when the
+source relation is graduated delegation or emergent continuity. If the
+architecture, causal return or human authority is material, give it a visual
+role even when it becomes quieter.
+
+### Let the process breathe
+
+The 5 October exercise also corrects density. A strong conceptual image can
+fail when headline, phase cards, labels, explanatory footer and decorative
+elements all compete at once.
+
+Prefer:
+
+```text
+one strong title or question
++ one readable relation per phase
++ scene carries part of the explanation
++ generous interval inside and between phases
++ no bottom strap that merely repeats what the sequence already showed
+```
+
+Remove explanatory copy before shrinking it. A phase card should not become a
+miniature article. If a sentence belongs in the companion post, presentation
+or next frame, let it move there.
+
+### Real process before internal vocabulary
+
+When the receiver does not yet know the concept, show the observable relation
+first:
+
+```text
+teach through work
+-> supervise delegated work
+-> supervision becomes more selective as the system can continue from what
+   prior work changed
+```
+
+Terms such as competence, continuum, autological return or autopoiesis can
+enter in deeper frames. The first image teaches the word by showing the
+phenomenon rather than requiring the word as prior knowledge.
+
+### Mother visual and derivatives
+
+A successful contextual process infographic can be the **mother visual** of a
+family:
+
+```text
+single social image
+-> carousel / presentation with one phase per frame
+-> storyboard / short video showing the transition
+-> longer explanation of the mechanism
+```
+
+Derivatives preserve the source relation and the meaningful phase change, not
+the exact crop, character pose or amount of text. When motion itself teaches
+something the static image cannot, hand temporal composition to
+Source-Grounded Storyboard rather than overloading this skill.
 
 ## Data, interpretation, product and horizon
 
