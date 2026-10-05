@@ -36,6 +36,31 @@ image generation: recursively branching translucent surfaces integrate into a
 clear open form. New artwork remains a candidate; the direction does not create
 a rigid image template or a measured performance claim.
 
+## MAIOS contextual process infographic — 2026-10-05
+
+A second 5 October operator return evolves Source-Grounded Infographic from
+0.4.0 to 0.5.0. The selected visual is not a generic diagram but a real-context
+three-phase work scene:
+
+```text
+human teaches through work
+-> AI performs while human supervises
+-> routine supervision recedes as operational continuity becomes self-supporting
+   enough for that field
+```
+
+The reusable learning is that temporal phase changes must be visible in actor
+roles and work relations, not only in captions. Density was corrected by
+removing redundant bottom explanation and opening space inside the three phase
+fields. The MAIOS profile carries the brand-specific human/AI scene relation;
+the generic skill owns contextual process, density and mother-visual
+derivation.
+
+The third phase remains a future/trajectory projection. It does not prove
+unbounded autonomy or remove human direction, judgement, exception handling or
+effect authority. The visual can now seed a presentation/carousel and
+Source-Grounded Storyboard/video without creating duplicate concepts.
+
 ## Public-kernel 3D visual presentation relation — 2026-10-02
 
 The operator selected a cross-kernel presentation relation: every new public
