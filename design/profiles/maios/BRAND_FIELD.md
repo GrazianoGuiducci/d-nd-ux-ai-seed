@@ -1,6 +1,6 @@
 # MAIOS brand field — design use
 
-Profile version: 0.3.0 · observed site source: 23 September 2026 · operator visual direction: 5 October 2026.
+Profile version: 0.4.0 · observed site source: 23 September 2026 · operator visual direction: 5 October 2026.
 State: current-source interpretation for controlled design work; new layouts and
 copy remain candidates, not a replacement for the production site.
 
@@ -190,6 +190,46 @@ receiver recover the actual AI-at-work subject.
 The new direction is selected by the operator; each resulting artwork remains
 a candidate until its own reception or selection. Graphic appreciation of the
 earlier study does not endorse the superseded paper metaphor or all future forms.
+
+## Temporal work scenes and emergent continuity — 2026-10-05
+
+The accepted three-phase MAIOS infographic adds a second reusable visual
+relation alongside possibility amplification.
+
+It begins from a recognizable human/AI work situation and changes the role
+relation over time:
+
+```text
+teach through work
+-> AI works while the person supervises
+-> supervision recedes where the system can continue from what prior work
+   changed
+```
+
+The visual projects a future consequence of the MAIOS cognitive architecture;
+it is not a literal runtime diagram and not a claim that the person disappears.
+
+Use human/AI placement semantically. The human can move from close operational
+participation toward observation/direction while the AI takes the working seat.
+In the third phase, avoid a “boss watching a subordinate” cliché and avoid
+equating an unattended robot with intelligence. Show continuity through the
+field, project relation, feedback/return or another source-grounded visual cue
+when those relations matter.
+
+The selected density correction is equally important: remove redundant bottom
+copy, open the three phase fields and let the scenes explain part of the
+relation. Large type and negative space outrank squeezing all mechanism labels
+into one social image.
+
+Keep the current MAIOS chromatic field: air/cyan and warm ground/path provide
+the environment; active green can mark emergence/continuation; dark ink carries
+the minimum exact text. Saturation may increase around the changed relation
+without turning every phase into a separate colour-coded product.
+
+This three-phase visual is a candidate **mother visual** for social,
+presentation/carousel and video derivatives. Later forms can reveal deeper
+mechanisms — causal readback, competence change, continuum and autological
+return — after the temporal relation has become understandable.
 
 ## Surface differences
 
