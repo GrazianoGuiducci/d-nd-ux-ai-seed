@@ -5,8 +5,8 @@ description: Design, implement or review usable interaction, responsive composit
 
 # Interaction Quality
 
-Version: 0.1.1 · Semantic owner: D-ND Design Kernel / this method.
-Source amendment 2026-10-06: delegated-view confirmation; source-method candidate, not a library release or proof of runtime adoption.
+Version: 0.1.2 · Semantic owner: D-ND Design Kernel / this method.
+Source amendment 2026-10-06: contextual reference, reading-state continuity and perceivable reflow; preserves delegated-view confirmation 0.1.1. Source-method candidate, not a library release or proof of production adoption.
 
 ## Understand the action before the component
 
@@ -44,6 +44,26 @@ attached to a different configuration. Keep selected objects across harmless
 resize/reflow or panel changes. Report unavailable capabilities rather than
 simulating a successful operation.
 
+### Continuity across different representations
+
+Preserve the current question or functional reference without collapsing its
+different representatives into one identity. A drawing revision, alternative,
+component and observed installation can remain distinct objects connected by
+source-owned relations. Changing view must not turn a proposal into an installed
+state or invent a correspondence. When the receiving representation does not
+contain the selection, retain it as recoverable context and make the absence
+legible instead of substituting another node.
+
+Keep reading state distinct from case or work state. A selection, comparison or
+reading bookmark must not become a second project archive. Transfer only the
+context whose content and destination are selected; the existence of a public
+view does not make a private question public.
+
+The [Contextual Reading Continuity reference](../../references/contextual-reading-continuity.md)
+contains the source-bound method, host composition and the Nautico prototype
+exercise. Use it when a change of representation or receiving surface makes
+identity, information depth or observable continuation material.
+
 ## Orientation, focus and recovery
 
 Opening a temporary surface retains its invoking control and the selected
@@ -56,6 +76,12 @@ its active navigation, label and content together; do not expose a hybrid frame
 with the new tab and old content. If space is insufficient, move a dependent
 inspector into normal flow instead of hiding essential controls or compressing
 text below useful reading size.
+
+On a single-pane receiver, a changed detail outside the viewport may not be a
+perceivable result. Connect the selected control to the meaningful detail through
+viewport and focus, with a return to that same object. On a wide surface where
+the result is already visible, preserving control focus can be more useful.
+Test both directions rather than assuming one universal focus recipe.
 
 Prefer native controls and semantic HTML for the task. Disclosures require a
 clear state and recovery; a real modal needs focus containment and restoration.
