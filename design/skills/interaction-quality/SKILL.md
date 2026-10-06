@@ -5,7 +5,8 @@ description: Design, implement or review usable interaction, responsive composit
 
 # Interaction Quality
 
-Version: 0.1.0 · Semantic owner: D-ND Design Kernel / this method.
+Version: 0.1.1 · Semantic owner: D-ND Design Kernel / this method.
+Source amendment 2026-10-06: delegated-view confirmation; source-method candidate, not a library release or proof of runtime adoption.
 
 ## Understand the action before the component
 
@@ -61,6 +62,31 @@ clear state and recovery; a real modal needs focus containment and restoration.
 Do not build a modal for inspection when an ordinary region can preserve context.
 Errors belong beside the owning decision and retain its inputs. Stop, retry,
 back and recovery must name their actual effects.
+
+### Delegated view transitions — source return 2026-10-06
+
+When a control delegates a view change to another surface, keep proposal,
+request dispatch and observed result distinct. A successful message send is
+not proof that the receiving surface has changed. Bind the pending action to
+its request and target; obtain the receiver's resulting state before showing
+completion, advancing dependent context or dismissing the controlling surface.
+Timeout, receiver failure, reload and late/out-of-order responses retain their
+own recovery paths. A response for an earlier request must not confirm a later
+one. Reconcile manual navigation through the same observed-state relation.
+
+Use the smallest contract suited to the receiver. Do not introduce a permanent
+orchestrator or transmit private work just to confirm a view. A view identifier
+and a request correlation can suffice. If execution is synchronous and directly
+observable, an additional asynchronous handshake need not be invented.
+
+The Nautico source exercise exposed an `applied` flag set immediately after
+`postMessage`, while the last observed view was unchanged. The exact parent
+module was exercised with declared DOM/transport stubs, not as a full browser
+or AI test. Source and reproduction scope remain at the site owner:
+`GrazianoGuiducci/maios_it`, `docs/NAUTICAL_INTEGRATION_PREPARATION_20261006.md`,
+branch `gpt/nautico-integration-review-20261006`. The site and Nautico own the
+implementation correction and its later runtime proof. This return deepens
+this existing method; it does not form a new generic product kernel.
 
 ## Responsive meaning, not geometric shrinking
 
