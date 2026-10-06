@@ -39,8 +39,9 @@
     {
       "id": "interaction-quality",
       "path": "design/skills/interaction-quality/SKILL.md",
-      "version": "0.1.0",
-      "role": "interaction_responsive_access_recovery"
+      "version": "0.1.1",
+      "role": "interaction_responsive_access_recovery",
+      "source_amendment": "2026-10-06 delegated-view confirmation; source-method candidate, runtime adoption unobserved"
     },
     {
       "id": "agentic-ux-seed",
@@ -75,78 +76,22 @@
     }
   ],
   "external_roles": [
-    {
-      "id": "writing",
-      "ownership": "words_argument_voice",
-      "required_always": false
-    },
-    {
-      "id": "business",
-      "ownership": "relationship_value_resources",
-      "required_always": false
-    },
-    {
-      "id": "launch",
-      "ownership": "carrier_wave_timing",
-      "required_always": false
-    },
-    {
-      "id": "ux-ai-explanation",
-      "ownership": "in_process_comprehension_agency",
-      "required_always": false
-    },
-    {
-      "id": "product-research",
-      "ownership": "object_truth_evidence",
-      "required_always": false
-    },
-    {
-      "id": "publication",
-      "ownership": "exact_external_effect",
-      "required_always": false
-    }
+    {"id": "writing", "ownership": "words_argument_voice", "required_always": false},
+    {"id": "business", "ownership": "relationship_value_resources", "required_always": false},
+    {"id": "launch", "ownership": "carrier_wave_timing", "required_always": false},
+    {"id": "ux-ai-explanation", "ownership": "in_process_comprehension_agency", "required_always": false},
+    {"id": "product-research", "ownership": "object_truth_evidence", "required_always": false},
+    {"id": "publication", "ownership": "exact_external_effect", "required_always": false}
   ],
   "references": [
-    {
-      "id": "design-reasoning-and-craft",
-      "path": "design/references/design-reasoning-and-craft.md",
-      "role": "direction_style_grammar_critique"
-    },
-    {
-      "id": "web-quality-gate",
-      "path": "design/references/web-quality-gate.md",
-      "role": "implementation_quality_evidence_access_responsive_motion"
-    },
-    {
-      "id": "cognitive-motion",
-      "path": "design/references/cognitive-motion.md",
-      "role": "motion_focus_continuity_surface_transitions"
-    },
-    {
-      "id": "relational-chromatic-design",
-      "path": "design/references/relational-chromatic-design.md",
-      "role": "relational_chromatic_field_vectors_view_state"
-    },
-    {
-      "id": "timeline-media-editor-competence",
-      "path": "design/references/timeline-media-editor-competence.md",
-      "role": "time_based_editor_exact_time_track_topology"
-    },
-    {
-      "id": "context-aware-guided-form-composition",
-      "path": "design/references/context-aware-guided-form-composition.md",
-      "role": "causal_onboarding_dependent_form_focus_action_boundaries"
-    },
-    {
-      "id": "candidate-evaluation-contract",
-      "path": "design/references/candidate-evaluation-contract.md",
-      "role": "candidate_evaluation_scoped_receipt"
-    },
-    {
-      "id": "public-kernel-3d-visual-presentation",
-      "path": "design/references/public-kernel-3d-visual-presentation.md",
-      "role": "cross_kernel_3d_media_presentation_cognitive_guide"
-    }
+    {"id": "design-reasoning-and-craft", "path": "design/references/design-reasoning-and-craft.md", "role": "direction_style_grammar_critique"},
+    {"id": "web-quality-gate", "path": "design/references/web-quality-gate.md", "role": "implementation_quality_evidence_access_responsive_motion"},
+    {"id": "cognitive-motion", "path": "design/references/cognitive-motion.md", "role": "motion_focus_continuity_surface_transitions"},
+    {"id": "relational-chromatic-design", "path": "design/references/relational-chromatic-design.md", "role": "relational_chromatic_field_vectors_view_state"},
+    {"id": "timeline-media-editor-competence", "path": "design/references/timeline-media-editor-competence.md", "role": "time_based_editor_exact_time_track_topology"},
+    {"id": "context-aware-guided-form-composition", "path": "design/references/context-aware-guided-form-composition.md", "role": "causal_onboarding_dependent_form_focus_action_boundaries"},
+    {"id": "candidate-evaluation-contract", "path": "design/references/candidate-evaluation-contract.md", "role": "candidate_evaluation_scoped_receipt"},
+    {"id": "public-kernel-3d-visual-presentation", "path": "design/references/public-kernel-3d-visual-presentation.md", "role": "cross_kernel_3d_media_presentation_cognitive_guide"}
   ],
   "exercise": "design/exercises/2026-09-23/READBACK.md",
   "candidate_lineage": {
