@@ -1,6 +1,6 @@
 # D-ND Design Kernel
 
-Version: **0.1.0** · Owner: **d-nd-ux-ai-seed** · Form: **compositional design-domain kernel**
+Version: **0.1.1** · Owner: **d-nd-ux-ai-seed** · Form: **compositional design-domain kernel**
 
 This kernel forms perceptual, visual, spatial, temporal and interactive
 expressions of a real object. A capable receiver exercises its methods with the
@@ -123,6 +123,18 @@ composition or justify a new continuing owner; a name alone does not decide.
 Do not implement the table as keyword routing. For example, "video" in a request
 can identify a distribution constraint while the actual needed work is a readable
 thumbnail; "landing" does not by itself select a workspace component or WebGL.
+
+## Reusable expressive UI and media artifacts — 10 October 2026
+
+The operator's selected possibility field extends design beyond a single image, interface or video. An **expressive artifact family** may contain reactive/interactive avatars or assistant presences, semantic indicators, motion feedback and microinteractions, interactive guides or questionnaires, social cards/carousels, explanatory clips, YouTube video, slide presentations and kernel-native 3D guides. These are options made pertinent by actual use; they do not form a fixed asset catalogue or a promise that the product implements them.
+
+Design forms the **perceptual and interactive grammar**. [Perceptual Composition](design/skills/perceptual-composition/SKILL.md) handles identity, scene and brand; [Interaction Quality](design/skills/interaction-quality/SKILL.md) handles perceivable state, meaningful feedback, controls, interruption, keyboard/accessibility, reduced motion and recovery; [Source-Grounded Storyboard](design/skills/source-grounded-storyboard/SKILL.md) handles temporal explanation; [Public Kernel 3D Visual Presentation](design/references/public-kernel-3d-visual-presentation.md) already describes kernel-native presentation/guide functions. The existing [Cognitive Motion](design/references/cognitive-motion.md) stays their reference, not a duplicate animation competence.
+
+An avatar may be only an expressive character, may react locally to user input, or may represent current AI state **only if such state is actually sourced and available**. Its appearance does not establish perception, speech, autonomy, connection or consent. Likewise a graphic questionnaire is not a working answer collector, and a filmed interface is not a live executable interface. Source/product authority must govern the represented feature.
+
+When original code, animated assets, compositing or export are material, recall the **receiver's existing Code Medium Construction owner** (currently formed privately in tm7) instead of rebuilding its construction method inside Design. [Editoriali / Concept-to-Media](https://github.com/GrazianoGuiducci/Editoriali/blob/main/skills/concept-to-media-formation/SKILL.md) owns the semantic and public message; [Social Media Composition](https://github.com/GrazianoGuiducci/social-kernel/blob/main/skills/social-media-composition/SKILL.md) owns the social medium's preparation and inspection; product/domain owners supply truth. Publication remains separately governed.
+
+Reuse means preserving a common **source-bound referent and editable production identity** while making native derivatives: an interactive component, a recorded demonstration, a still/carousel, and a slide may have different capabilities, timing and evidence. Test and qualify each selected derivative rather than inheriting proof from another surface. Art-direction and brand-profile decisions remain project-specific; MAIOS is one possible pilot, not the Design Kernel's universal palette.
 
 ## Concept-to-media editorial handoff — 2026-10-05
 

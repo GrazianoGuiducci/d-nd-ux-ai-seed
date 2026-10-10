@@ -1,7 +1,7 @@
 {
   "schema": "dnd.design-kernel.manifest.v1",
   "kernel_id": "dnd-design-kernel",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "form": "domain_compositional_kernel",
   "owner": "GrazianoGuiducci/d-nd-ux-ai-seed",
   "entry": "DESIGN_KERNEL.md",

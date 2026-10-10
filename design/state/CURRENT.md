@@ -1,6 +1,6 @@
 # Current Design Kernel
 
-Version: 0.1.5
+Version: 0.1.6
 Owner: D-ND Design Kernel in `d-nd-ux-ai-seed`.
 Source base: `9b91eb9171d9ecb5278f296dba78fd9418b4f024`.
 
@@ -22,6 +22,10 @@ adapter file remains receiver-specific and is not implied by source promotion.
 `design/OWNER_RECONCILIATION.md` records source selection and current reconciliation
 status. `design/exercises/2026-09-23/READBACK.md` records the controlled exercise.
 
+
+## Expressive UI / participatory media family — 2026-10-10
+
+The operator selects reusable expressive elements across UX and communication: reactive/interactive avatar presences, motion and adaptive controls, visual guides, questionnaires, social media, YouTube clips and kernel presentation systems. The [Design Kernel entry](../../DESIGN_KERNEL.md#reusable-expressive-ui-and-media-artifacts--10-october-2026) now routes this **possibility field** to existing Perceptual Composition, Interaction Quality, Storyboard, Cognitive Motion and public-kernel 3D presentation methods. Code-medium construction remains with its separate receiver/private owner; Editoriali, Social and domain truth keep theirs. This is a design/routing clarification, **not a new Design skill, shipped UI component, tested avatar, release, or permission to publish**. No Seed/npm build or promotion was selected.
 
 ## MAIOS visual direction — 2026-10-05
 
