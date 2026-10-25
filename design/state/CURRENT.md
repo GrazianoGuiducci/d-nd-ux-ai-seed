@@ -2,6 +2,13 @@
 
 Version: 0.1.6
 Owner: D-ND Design Kernel in `d-nd-ux-ai-seed`.
+
+## 25 ottobre 2026 — regia, performance e montaggio specializzati
+
+Scelto dall'operatore il movimento **costruire ora il sistema di competenze cinematografiche e i meccanismi di lavoro reciproco; approfondire la loro conoscenza successivamente**. Formate tre competenze native di Design: [Cinematic Direction](../skills/cinematic-direction/SKILL.md) (messa in scena e sguardo), [Character Performance](../skills/character-performance/SKILL.md) (azione/interpretazione osservabile) e [Film Montage](../skills/film-montage/SKILL.md) (taglio, ritmo, relazione immagine-suono). [Source-Grounded Storyboard](../skills/source-grounded-storyboard/SKILL.md) e Perceptual Composition rimangono i metodi già esistenti; non sono duplicati né trasformati in fasi.
+
+La scrittura ha il proprio [owner Editoriali](https://github.com/GrazianoGuiducci/Editoriali/blob/main/skills/cinematic-screenwriting/SKILL.md); [MKCV Cinema](https://github.com/GrazianoGuiducci/Meta_Skill/blob/main/skills/semantic-timelapse-formation/mkcv/cinema/SKILL.md) conserva l'unico caso e il [richiamo reciproco](https://github.com/GrazianoGuiducci/Meta_Skill/blob/main/skills/semantic-timelapse-formation/mkcv/cinema/COOPERATION.md), Code Medium costruisce i mezzi effettivi. **Stato:** specializzazioni formate in sorgente; nessuna regia cinematografica, acting, montaggio narrativo o nuovo film esercitato con queste skill; nessun renderer/sistema multi-agente installato dal commit.
+
 Source base: `9b91eb9171d9ecb5278f296dba78fd9418b4f024`.
 
 ## 25 ottobre 2026 — sceneggiatura e scena filmica raggiungibili nello Storyboard
