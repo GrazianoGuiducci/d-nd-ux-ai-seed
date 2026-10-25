@@ -5,7 +5,7 @@ description: Compose cinematic meaning through the temporal relation of shots, d
 
 # Film Montage — montaggio e forma temporale
 
-**Owner:** D-ND Design Kernel. **Identità:** competenza sulla *relazione espressiva fra le immagini e i suoni nel tempo*, distinta dal montaggio software e dal codec. **Stato 25 ottobre 2026:** identità, pertinenza e partecipazione formate; craft del montaggio ancora da approfondire ed esercitare in un film.
+**Owner:** D-ND Design Kernel. **Identità:** competenza sulla *relazione espressiva fra le immagini e i suoni nel tempo*, distinta dal montaggio software e dal codec. **Stato 25 ottobre 2026:** identità e partecipazione formate, primo sapere professionale su inferenze, raccordo, ritmo e rapporto sonoro integrato; montaggio cinematografico nuovo non ancora esercitato.
 
 ## Quando diventa pertinente
 
