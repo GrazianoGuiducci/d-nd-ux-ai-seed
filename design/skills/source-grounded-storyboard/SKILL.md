@@ -5,7 +5,7 @@ description: Form a source-grounded temporal explanation, motion sequence, walkt
 
 # Source-Grounded Storyboard
 
-Version: 0.1.0 · Semantic owner: D-ND Design Kernel / this method.
+Version: 0.1.1 · Semantic owner: D-ND Design Kernel / this method.
 
 ## Find the event that can be seen
 
@@ -35,6 +35,14 @@ possibility without claiming a captured product demonstration.
 Keep what happened, what was understood then and what is understood now separate
 when a later consequence changes the interpretation. Do not edit a failure out
 of a demonstration merely to make the intended theory appear inevitable.
+
+## Quando la sceneggiatura cambia il racconto
+
+Un'esigenza di video può richiedere **scrittura di scena**, non soltanto disposizione di inquadrature. Con Editoriali, che conserva soggetto, parole e autorialità della scrittura, questa facoltà riconosce come una situazione diventa osservabile: eventuale punto di vista, condizioni del mondo, comportamento o decisione, reazione, mutamento e rapporto con ciò che lo spettatore può sapere. Una posa animata, un movimento camera o un taglio non costituiscono da soli una storia. Una scena contemplativa, esplicativa o concettuale può non richiedere personaggio o conflitto.
+
+Per una scena filmica, un **beat** è un momento rilevante del rapporto narrato, non una durata o un segmento di rendering. Esiste la possibilità di costruire uno *story reel* temporizzato da disegni/immagini e audio provvisorio prima di un rig o render costoso: si apprende se il gesto, il punto di vista e la conseguenza sono percepibili. Il film può anche nascere da un piano continuo, senza storyboard multipannello. Il risultato del reel può riformare sceneggiatura, riferimento A, regia e Codice B. La specifica tecnica appartiene al medium, il testo e il soggetto a Editoriali; il disegno e l'organizzazione del tempo restano qui.
+
+[Fonti e distinzione approfondita — sceneggiatura / scene craft, 25 ottobre 2026](references/SCREENPLAY_SCENE_CRAFT_2026_10_25.md). **Stato:** sapere studiato, non una sceneggiatura MKCV già esercitata, un film finalizzato o un metodo universale in tre atti.
 
 ## Compose time and attention
 
