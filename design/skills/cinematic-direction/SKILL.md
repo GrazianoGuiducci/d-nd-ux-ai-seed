@@ -35,6 +35,12 @@ Quando il film è ancora grezzo e il rapporto spaziale può cambiarlo, una **pre
 
 Il contributo può essere una direzione di scena, uno schema spaziale, una sequenza di punti di vista, uno story reel o una nota di continuità, nella minima forma che cambia il caso. Non è necessario compilarli tutti.
 
+## Primo mondo filmico in codice — MKCV Living World (25 ottobre 2026)
+
+La [lettura cinematografica del film 3D originale](references/MKCV_LIVING_WORLD_SPATIAL_SCENE_2026_10_25.md) ha esercitato il metodo attraverso un **ambiente persistente** (robot, isola, albero, casa), un gesto e una camera prospettica; video effettivo 14s/336 frame. La regia ha cambiato la resa mentre il film si formava: prima il mondo era troppo lontano, poi un cielo a chiazze attirava attenzione invece del personaggio, infine il titolo competeva con il fogliame. Camera più vicina, nuvole morbide, testo dislocato e tagli temporali riproducibili hanno corretto il rapporto fra soggetto e spettatore.
+
+La differenza per il lavoro successivo è **riconoscere lo spazio e il referente della scena prima di eleggere un key visual con pannelli a film completo**. Quando un gesto deve comunicare, l'origine e la destinazione appartengono a un mondo comune; ciò che la camera svela o nasconde può cambiare la scrittura o il modello. L'estetica low-poly ottenuta resta inferiore per dettaglio al precedente autopromo illustrativo, ma possiede una profondità di regia differente; non trasformare questo caso in una preferenza generale per il 3D.
+
 ## Sapere da approfondire e ritorno
 
 Inquadrature e loro grammatica, ottiche, movimento macchina, blocking, direzione degli attori, uso del fuori campo, messa in scena, fotografia e linguaggio dei generi sono **campi da studiare ed esercitare**, non capacità già dimostrate dalla sola skill. Il reale effetto sul film e le correzioni apprese ritornano qui quando una futura regia debba operare diversamente; tecnica esecutiva a Code Medium, significato a Editoriali e grammatica temporale generale a Storyboard.
