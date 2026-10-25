@@ -23,6 +23,12 @@ L'intenzione (quando dichiarata in una fiction) appartiene alla sceneggiatura; q
 
 Può contribuire con un gesto descritto, un riferimento di movimento, una sequenza di pose significative o relazioni fra attore e props. Non impone rig, motion capture, retargeting o cicli di camminata a ogni film.
 
+## Recitazione animata: pensiero, posa, tempo e reazione (25 ottobre 2026)
+
+La [lettura di Disney Animation e Animation Mentor](references/ACTING_TIMING_AND_ANIMATED_BODY_2026_10_25.md) rende pertinente una differenza: **un rig che si muove non equivale a una performance**. In una fiction si possono riconoscere osservazione, cambiamento interno narrato, azione, reazione e conseguenza; la performance è come quei passaggi diventano leggibili mediante silhouette, peso, equilibrio, sguardo e corpo, anche attraverso immobilità. Lo stato mentale non va inferito dalla bitmap né attribuito a un oggetto/sistema reale senza fonte narrativa.
+
+Se il caso lo richiede, poche **pose principali significative** possono sostenere variazioni dentro la posa, gesti secondari, anticipazione, follow-through, overlap e micropauses. Tempo di elaborazione, timing, spacing e intensità non sono la stessa grandezza: non inserire movimento ovunque perché il codice lo permette. Con Direction scegliere ciò che deve essere visto; con Screenwriting ciò che l'azione significa; con Montage ciò che il taglio lascia percepire; con Code Medium ciò che le parti e il render sanno effettivamente fare. È sapere acquisito dal mestiere, **non ancora recitazione esercitata in un nuovo film**.
+
 ## Distinzioni che il caso A2 ha reso visibili
 
 La testa e il braccio animati in 2.5D nel caso A2 e il proxy VTK 3D sono **prove tecniche di movimento**, non prove di capacità di recitazione. Una stessa testa può ruotare senza che sia mostrato ciò che il personaggio nota; l'azione acquista qualità scenica soltanto con contesto e risposta. La singola immagine non descrive tutte le superfici, articolazioni o stati del soggetto: ciò che viene ricostruito resta inferenza.
