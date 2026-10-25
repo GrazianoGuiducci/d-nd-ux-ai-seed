@@ -19,6 +19,12 @@ Entra quando il punto di vista, il posizionamento dei corpi/oggetti, le distanze
 
 A partire dal **soggetto e dalle relazioni reali del caso**, forma *mise-en-scène* situata: centro percettivo, prospettiva, azione primaria, performance osservabile, camera/movimenti possibili, luce/materie, durata ed eventuale suono. Una scelta di forma può restare una proposta e ritornare alla sceneggiatura; non diventa nuova verità del soggetto.
 
+## Regia come mondo e previsualizzazione situata (25 ottobre 2026)
+
+La [lettura Disney/Pixar sul layout e sulla grammatica cinematografica](references/STAGING_CAMERA_PREVIS_2026_10_25.md) ha approfondito il modo di agire: una scena da mettere in quadro non è una sequenza di nomi di inquadratura, ma un **mondo dove qualcuno o qualcosa occupa uno spazio, compie un'azione, viene visto e può restare fuori campo**. Blocking, geografia, punto di vista, sguardi, materiali e luce costituiscono possibilità espressive che si trasformano con il soggetto. Campo lungo, dettaglio, ottiche, piano-sequenza, 180° ed eyeline match sono grammatica utile all'orientamento o alla sua trasformazione, non prescrizioni fisse.
+
+Quando il film è ancora grezzo e il rapporto spaziale può cambiarlo, una **previsualizzazione 3D leggera** può far emergere quale camera, movimento o raccordo funziona prima di costruire materiali/rig finali. Non è obbligatoria: un semplice storyboard o film continuo può essere sufficiente. Il film animato costruito dal layout ritorna anche al montaggio e alla scrittura; il Code Medium rende effettivi asset e camere nei soli riceventi capaci. Il film A2 3D precedente non era già regia di un racconto, ma una sonda tecnica.
+
 ## Relazione con le altre competenze
 
 - [Cinematic Screenwriting](https://github.com/GrazianoGuiducci/Editoriali/blob/main/skills/cinematic-screenwriting/SKILL.md): riceve situazioni, azioni e cambi di senso; restituisce scoperte percettive che possono far evolvere la scrittura, senza riscriverla in sua vece.
