@@ -5,7 +5,7 @@ description: Form the observable performance of animated characters and expressi
 
 # Character & Object Performance — interpretazione animata
 
-**Owner:** D-ND Design Kernel. **Identità:** competenza su *ciò che un soggetto/oggetto comunica agendo nel mondo*, distinta sia dalla scrittura del personaggio sia dal rig e dal codice delle pose. **Stato:** composizione formata il 25 ottobre 2026; conoscenze di recitazione/animazione avanzata ancora da acquisire ed esercitare.
+**Owner:** D-ND Design Kernel. **Identità:** competenza su *ciò che un soggetto/oggetto comunica agendo nel mondo*, distinta sia dalla scrittura del personaggio sia dal rig e dal codice delle pose. **Stato 25 ottobre 2026:** composizione e prima conoscenza professionale di recitazione/animazione integrate; interpretazione cinematografica in una nuova scena non ancora esercitata.
 
 ## Oggetto e ingresso
 
