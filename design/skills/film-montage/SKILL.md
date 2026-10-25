@@ -13,6 +13,12 @@ Una ripresa può funzionare isolatamente e il film no: ordine delle informazioni
 
 Non prescrive un taglio ogni numero fisso di secondi, né assume che la qualità cinematografica sia quantità di transizioni. Anche un piano-sequenza o un film senza parlato può essere una decisione di montaggio/continuità temporale.
 
+## Un taglio può generare una relazione non presente nella fonte (25 ottobre 2026)
+
+Le [fonti Disney, Pixar e Adobe su montaggio e suono](references/EDITING_EMOTION_SPACE_AND_SOUND_2026_10_25.md) cambiano la funzione di questo owner: **la successione di due piani genera inferenze**, anche quando nessuna camera o render ha mostrato esplicitamente una causalità. Prima di fissare un taglio, comprendere quale relazione diventa leggibile: continuità, confronto, contrasto, causa, ellissi o sorpresa. Quando una causalità è generata dal solo montaggio ma non appartiene alla fonte del film, riformare con Screenwriting/Direction anziché rendere il cut più fluido e lasciare intatta la distorsione.
+
+La durata di un piano e il momento di entrata/uscita possono valorizzare gesto, reazione, silenzio ed emozione. Eyeline match, asse 180°, match-on-action e orientamento spaziale sono strumenti di continuità, non regole inviolabili. Audio che anticipa la scena successiva (**J-cut**) o prosegue dal piano precedente (**L-cut**) può modificare informazione e attesa; non richiedere una traccia se non esiste o non serve. Quando utile, un **story reel con materiale provvisorio** permette a Montage e Direction/Screenwriting di apprendere prima del render finale. Questa è conoscenza del mestiere e del meccanismo, **non un nuovo montaggio MKCV già eseguito**.
+
 ## Collaborazione
 
 - **Sceneggiatura / Editoriali:** restituisce quanto dell'azione, della relazione e della scoperta diventa conoscibile nel montaggio; il testo può essere riformato, ma l'owner della scrittura lo modifica.
