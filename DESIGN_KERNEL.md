@@ -13,11 +13,11 @@ library. Its package, components, public adoption skills and release identity ar
 not replaced by the Design Kernel. The Design Kernel source lives in `design/`
 and is not implicitly added to that npm distribution.
 
-## Enter through the work
-
 ## Cinema, regia e interpretazione del film (25 ottobre 2026)
 
 Quando un film richiede profondità cinematografica oltre al generico storyboard, raggiungere le **specializzazioni competenti** in [Cinematic Direction](design/skills/cinematic-direction/SKILL.md), [Character Performance](design/skills/character-performance/SKILL.md) e [Film Montage](design/skills/film-montage/SKILL.md) solo dove cambiano la scena. Lo [Storyboard](design/skills/source-grounded-storyboard/SKILL.md) conserva il mutamento percepibile nel tempo; Editoriali conserva la sceneggiatura e il soggetto, [MKCV Cinema](https://github.com/GrazianoGuiducci/Meta_Skill/blob/main/skills/semantic-timelapse-formation/mkcv/cinema/SKILL.md) il medesimo film. Il [meccanismo](https://github.com/GrazianoGuiducci/Meta_Skill/blob/main/skills/semantic-timelapse-formation/mkcv/cinema/COOPERATION.md) permette richiami e correzioni reciproche, senza un pipeline gerarchico, un secondo Design Kernel o una crew di agenti automaticamente attiva.
+
+## Enter through the work
 
 When the function and its source are already known, use the relevant competence
 directly. On reentry, [CURRENT](design/state/CURRENT.md) identifies the live
