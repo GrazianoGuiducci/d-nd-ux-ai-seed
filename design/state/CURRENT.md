@@ -1,5 +1,14 @@
 # Current Design Kernel
 
+## 25 ottobre 2026 — approfondimento cinematografico delle tre specializzazioni
+
+Dopo la formazione di MKCV Cinema, la prima conoscenza specialistica è stata letta da Disney, Pixar, Animation Mentor e Adobe ed è stata incorporata direttamente negli owner:
+- [Cinematic Direction](../skills/cinematic-direction/SKILL.md): [blocking, punto di vista, geografia, camera e layout/previs](../skills/cinematic-direction/references/STAGING_CAMERA_PREVIS_2026_10_25.md);
+- [Character Performance](../skills/character-performance/SKILL.md): [pose significative, tempo di reazione, gesti secondari e rapporto rig/acting](../skills/character-performance/references/ACTING_TIMING_AND_ANIMATED_BODY_2026_10_25.md);
+- [Film Montage](../skills/film-montage/SKILL.md): [inferenza generata fra piani, timing, continuità, suono e J/L-cut](../skills/film-montage/references/EDITING_EMOTION_SPACE_AND_SOUND_2026_10_25.md).
+
+Il nuovo sapere ha guidato una [lettura di fogli di contatto reali dei video A2 2.5D/3D](https://github.com/GrazianoGuiducci/Meta_Skill/blob/main/skills/semantic-timelapse-formation/mkcv/cinema/references/A2_CINEMATIC_COMPETENCE_READBACK_2026_10_25.md) con Editoriali e il [meccanismo comune MKCV Cinema](https://github.com/GrazianoGuiducci/Meta_Skill/blob/main/skills/semantic-timelapse-formation/mkcv/cinema/COOPERATION.md). Lettura e metodi acquisiti ≠ realizzazione di un nuovo film o prova su una nuova narrazione. Nessun nuovo Design Kernel, release o runtime multi-agent.
+
 Version: 0.1.6
 Owner: D-ND Design Kernel in `d-nd-ux-ai-seed`.
 Source base: `9b91eb9171d9ecb5278f296dba78fd9418b4f024`.
