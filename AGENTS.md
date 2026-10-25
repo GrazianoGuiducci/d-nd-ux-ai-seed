@@ -1,5 +1,11 @@
 # Design repository entry
 
+## Cinema / MKCV — owner-native film faculties (25 ottobre 2026)
+
+Per **regia cinematografica**, interpretazione del personaggio o montaggio, usare rispettivamente [Cinematic Direction](design/skills/cinematic-direction/SKILL.md), [Character Performance](design/skills/character-performance/SKILL.md) e [Film Montage](design/skills/film-montage/SKILL.md), con [Source-Grounded Storyboard](design/skills/source-grounded-storyboard/SKILL.md) e [Perceptual Composition](design/skills/perceptual-composition/SKILL.md) secondo il caso. La scrittura resta [Editoriali / Cinematic Screenwriting](https://github.com/GrazianoGuiducci/Editoriali/blob/main/skills/cinematic-screenwriting/SKILL.md). [MKCV Cinema](https://github.com/GrazianoGuiducci/Meta_Skill/blob/main/skills/semantic-timelapse-formation/mkcv/cinema/SKILL.md) collega le competenze tramite l'unico caso Studio-Lab e lo [scambio reciproco](https://github.com/GrazianoGuiducci/Meta_Skill/blob/main/skills/semantic-timelapse-formation/mkcv/cinema/COOPERATION.md), non crea un secondo Design Kernel.
+
+Le tre skill sono specializzazioni **formate da approfondire**, non tre agenti autonomi o un nuovo film.
+
 For a design-domain task, use [DESIGN_KERNEL.md](DESIGN_KERNEL.md). It composes
 perceptual design, visual explanation and interaction with the relevant source,
 writing, product and delivery owners. It is not an additional background agent.
