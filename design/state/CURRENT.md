@@ -4,6 +4,12 @@ Version: 0.1.6
 Owner: D-ND Design Kernel in `d-nd-ux-ai-seed`.
 Source base: `9b91eb9171d9ecb5278f296dba78fd9418b4f024`.
 
+## 25 ottobre 2026 — sceneggiatura e scena filmica raggiungibili nello Storyboard
+
+Su richiesta di approfondire la sceneggiatura **prima di comporre un nuovo video MKCV**, la competenza [Source-Grounded Storyboard](../skills/source-grounded-storyboard/SKILL.md) è stata approfondita dalla lettura di fonti cinematografiche primarie e professionali: [guida ragionata](../skills/source-grounded-storyboard/references/SCREENPLAY_SCENE_CRAFT_2026_10_25.md). La distinzione nuova per il routing è **sceneggiatura come scena portatrice di azione/interpretazione/conseguenza** diversa dalla sola disposizione di pose, cambi camera e tempi di rendering. Se il caso lo richiede, Editoriali co-forma soggetto e scrittura; Design rende riconoscibile la scena; un primo story reel con immagini e suono provvisori può cambiare la regia prima di costruire il 3D. Nessuna struttura in tre atti/eroe/conflitto diventa obbligatoria.
+
+**Stato effettivo:** fonti studiate e nuovo metodo documentato; nessuna sceneggiatura MKCV o story reel narrativo nuovo esercitato; nessun nuovo skill, asset pubblicato o film finale. La prova 2.5D e il proxy 3D sul robot A2 restano episodi tecnici precedenti e separati. Il nodo Studio-Lab MKCV conserva il percorso di richiamo, Code Medium possiede il renderer, Editoriali la scrittura. Versione metodo Source-Grounded Storyboard 0.1.1 come **conoscenza disponibile**, non acquisizione di capacità produttiva dimostrata.
+
 ## Present resultant
 
 The design domain has a source-native compositional kernel and four methods:
