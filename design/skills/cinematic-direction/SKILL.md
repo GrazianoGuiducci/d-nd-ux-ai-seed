@@ -5,7 +5,7 @@ description: Direct the perceptual cinematic experience of a scene through stagi
 
 # Cinematic Direction — regia cinematografica
 
-**Owner:** D-ND Design Kernel. **Specializzazione:** la regia *di scena e del film* entro il Design, non un nuovo sistema direttivo sopra gli altri owner. **Stato, 25 ottobre 2026:** identità e meccanismi di collaborazione formati; craft professionale e prove in film successivi da approfondire.
+**Owner:** D-ND Design Kernel. **Specializzazione:** la regia *di scena e del film* entro il Design, non un nuovo sistema direttivo sopra gli altri owner. **Stato, 25 ottobre 2026:** identità e collaborazione formate, prima conoscenza professionale di messa in scena/previsualizzazione integrata; regia di un nuovo film non ancora esercitata.
 
 ## Funzione distinta
 
