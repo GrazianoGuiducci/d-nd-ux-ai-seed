@@ -1,5 +1,13 @@
 # Current Design Kernel
 
+## 31 ottobre 2026 — primo render copertina: prompt non guidato dalla competenza
+
+**Esercizio realmente accaduto nella conversazione ChatGPT:** dopo l'analisi preliminare della copertina della guida *Usare MAIOS Project Kernel*, l'operatore ha selezionato una prima generazione. Il modello ha inviato a ImageGen un prompt che chiedeva esplicitamente professionista al laptop, interfaccia olografica centrale e barra inferiore Contesto → Competenze → Lavoro → Apprendimento. L'immagine restituita ha seguito questa direzione. La direzione del precedente studio (un campo di lavoro unificato, copertina come soglia, relazione non ridotta a sequenza didattica) **era stata letta e codificata, ma non ha formato l'istruzione al generatore**. È una differenza fra disponibilità/documentazione e partecipazione/esercizio, visibile senza attribuire l'errore al renderer.
+
+**Owner corretto:** il metodo Design e il Brand Field già conservavano la relazione; la perdita è del ricevente nel passaggio sorgente → selezione rappresentativa → prompt esecutivo. [ChatGPT Design Adapter](../adapters/CHATGPT.md#source-to-prompt-participation--actual-mpk-cover-failure-31-october-2026) è stato approfondito per rendere pertinente il nucleo selezionato nel prompt effettivo, distinguendo figure, ologrammi e sequenze stereotipate da oggetti motivati dalla fonte. Non occorre una seconda competenza grafica o un controllo esterno obbligatorio.
+
+**Statuto:** immagine candidata effettivamente generata e mostrata in conversazione, non approvata dall'operatore, non committata come asset nel progetto, non inserita nel PDF. La V2 owner Editoriali resta distinta. Una futura generazione che mantenga il nucleo percettivo effettivamente selezionato è il prossimo test del metodo; assimilazione e trasferibilità ai diversi contesti ancora da verificare.
+
 ## 31 ottobre 2026 — analisi preliminare della copertina MPK
 
 **Nuova sorgente:** PNG della copertina V2 e PDF italiano A4 di 14 pagine *Usare MAIOS Project Kernel* allegati dall'operatore. La guida contiene i diagrammi didattici alle pagine 2, 4 e 7. L'operatore chiede un'analisi prima di generare una nuova cover, osservando che le etichette dei sei temi, la scena centrale, i settori e il titolo competono fra loro. Non è autorizzata una nuova pubblicazione o un nuovo prodotto.
