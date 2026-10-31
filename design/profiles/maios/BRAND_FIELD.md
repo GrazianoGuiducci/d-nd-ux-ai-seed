@@ -1,5 +1,13 @@
 # MAIOS brand field — design use
 
+## 31 ottobre 2026 — grammatica dei contenuti visivi, candidata
+
+L'operatore ha fornito undici referenze e selezionato una **codifica per formare immagini MAIOS nei diversi mezzi** prima di generare nuove immagini. La [grammatica candidata multi-superficie](VISUAL_CONTENT_GRAMMAR.md) custodisce il diverso peso di contesto aziendale/settoriale, figure reali/AI/illustrate, campo naturale-astratto e ambiente progettuale, percorso dello sguardo causale, ruoli cromatici, lavori di articolo/social/header/prodotto/copertina PDF e il ponte verso i prompt. Questo è **sapere del profilo MAIOS**, mentre Perceptual Composition rimane il metodo generale.
+
+Il CSS MAIOS osservato nuovamente nel repo il 31 ottobre espone anche le espressioni contestuali `institutional`, `everyday`, `research`, `builder`: variazione sul substrato cromatico comune, non quattro identità indipendenti. Le referenze inviate sono **evidenza visiva fornita**, non una selezione indiscriminata di asset approvati. La prima generazione ChatGPT della “tavola di codifica” era una sostituzione del compito: la richiesta riguardava le competenze, non una tavola da illustrare. La riparazione dell'ingresso avviene nel ricevente, senza duplicare il metodo Design.
+
+Stato: specifica candidata raggiungibile. Il successivo caso PDF e il confronto con un'altra superficie potranno confermare, riformare o approfondire il profilo. Nessun nuovo prodotto, immagine approvata, CSS live o pubblicazione discende da questa nota.
+
 Profile version: 0.4.0 · observed site source: 23 September 2026 · operator visual direction: 5 October 2026.
 State: current-source interpretation for controlled design work; new layouts and
 copy remain candidates, not a replacement for the production site.
