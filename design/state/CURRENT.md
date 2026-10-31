@@ -1,5 +1,15 @@
 # Current Design Kernel
 
+## 31 ottobre 2026 — analisi preliminare della copertina MPK
+
+**Nuova sorgente:** PNG della copertina V2 e PDF italiano A4 di 14 pagine *Usare MAIOS Project Kernel* allegati dall'operatore. La guida contiene i diagrammi didattici alle pagine 2, 4 e 7. L'operatore chiede un'analisi prima di generare una nuova cover, osservando che le etichette dei sei temi, la scena centrale, i settori e il titolo competono fra loro. Non è autorizzata una nuova pubblicazione o un nuovo prodotto.
+
+**Risultante:** la copertina ha il compito di introdurre il significato fondamentale e il desiderio di entrare nella guida; le spiegazioni e i dettagli restano in pagina. La generalità del Kernel si può far percepire attraverso il **modo comune di lavorare** (orientamento umano + fonti + competenza/metodo + lavoro + sapere riusabile che continua), senza enumerare tutti gli ambienti. La direzione visiva **candidata** è una copertina editoriale con un campo di progetto unitario e una relazione che prende forma, gerarchia titolo/subtitolo/visual/identità MAIOS, registro neutro e professionale. Il soggetto concreto e il grado di figurazione restano da determinare nel brief/render.
+
+**Ritorno nelle competenze:** [Perceptual Composition](../skills/perceptual-composition/SKILL.md#cover-design-perceptual-thesis-before-a-topic-map--31-october-2026) possiede la distinzione riusabile *copertina/soglia vs spiegazione interna*, [grammatica MAIOS](../profiles/maios/VISUAL_CONTENT_GRAMMAR.md#31-ottobre-2026--copertina-della-guida-mpk-comprensione-prima-della-scena) la sua incarnazione nel brand, [Editoriali Concept-to-Media](https://github.com/GrazianoGuiducci/Editoriali/blob/main/skills/concept-to-media-formation/SKILL.md#editorial-cover-as-entry-to-meaning--31-october-2026) il significato/identità editoriale. [COPERTINA owner](https://github.com/GrazianoGuiducci/Editoriali/blob/main/programs/maios/documentation/mpk-5.5.0/guida-uso/COPERTINA.md#riesame-preliminare-della-funzione-di-copertina--31-ottobre-2026) conserva il caso, la V2 e il candidato.
+
+**Stato:** fonti lette, metodo aggiornato e scritture verificate; visual V3 ancora non generato/approvato, PDF originale invariato; test di riconoscibilità e miniatura pendenti. Non inferire assimilazione automatica in Codex o in un'altra istanza.
+
 ## 31 ottobre 2026 — richiamo competente al momento della produzione visuale
 
 **Nuova selezione dell'operatore, nello stesso campo del 31 ottobre:** rendere le competenze di design disponibili **quando servono** nel lavoro generativo di articoli, post, header, prodotti, presentazioni e copertine PDF. La prossima copertina di una guida PDF è selezionata come **test prossimo**, non come render da eseguire in questa richiesta.
