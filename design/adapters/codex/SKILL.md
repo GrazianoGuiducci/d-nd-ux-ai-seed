@@ -25,6 +25,15 @@ actual changed behaviours. Keep generated, rendered, tested, installed and
 published states separate. Do not deploy, post or alter accounts through the
 existence of the design request.
 
+For a selected MAIOS image, article visual, social asset, profile header,
+product visual or PDF cover, reach the current [MAIOS Brand Field](../../profiles/maios/BRAND_FIELD.md)
+and its [cross-surface grammar](../../profiles/maios/VISUAL_CONTENT_GRAMMAR.md)
+through the canonical Design Kernel while shaping the generation brief. Compose
+Editoriali and the true product/document owner when their meaning changes the
+image. If the user selected only competence study, do not produce an image.
+The same method serves other products through **their** current profiles; never
+make MAIOS colour or figurative style a default of the coder receiver.
+
 Return reusable source-independent design learning to its canonical design
 faculty, project facts to the project profile and local mechanical adaptations
 to this adapter. Do not replace the entire owner method with a receiver snapshot.
