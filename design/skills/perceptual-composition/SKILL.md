@@ -194,6 +194,23 @@ primary link sufficient. This is a chosen failure-tolerant design condition,
 not a claim that every email client blocks images. Media can live at the linked
 destination; do not make an attachment necessary for initial comprehension.
 
+## Cover design: perceptual thesis before a topic map — 31 October 2026
+
+A cover for a guide or PDF is a first **perceptual encounter with the work's central promise**. The guide's internal diagrams, explanatory steps and catalogue of use cases can remain in its pages. For a cover, compose the smallest coherent field in which the reader recognises the subject, perceives what becomes possible or different, and finds a reason to open the document. This is not a numerical content limit: a cover may be complex when the *cover itself* has a genuinely complex perceptual job.
+
+The 31 October 2026 MPK guide study exposes a specific failure mode of an otherwise source-accurate visual: the oversized title, six subject labels, a human work scene, loop and four equally weighted sector panels each remained readable, but their competition made the whole artifact look like an illustrated contents page. The important correction is **semantic allocation across surfaces**, not merely deleting boxes, choosing another color or shrinking labels. First recognise what the PDF already explains and decide which one relationship belongs to the cover.
+
+For a cross-domain product, make **the operative invariant** perceptible before treating multiple sectors as proof of universality. A coherent common action scene, an architectural/relational project field, a precisely staged material metaphor or another form can carry this. A specific industry may be an understated contextual trace, a real project focus or absent from the cover, depending on the receiving document. This is a *graded relation* between identity and context, not a fixed no-people/no-sector style.
+
+A good cover can use **one recognizable working object and a visible transformation** with a larger invisible-but-expressed competence field: source and purpose become organized, work takes shape, a useful result can affect subsequent work. The kernel may be represented through the *effect of its method* rather than as a brain, avatar, machine, central ruler or literal software circuit. Keep any return/feedback relationship distinguishable from a mandatory workflow, autonomous control or guaranteed model retraining.
+
+For the actual executor, distinguish:
+- **exact identity/content**: title, subtitle, mark, dates and product names belong in controllable layout/vector type when accuracy is material;
+- **expressive visual**: metaphor, spatial/material treatment, camera, lighting, atmosphere and purposeful brand accents may be formed by an image generator;
+- **receiving surface**: the actual A4 cover and its thumbnail need legible hierarchy, safe zones and an intelligible reading path. Preserve existing good material when revising rather than restarting from an unrelated aesthetic.
+
+Learning classification: the cover-as-threshold method belongs here, the editorial promise and division of explanatory burden belong to [Editoriali Concept-to-Media](https://github.com/GrazianoGuiducci/Editoriali/blob/main/skills/concept-to-media-formation/SKILL.md), the specific visual grammar and palette to the selected product profile. Inspect the next cover and the PDF together; a source-based brief or edited skill does not yet prove a successful design.
+
 ## Compose hierarchy and visual syntax
 
 Choose a dominant object and an intentional relationship between its surrounding
