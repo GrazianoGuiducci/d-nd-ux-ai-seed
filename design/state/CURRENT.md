@@ -1,5 +1,13 @@
 # Current Design Kernel
 
+## 31 ottobre 2026 — codifica visiva multi-superficie MAIOS
+
+Sorgente diretta: operatore, conversazione ChatGPT del 31/10, undici immagini di riferimento e indicazioni su neutralità aperta, natura astratta/pastello + ambiente progettuale avanzato, dinamica dello sguardo causale, adattamento a pubblico/contesto e scelta situata di persone/AI/cartoon. **Oggetto selezionato:** formare la capacità competente e catalogarne le specifiche per articoli, social, header, prodotti e PDF **prima** della prova su una copertina.
+
+Risultato: [grammatica MAIOS candidata](../profiles/maios/VISUAL_CONTENT_GRAMMAR.md) collegata al [Brand Field](../profiles/maios/BRAND_FIELD.md). Perceptual Composition e Source-Grounded Infographic erano già adeguate nel metodo generale; l'adapter ChatGPT del Design Kernel riceve una correzione dell'interpretazione di intento: una richiesta di codifica e lettura di sorgenti è stata scambiata per produzione di una tavola illustrata. Nessuna nuova skill o template rigido. Il CSS site con espressioni contestuali, Editoriali Concept-to-Media, social e K-UX-AI conservano owner e verità distinti.
+
+La [copertina guida MPK V2 del 31/10](https://github.com/GrazianoGuiducci/Editoriali/blob/main/programs/maios/documentation/mpk-5.5.0/guida-uso/COPERTINA.md) è evidenza/candidato in un altro owner: distingue destinatario principiante, generalità del kernel e setting illustrativo. Non è stata modificata. **Non esercitati qui**: nuova generazione, confronto della cover finale nel PDF, apprendimento da un altro mezzo, pubblico, pubblicazione e assimilazione del successivo ricevente. Le undici immagini fornite restano allegati della conversazione, non asset automaticamente importati nel repository.
+
 ## 25 ottobre 2026 — approfondimento cinematografico delle tre specializzazioni
 
 Dopo la formazione di MKCV Cinema, la prima conoscenza specialistica è stata letta da Disney, Pixar, Animation Mentor e Adobe ed è stata incorporata direttamente negli owner:
