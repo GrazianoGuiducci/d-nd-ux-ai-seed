@@ -27,6 +27,16 @@ The 31 October MAIOS case exposed this receiver error: an image was generated as
 
 ## Image-generation execution path
 
+### Source-to-prompt participation — actual MPK cover failure, 31 October 2026
+
+The MAIOS *Usare MAIOS Project Kernel* cover exercise exposed a **second, different receiver failure** after the earlier premature infographic: Design/Editoriali and the MAIOS Visual Content Grammar had been read and evolved; the selected thesis was a spacious editorial cover expressing one shared project/work field and the kernel's meaningful continuing method. Yet the actual ImageGen instruction introduced a stock seated professional at a laptop, glowing holographic MPK dashboard and a bottom linear four-icon chain (Context → Competences → Work → Learning). The rendered cover followed those instructions. The primary divergence occurred **when the assistant formed the executor prompt**, not because the image generator disregarded a correct design brief.
+
+Carry the meaning into the actual generative instruction at the point it forms. Recognize if an inherited familiar image or layout is replacing a selected source relation: a figure at a laptop, neon dashboard, central-node diagram, icon chain, four-card summary or scenic motif is one possible expression only when the **specific chosen visual thesis** warrants it. Let source object, visual relation and intended reading experience determine the scene, and leave the renderer freedom inside that determined field. Aesthetic words and brand color tokens alone do not preserve the source.
+
+For the selected MPK cover, the source's **interacting relations and their useful continuation** are the content; the previous explanatory diagrams belong to the PDF. A conceptual project-field composition may depict action and transformation without manufacturing a numbered pipeline. For another artifact (social post, profile header, industrial product), re-form scene and content from its own current audience, job, product state and brand profile; do not export this one cover's sparsity as a universal law. This is an in-flow source/prompt correction, not a new approval stage, fixed prompt template or extra skill.
+
+The immediately generated candidate was visible in the conversation; its visual interpretation is evidence of the failure, not acceptance, GitHub asset publication, or proof that the corrected method will be used in the next non-identical case. A later real prompt and rendering must demonstrate the difference.
+
 For an image-generation or image-edit movement, do not move directly from the
 operator's prose to a generic aesthetic prompt. Resolve the active design method
 and, when a real project or brand exists, bring its current project profile and
