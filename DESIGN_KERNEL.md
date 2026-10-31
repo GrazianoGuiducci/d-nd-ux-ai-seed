@@ -183,6 +183,16 @@ If Design discovers a semantic correction, new source relation or useful
 representation grammar, return the meaning/argument delta to Editoriali and the
 reusable perceptual/spatial/temporal method to the closest Design owner.
 
+## Generative visual assets — competence at the point of production (31 October 2026)
+
+When the selected movement is **actually to produce or edit** a cover, article visual, social image, profile header, product visual, presentation graphic or another rendered asset, reach the relevant [Perceptual Composition](design/skills/perceptual-composition/SKILL.md) and **current project's own profile** while forming the scene and the generation brief. Editoriali/Concept-to-Media participates if the claim, image wording or public meaning can change the form; the real product, document or research owner supplies what the image is permitted to represent; the channel/receiver supplies crop, size and reading conditions.
+
+**For MAIOS specifically**, [Brand Field](design/profiles/maios/BRAND_FIELD.md) reaches its [cross-surface visual content grammar](design/profiles/maios/VISUAL_CONTENT_GRAMMAR.md). This candidate knowledge holds the shared identity, source of colours and marks, causal attention, adaptable natural/projectual atmosphere, degree of domain specificity and situated choice among people, AI presence, illustration or nonfigurative expression. The generator's prompt is a **situated execution projection** of that understanding, not the owner of the brand and not the first aesthetic decision. A different project uses its own selected identity, never an inherited MAIOS palette.
+
+At the point of **competence or reference study**, the images are evidence; no renderer has yet been selected. At the point of a **concrete artifact**, use the source, product/guide content, audience, intended perceptual change, exact mark/copy needs and actual medium to form a capable brief; generate or edit through the receiving host's real means; read the rendered result at its destination scale. An aesthetically appealing interpretation does not become product truth. Preserve editable text and precise brand assets where image generation cannot reliably hold them.
+
+Each result may return learning to a different place: visual reasoning to Perceptual Composition, MAIOS-specific expression to its profile, text/meaning to Editoriali, factual corrections to the object owner, crop/platform behavior to the receiving medium. Use a relevant capability when it can change the artifact; do not require a universal sequence, a fixed tool, a new skill, or a repeated style checklist.
+
 ## Form before allocating machinery
 
 First preserve the source relation and recognise what the receiver can already
