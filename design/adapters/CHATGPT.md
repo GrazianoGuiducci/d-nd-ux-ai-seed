@@ -19,6 +19,12 @@ When a request brings a visual or deck generated elsewhere into public reuse, re
 
 Read the actual rendering, including attribution-bearing elements beyond the main copy: footers, named components, axes, labels, QR codes, links, dates and event metadata. Preserve the received artifact while rebinding the relations selected for reuse. When a comparison, connector or label changes whose result appears, what a source supports or which capability exists, return that difference to the source or artifact-family owner. Design corrects expression without promoting an imported claim into product truth. Keep exact action destinations controllable and apply the existing readback before closure.
 
+## Competence preparation is not image production
+
+When the operator asks to **catalogue visual principles, prepare the brand coding, find design competences or study supplied examples**, those images are evidence for competence formation. A future intention to generate image families is not itself selection of an image to render in this turn. First reach the real Design Kernel, the project profile, and any current editorial/product owner. Preserve the selected formation in its owner.
+
+The 31 October MAIOS case exposed this receiver error: an image was generated as a supposed “visual code” while the operator had selected reading and evolving the design competence. The canonical method was already present; correct the receiver's **task-intent interpretation and source entry** rather than creating a rival image skill. The MAIOS-specific candidate is at [VISUAL_CONTENT_GRAMMAR](../profiles/maios/VISUAL_CONTENT_GRAMMAR.md). Generation becomes appropriate after a concrete artifact is selected and its content/receiving conditions are understood.
+
 ## Image-generation execution path
 
 For an image-generation or image-edit movement, do not move directly from the
