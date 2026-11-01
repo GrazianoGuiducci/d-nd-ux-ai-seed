@@ -257,3 +257,11 @@ Actual operator decisions and qualified receiver observations update this
 profile. Generic medium/interaction rules return to their design faculties.
 Keep current accepted form, candidate explorations and dated evidence distinct.
 The first prototype does not constitute brand approval or a user study.
+
+## Long-form reading fields — operator correction, 1 November 2026
+
+The operator distinguishes the MPK product sections from the guide and shows an agentic-research article where the yellow band and coloured shapes cross the body text: «o lo manteniamo uniforme o ci mettiamo un campo chiaro sotto i testi». The selected [site correction](https://github.com/GrazianoGuiducci/maios_it/blob/d404449bb93ed795811f54030f60ebb4d8132a8a/docs/MPK_GUIDE_READABILITY_20261101.md) gives the existing article layout and MPK handbook a continuous opaque light reading field, retaining the chromatic landscape outside it. This is a situated MAIOS reading expression, not a requirement to turn every product, operational view or illustration into a paper card.
+
+Keep brand expression and sustained reading mutually legible. A nominal palette pair or an existing link does not establish the whole encounter: real bands, alpha, depth, text measure and competing actions participate. The product page now gives Guida all’uso / User guide a primary visible role and keeps installation separately recognisable.36 reading HTML files, their authored text and PDF/cover assets remain unchanged. Actual local/live examples in both languages at measured1280/390 widths, keyboard entry and source/live byte checks support this result; no independent human study or universal readability claim follows.
+
+The general method remains Perceptual Composition and relational chromatic design. This profile retains the operator's chosen MAIOS relation and its exercised source, so a future reader-facing surface can compose it when pertinent rather than inheriting a decorative landscape directly beneath prose by default.
