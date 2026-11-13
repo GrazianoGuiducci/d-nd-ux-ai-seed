@@ -1,5 +1,12 @@
 # Current Design Kernel
 
+## 13 novembre 2026 — MetaCanvas Studio 20 come caso percettivo raggiungibile
+
+**Fonte e risultato:** l'operatore seleziona la pubblicazione del tool HTML MetaCanvas già costruito, mantenendone il legame con D-ND Design e destinando una futura scheda MAIOS.it a **Risorse → Tool**. K-UX-AI ha pubblicato l'editor autonomo Studio 20 in `examples/collaborative-communication-medium/AI_Collaboration_Studio.html` (commit `0be329ae723110c62aa67d89756397683505319b`, hash SHA-256 `c8c1be74c7d9b91d99b0c7888c40cee387579ca26f3079d0fa44ea81f1817a19`). Il [riferimento di design](../references/metacanvas-collaborative-medium.md) custodisce la relazione percettiva e le prove con collegamento al download pubblico: non copia il runtime e non lo considera parte del package D-ND UX Seed.
+
+**Metodo che può continuare:** un mezzo ricco di funzioni resta leggibile se il lavoro/canvas mantiene il primato visivo, se viewport e pannelli si compongono per spazio effettivo, e se la complessità emerge vicino all'azione pertinente invece che in una toolbar sempre presente. Un successivo medium può tradurre il principio in altra forma; la forma Studio 20 non è grammatica universale. K-UX-AI possiede schema, codice e interventi nel documento. La pagina MAIOS.it non è stata creata e Codex non è stato attivato.
+
+
 ## 31 ottobre 2026 — prima copertina da ricevente nuovo, risultato e limite della prova
 
 L'operatore ha riportato il PNG di una copertina generata da una **nuova conversazione ChatGPT**, senza le precedenti immagini/esempi ma con il PDF guida originale. È un risultato diverso dalla generazione già fallita in questa chat. La copertina nuova (`Guida MAIOS_ sapere in evoluzione.png`, 1055×1491 A4 approx., SHA256 `0dc9582af08dd3351cccb795ba3c1331c866f41f9efc8c24bb50cc337cbaa80f`, **allegato alla conversazione, non asset repo**) migliora spazio e gerarchia, ma restituisce principalmente il diagramma persona → assistente/competenze → lavoro che insegna, simile alla figura interna a pagina 2, più che la *soglia editoriale* / campo di progetto unitario formata nel brief precedente. Il tratteggio di ritorno punta all'area persona, non chiaramente agli strati di sapere/metodo. Il logo effettivo non è presente, solo MAIOS testuale.
