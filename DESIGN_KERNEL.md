@@ -279,6 +279,10 @@ proves only its observed behaviour. Later non-identical use is needed to claim
 assimilation; first-encounter comprehension requires an actual receiver rather
 than the author's self-endorsement.
 
+## MetaCanvas Studio 20 — caso di design collaborativo
+
+Il [riferimento MetaCanvas](design/references/metacanvas-collaborative-medium.md) mostra una composizione effettivamente esercitata di Interaction Quality e Perceptual Composition: l'interfaccia mantiene il canvas al centro, riduce la competizione dei comandi e rende visibili le nuove possibilità soltanto nel punto di intervento (scambio AI, confronto, recupero). Il [tool è scaricabile da K-UX-AI](https://github.com/GrazianoGuiducci/k-ux-ai/blob/main/examples/collaborative-communication-medium/AI_Collaboration_Studio.html), che resta owner del codice e dello stato. Design conserva la conoscenza percettiva: nessuna duplicazione del software e nessuna dichiarazione di installazione nel Seed npm o sul sito MAIOS.it.
+
 ## Present implementation boundary
 
 This is a source-level kernel with controlled exercises, not an autonomous
