@@ -5,6 +5,16 @@ Owner del **metodo di design**: D-ND Design Kernel (`GrazianoGuiducci/d-nd-ux-ai
 Owner **del prodotto, del codice e dello stato del documento**: K-UX-AI / Collaborative Communication Medium (`GrazianoGuiducci/k-ux-ai`).  
 Stato: **esercizio progettuale documentato, tool pubblico verificato in GitHub; non componente distribuito dal package Agentic UX Seed**.
 
+## Studio 21 — la demo e la distribuzione linguistica sono distinte
+
+**Fonte:** l'operatore ha fornito una nuova pagina Consulenza AI e richiesto di convertirla in rappresentazione presentabile dentro MetaCanvas, poi ha precisato che MAIOS.it avrà due pagine di risorsa, una IT e una EN, ciascuna riferita al rispettivo HTML autonomo **nella repository K-UX-AI**.
+
+**Relazione di Design:** non si tratta di duplicare la pagina né di imporre una traduzione con toggle al pubblico. Un contenuto sorgente viene trasformato in sette scene leggibili/editabili, senza forzare le possibilità MAIOS in una sequenza commerciale obbligata. La lingua è parte dell'incontro con il ricevente: testo delle scene, toolbar, guida e template devono restare comprensibili nella versione destinata a quel percorso. Il selettore bilingue era un'ipotesi di interazione, poi sostituita dall'architettura IT/EN determinata dall'operatore.
+
+**Oggetti pubblici:** [MetaCanvas Studio 21 IT](https://github.com/GrazianoGuiducci/k-ux-ai/blob/main/examples/collaborative-communication-medium/MetaCanvas_Studio21_Consulenza_IT.html) e [MetaCanvas Studio 21 EN](https://github.com/GrazianoGuiducci/k-ux-ai/blob/main/examples/collaborative-communication-medium/MetaCanvas_Studio21_Consulenza_EN.html). Rimangono codice e documenti sotto owner K-UX-AI; qui soltanto relazione percettiva e causalità della scelta. Le future pagine MAIOS.it sono ancora competenza del sito/Codex, non un effetto realizzato.
+
+**Qualifica:** sintassi e browser test circoscritti; ricezione esterna, touch, screen reader, Chrome Windows `file://`, versione effettivamente online della pagina Consulenza e pagine MAIOS.it non attestati da questa pubblicazione.
+
 ## Artefatto e prova
 
 - [Editor pubblico scaricabile: MetaCanvas Studio 20](https://github.com/GrazianoGuiducci/k-ux-ai/blob/main/examples/collaborative-communication-medium/AI_Collaboration_Studio.html)
