@@ -19,6 +19,27 @@ is not yet a visual question. "Show what belongs to the project and what belongs
 to the tool accessing it" can be one. A source can disclose a better question
 while the map is forming; do not protect the first layout from that discovery.
 
+## Reusable relational and interactive composition — 26 November 2026
+
+Treat a successful infographic as a source of generative know-how rather
+than a fixed template. Reciprocity and return, reachable depth, cooperating
+functions, comparative dynamics, and emergent relations are possible
+compositions, not a closed taxonomy. Retain the visual question, typed
+relations, and the conditions under which the geometry remains meaningful.
+An isometric stack can express access to depth without quantifying volume
+or authority; a radial field need not imply a controller.
+
+When simultaneous visibility is insufficient, selection can reveal a
+node's actual relations and an inspector can expose source-grounded depth.
+Subfield views preserve access to the whole; temporal controls apply only
+where time actually participates. Do not encode invented maturity or
+performance measurements in charts. Distinguish illustrative states from
+observed values. On narrow surfaces recompose the view or offer a readable
+non-spatial path instead of shrinking the full map to illegible labels.
+Keep keyboard access, focus, selected state, and a static reading path.
+The medium owner exercises implementation and transfer; the semantic
+owner retains the truth of the depicted relationship.
+
 ## From relation to geometry
 
 Identify the minimum materially participating objects and the actual predicates
