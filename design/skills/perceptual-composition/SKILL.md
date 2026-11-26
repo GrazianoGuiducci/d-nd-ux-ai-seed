@@ -7,6 +7,26 @@ description: Form or critique art direction, medium choice, brand expression and
 
 Version: 0.5.0 · Semantic owner: D-ND Design Kernel / this method.
 
+## Visual craft as a reusable faculty — 26 November 2026
+
+An editorial diagram can be semantically correct yet visually elementary. A real
+reference may reveal a more expressive construction: layered geometry,
+restrained depth, organic connectors, differentiated typographic roles,
+local vector symbols, and a coherent relation between field and surface.
+Acquire the mechanism, not just its appearance. Compose the geometry from
+the actual relation; use elevation, colour, radius, spacing and iconography
+to make distinctions perceptible, not to give every node equal decoration.
+
+For MAIOS, preserve the established site environment (air, substrate, path,
+ink and contextual expression); a locally scoped emerald/mint diagram profile
+can coexist with it. Do not promote a showroom palette or dashboard layout
+to the universal brand. Keep the semantic role of a colour separate from
+its value in a particular theme. Use the smallest visual structure that
+retains the relationship, but do not equate simplicity with primitive craft.
+Compare actual rendered views at the receiving widths and return the human
+correction to the design faculty. A visually approved candidate is not a
+publication approval or evidence of complete interaction quality.
+
 ## Begin with what must become visible
 
 Acquire the actual object and the relevant operator intention before proposing
